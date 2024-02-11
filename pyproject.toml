@@ -1,0 +1,8 @@
+[project]
+name = "rl4fisheries"
+version = "1.0.0"
+
+dependencies = ["gymnasium",
+                "numpy",
+                "matplotlib",
+                "typing"]
