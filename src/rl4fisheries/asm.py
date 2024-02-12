@@ -29,7 +29,7 @@ equib_init = [
 ]
 
 
-class AsmEnv(gym.Env):
+class Asm(gym.Env):
     """an age-structured model following the gym API standard"""
     
     metadata = {
@@ -50,7 +50,7 @@ class AsmEnv(gym.Env):
             "asl": np.float32(0.5),  # vul par 1
             "ahv": np.float32(5.0),  # vul par 2
             "ahm": np.float32(6.0),  # age 50% maturity
-            "upow": np.float32(1.0),  # 1 = max yield objective, < 1 = HARA
+            "upow": np.float32(1.0),  # 1 = max yield objective, < 1 = HARA  ## both 0.6 and 1.0 -- this describes risk adversion in the utility function
             "p_big": np.float32(0.05),  # probability of big year class
             "sdr": np.float32(0.3),  # recruit sd given stock-recruit relationship
             "rho": np.float32(0.0),  # autocorrelation in recruitment sequence
