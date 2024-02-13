@@ -3,14 +3,17 @@ import os
 import numpy as np
 
 class ConstEsc:
-    def __init__(self, escapement=0, **kwargs):
+    def __init__(self, escapement=0, obs_bounds = 1, **kwargs):
+        self.ui = ui(bounds=obs_bounds)
         self.escapement = escapement
+        self.obs_bound = obs_bound
         self.policy_type = "constant_escapement"
 
+
     def predict(self, state):
-        pop = self.state_to_pop(state)
-        raw_prediction = np.clip( self.predict_raw(pop), 0, 1)
-        return np.float32([2 * raw_prediction - 1])
+        pop = self.ui.to_natural_units(state)
+        raw_prediction = self.predict_raw(pop)
+        return self.ui.to_norm_units(raw_prediction)
 
     def predict_raw(self, pop):
         population = pop[0]

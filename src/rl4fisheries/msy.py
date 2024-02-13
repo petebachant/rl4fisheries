@@ -3,10 +3,11 @@ import os
 import numpy as np
 
 class Msy:
-    def __init__(self, mortality: float =0, threshold: float =0, **kwargs):
+    def __init__(self, mortality: float =0, threshold: float =0, env = None, **kwargs):
         self.mortality = mortality
         self.threshold = threshold
         self.policy_type = "msy_and_threshold"
+        self.env = env
 
     def predict(self, state):
         pop = self.state_to_pop(state)
