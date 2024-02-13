@@ -1,7 +1,7 @@
 import gymnasium as gym
 import numpy as np
 from numbers import Number
-from typing import Optional
+from typing import Optional, Union
 import warnings
 
 class unitInterface:
@@ -9,7 +9,7 @@ class unitInterface:
         self, 
         *,
         env: Optional[gym.Env] = None, 
-        bounds: Optional[np.ndarray, Number, list] = None,
+        bounds: Optional[Union[np.ndarray, Number, list]] = None,
     ):
         if env and bounds:
             warnings.warn("`env` and `bound` provided to unitInterface(). `bound` value will override the obs_bound value of the env.")
