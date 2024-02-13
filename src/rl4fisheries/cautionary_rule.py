@@ -1,5 +1,6 @@
 import json
 import os
+import numpy as np
 
 class CautionaryRule:
     def __init__(self, x1=0, x2=1, y2=1, **kwargs):
@@ -10,14 +11,26 @@ class CautionaryRule:
 
         assert x1 < x2, "CautionaryRule error: x1 < x2" 
 
-    def predict(self, population):
+    def predict(self, state):
+        pop = self.state_to_pop(state)
+        raw_prediction = np.clip( self.predict_raw(pop), 0, 1)
+        return np.float32([2 * raw_prediction - 1])
+    
+    def predict_raw(self, pop):
+        population = pop[0]
         if population < self.x1:
             return 0
-        elif self.x1 < population < self.x2:
+        elif self.x1 <= population < self.x2:
             return self.y2 * (population - self.x1) / (self.x2 - self.x1)
         else:
-            return self.y_2
+            return self.y2
 
+    def predict_effort(self, state):
+        return (self.predict(state) + 1) / 2
+    
+    def state_to_pop(self, state):
+        return (state + 1 ) / 2
+    
     def save(self, path = None)->None:       
         path = path or os.path.join(f'{self.policy_type}.json')
         with open(path, 'w') as f:
@@ -37,3 +50,5 @@ class CautionaryRule:
         # self.mortality = data.get("mortality")
 
         return Msy(**data)
+
+    
