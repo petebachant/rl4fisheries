@@ -30,7 +30,7 @@ equib_init = [
 ]
 
 
-class asm2(gym.Env):
+class AsmEsc(gym.Env):
     """an age-structured model following the gym API standard"""
 
     def __init__(self, config=None):
@@ -197,9 +197,3 @@ class asm2(gym.Env):
         obs = self.observe()
         return obs, {}
 
-
-# smoke-test
-# Confirm environment is correctly defined:
-from stable_baselines3.common.env_checker import check_env
-
-check_env(asm2(), warn=True)
