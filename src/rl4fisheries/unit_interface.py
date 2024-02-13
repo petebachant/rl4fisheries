@@ -24,7 +24,7 @@ class unitInterface:
         if bounds:
             self.ignore_env = True
         
-        tmp_bounds = bounds or env.obs_bound
+        tmp_bounds = bounds or env.bound
         self.bound_used = self.preprocess(tmp_bounds)
 
 
@@ -58,5 +58,5 @@ class unitInterface:
             if self.ignore_env:
                 raise Warning("unitInterface() `bounds` argument: `bounds` not in any of the allowed formats (list, number, np.ndarray)")
             else:
-                raise Warning("unitInterface() `env` argument: `env.obs_bound` not in any of the allowed formats (list, number, np.ndarray)")
+                raise Warning("unitInterface() `env` argument: `env.bound` not in any of the allowed formats (list, number, np.ndarray)")
             
