@@ -2,6 +2,8 @@ import json
 import os
 import numpy as np
 
+from . import unit_interface.UnitInterface as ui # is there a nicer way of doing things?
+
 class ConstEsc:
     def __init__(self, escapement=0, obs_bounds = 1, **kwargs):
         self.ui = ui(bounds=obs_bounds)
