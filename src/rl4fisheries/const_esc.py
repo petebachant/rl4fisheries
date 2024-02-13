@@ -46,6 +46,6 @@ class ConstEsc:
 
         # self.mortality = data.get("mortality")
 
-        return Msy(**data)
+        return ConstEsc(**data)
         
         
