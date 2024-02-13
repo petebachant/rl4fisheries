@@ -2,7 +2,7 @@ import gymnasium as gym
 import numpy as np
 from numbers import Number
 from typing import Optional
-import warning
+import warnings
 
 class unitInterface:
     def __init__(
@@ -12,7 +12,7 @@ class unitInterface:
         bounds: Optional[np.ndarray, Number, list] = None,
     ):
         if env and bounds:
-            warning.warn("`env` and `bound` provided to unitInterface(). `bound` value will override the obs_bound value of the env.")
+            warnings.warn("`env` and `bound` provided to unitInterface(). `bound` value will override the obs_bound value of the env.")
 
         if not (env or bounds):
             raise Warning("unitInterface() initializer needs either an `env` or a `bound` argument.")
