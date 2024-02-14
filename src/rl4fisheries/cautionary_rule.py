@@ -9,7 +9,7 @@ class CautionaryRule:
         self.y2 = y2
         self.policy_type = "CautionaryRule_piecewise_linear"
 
-        assert x1 < x2, "CautionaryRule error: x1 < x2" 
+        assert x1 <= x2, "CautionaryRule error: x1 <= x2" 
 
     def predict(self, state):
         pop = self.state_to_pop(state)
@@ -49,6 +49,6 @@ class CautionaryRule:
 
         # self.mortality = data.get("mortality")
 
-        return Msy(**data)
+        return CautionaryRule(**data)
 
     
