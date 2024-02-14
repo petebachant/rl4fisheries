@@ -30,14 +30,14 @@ class unitInterface:
 
     def to_natural_units(self, vec: np.ndarray):
         """ [-1, 1] space to [0, bounds] space. """
-        assert isinstance(vec, np.ndarray), "unitInterface.to_natural_units() `vec` argument must be an np.ndarray!"
+        assert isinstance(vec, np.ndarray) or isinstance(vec, Number), "unitInterface.to_natural_units() `vec` argument must be an np.ndarray or a number!"
         return self.bound_used * (vec + 1 ) / 2
 
     def to_norm_units(self, vec: np.ndarray):
         """ [0, bounds] to [-1, 1] space. """
-        assert isinstance(vec, np.ndarray), "unitInterface.to_norm_units() `vec` argument must be an np.ndarray!"
-        return vec / self.bound_used
-        self.bound_used * (vec + 1 ) / 2
+        assert isinstance(vec, np.ndarray) or isinstance(vec, Number), "unitInterface.to_norm_units() `vec` argument must be an np.ndarray or a number!"
+        return 2 * vec / self.bound_used - 1
+        # self.bound_used * (vec + 1 ) / 2
 
     def preprocess(self, bounds):
         if isinstance(bounds, Number):
