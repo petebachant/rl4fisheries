@@ -49,6 +49,6 @@ class CautionaryRule:
 
         # self.mortality = data.get("mortality")
 
-        return Msy(**data)
+        return CautionaryRule(**data)
 
     
