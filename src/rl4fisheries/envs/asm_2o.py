@@ -39,30 +39,30 @@ class Asm2o(gym.Env):
     
     def __init__(self, render_mode: Optional[str] = 'rgb_array', config={}):
         config = config or {}
-        parameters = {
+        self.parameters = {
             "n_age": 20,  # number of age classes
-            "vbk": np.float32(0.23),  # von Bertalanffy kappa
-            "s": np.float32(0.86),  # average survival
-            "cr": np.float32(6.0),  # Goodyear compensation ratio
-            "rinit": np.float32(0.01),  # initial number age-1 recruits
-            "ro": np.float32(1.0),  # average unfished recruitment
-            "uo": np.float32(0.12),  # average historical exploitation rate
-            "asl": np.float32(0.5),  # vul par 1
-            "ahv": np.float32(5.0),  # vul par 2
-            "ahm": np.float32(6.0),  # age 50% maturity
-            "upow": np.float32(1.0),  # 1 = max yield objective, < 1 = HARA
-            "p_big": np.float32(0.05),  # probability of big year class
-            "sdr": np.float32(0.3),  # recruit sd given stock-recruit relationship
-            "rho": np.float32(0.0),  # autocorrelation in recruitment sequence
-            "sdv": np.float32(1e-9),  # sd in vulnerable biomass (survey)
-            "sigma": np.float32(1.5),
+            "vbk": config.get("vbk" , np.float32(0.23)),  # von Bertalanffy kappa
+            "s": config.get("s" , np.float32(0.86)),  # average survival
+            "cr": config.get("cr" , np.float32(6.0)),  # Goodyear compensation ratio
+            "rinit": config.get("rinit" , np.float32(0.01)),  # initial number age-1 recruits
+            "ro": config.get("ro" , np.float32(1.0)),  # average unfished recruitment
+            "uo": config.get("uo" , np.float32(0.12)),  # average historical exploitation rate
+            "asl": config.get("asl" , np.float32(0.5)),  # vul par 1
+            "ahv": config.get("ahv" , np.float32(5.0)),  # vul par 2
+            "ahm": config.get("ahm" , np.float32(6.0)),  # age 50% maturity
+            "upow": config.get("upow" , np.float32(1.0)),  # 1 = max yield objective, < 1 = HARA
+            "p_big": config.get("p_big" , np.float32(0.05)),  # probability of big year class
+            "sdr": config.get("sdr" , np.float32(0.3)),  # recruit sd given stock-recruit relationship
+            "rho": config.get("rho" , np.float32(0.0)),  # autocorrelation in recruitment sequence
+            "sdv": config.get("sdv" , np.float32(1e-9)),  # sd in vulnerable biomass (survey)
+            "sigma": config.get("sigma" , np.float32(1.5)),
         }
         # these parameters can be specified in config
         self.n_year = config.get("n_year", 1000)
         self.Tmax = self.n_year
         self.threshold = config.get("threshold", np.float32(1e-4))
         self.training = config.get("training", True)
-        self.parameters = config.get("parameters", parameters)
+        # self.parameters = config.get("parameters", parameters)
         self.timestep = 0
         self.bound = 50  # a rescaling parameter
         self.parameters["ages"] = range(
