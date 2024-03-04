@@ -7,6 +7,7 @@ from rl4fisheries.agents.cautionary_rule import CautionaryRule
 from rl4fisheries.agents.const_esc import ConstEsc
 from rl4fisheries.agents.msy import Msy
 
+
 from gymnasium.envs.registration import register
 # action is 'harvest'
 register(id="Asm-v0", entry_point="rl4fisheries.envs.asm:Asm")
