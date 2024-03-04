@@ -1,37 +1,39 @@
+import yaml
+import os
+
 import gymnasium as gym
-
-from sb3_contrib import TQC, ARS
-from stable_baselines3 import PPO, A2C, DQN, SAC, TD3
 from stable_baselines3.common.env_util import make_vec_env
+from stable_baselines3 import PPO, A2C, DQN, SAC, TD3, HER, DDPG
+from sb3_contrib import TQC, ARS, RecurrentPPO
 
-def load_sb3_agent(algo, env, weights, policy = "MlpPolicy"):
-    ALGO = algorithm(algo)
-    model = ALGO(policy, env)
-    agent = model.load(weights)
-    return agent
-
-# dictionary look up as a function...
 def algorithm(algo):
     algos = {
+        'PPO': PPO, 
+        'ppo': PPO,
         'RecurrentPPO': RecurrentPPO,
         'RPPO': RecurrentPPO,
         'recurrentppo': RecurrentPPO,
         'rppo': RecurrentPPO,
         #
-        "PPO": PPO,
-        "ARS": ARS,
-        "TQC": TQC,
-        "A2C": A2C,
-        "SAC": SAC,
-        "DQN": DQN,
-        "TD3": TD3,
-        "ppo": PPO,
-        "ars": ARS,
-        "tqc": TQC,
-        "a2c": A2C,
-        "sac": SAC,
-        "dqn": DQN,
-        "td3": TD3,
+        'ARS': ARS,
+        'ars': ARS,
+        'A2C': A2C, 
+        'a2c':A2C ,
+        #
+        'DDPG': DDPG, 
+        'ddpg': DDPG,
+        #
+        'HER': HER, 
+        'her': HER,
+        #
+        'SAC': SAC, 
+        'sac': SAC,
+        #
+        'TD3': TD3, 
+        'td3': TD3,
+        #
+        'TQC': TQC, 
+        'tqc': TQC,
     }
     return algos[algo]
 

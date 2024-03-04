@@ -7,5 +7,5 @@ args = parser.parse_args()
 import rl4fisheries
 
 
-from rl4eco.utils import sb3_train    
+from rl4fisheries.utils import sb3_train    
 sb3_train(args.file)
