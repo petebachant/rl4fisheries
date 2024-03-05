@@ -15,7 +15,6 @@ n_envs: 32
 id: "1"
 repo: "cboettig/rl-ecology"
 save_path: "/home/rstudio/rl4fisheries/saved_agents"
-tensorboard: "/home/rstudio/logs"
 
 # algo hyperpars taken from BipedalWalker-v3 hyperpars:
 # https://github.com/DLR-RM/rl-baselines3-zoo/blob/master/hyperparams/ppo_lstm.yml
@@ -24,6 +23,7 @@ algo_config:
     # n_envs: 32
     # n_timesteps: 10000000
     policy: 'MlpLstmPolicy'
+    tensorboard_log: "/home/rstudio/logs"
     n_steps: 256
     batch_size: 256
     gae_lambda: 0.95
