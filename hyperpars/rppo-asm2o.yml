@@ -1,13 +1,41 @@
 # stable-baselines3 configuration template. 
 
+# algo overall
 algo: "RPPO"
-policyType: "MlpLstmPolicy"
+total_timesteps: 10000000
+
+additional_imports: ["torch"]
+
+# env overall
 env_id: "Asm2o-v0"
-n_envs: 12
-tensorboard: "/home/rstudio/logs"
-total_timesteps: 500000
 config: {}
-use_sde: True
+n_envs: 32
+
+# io
 id: "1"
 repo: "cboettig/rl-ecology"
 save_path: "/home/rstudio/rl4fisheries/saved_agents"
+tensorboard: "/home/rstudio/logs"
+
+# algo hyperpars taken from BipedalWalker-v3 hyperpars:
+# https://github.com/DLR-RM/rl-baselines3-zoo/blob/master/hyperparams/ppo_lstm.yml
+algo_config:
+    # normalize: True # not clear what this one actually does -- from the source code it seems to 'activate' VecNormalize, but more care & examination needed
+    # n_envs: 32
+    # n_timesteps: 10000000
+    policy: 'MlpLstmPolicy'
+    n_steps: 256
+    batch_size: 256
+    gae_lambda: 0.95
+    gamma: 0.999
+    n_epochs: 10
+    ent_coef: 0.0
+    learning_rate: !!float 3e-4
+    clip_range: 0.18
+    policy_kwargs: "dict(
+                    ortho_init=False,
+                    activation_fn=torch.nn.ReLU,
+                    lstm_hidden_size=64,
+                    enable_critic_lstm=True,
+                    net_arch=dict(pi=[64], vf=[64])
+                  )"

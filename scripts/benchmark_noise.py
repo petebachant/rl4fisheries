@@ -14,4 +14,5 @@ sb3_train(
     args.file, 
     progress_bar = args.progress_bar, 
     config={"sigma": args.noise},
+    id=f"noise_{args.noise}",
 )
