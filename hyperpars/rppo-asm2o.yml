@@ -1,4 +1,4 @@
-# stable-baselines3 configuration template. 
+# template for using sb3_zoo hyperparameter yamls
 
 # algo overall
 algo: "RPPO"
@@ -20,8 +20,6 @@ save_path: "/home/rstudio/rl4fisheries/saved_agents"
 # https://github.com/DLR-RM/rl-baselines3-zoo/blob/master/hyperparams/ppo_lstm.yml
 algo_config:
     # normalize: True # not clear what this one actually does -- from the source code it seems to 'activate' VecNormalize, but more care & examination needed
-    # n_envs: 32
-    # n_timesteps: 10000000
     policy: 'MlpLstmPolicy'
     tensorboard_log: "/home/rstudio/logs"
     n_steps: 256
