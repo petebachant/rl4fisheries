@@ -44,7 +44,6 @@ save_path: "/home/rstudio/rl4fisheries/saved_agents"
 # # HALF CHEETAH V4
 
 algo_config:
-  n_envs: 1
   policy: 'MlpLstmPolicy'
   tensorboard_log: "/home/rstudio/logs"
   batch_size: 64
@@ -69,7 +68,6 @@ algo_config:
 # # INVERTED PENDULUM
 
 # algo_config:
-#   n_envs: 8
 #   tensorboard_log: "/home/rstudio/logs"
 #   policy: 'MlpLstmPolicy'
 #   n_steps: 2048
@@ -85,7 +83,6 @@ algo_config:
 # # MOUNTAIN CAR NO VEL
 
 # algo_config:
-#   n_envs: 8
 #   tensorboard_log: "/home/rstudio/logs"
 #   policy: 'MlpLstmPolicy'
 #   batch_size: 256
