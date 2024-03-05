@@ -44,7 +44,6 @@ save_path: "/home/rstudio/rl4fisheries/saved_agents"
 # # HALF CHEETAH V4
 
 algo_config:
-  normalize: true
   n_envs: 1
   policy: 'MlpLstmPolicy'
   tensorboard_log: "/home/rstudio/logs"
