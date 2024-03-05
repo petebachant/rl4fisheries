@@ -62,7 +62,6 @@ class Asm2o(gym.Env):
         self.Tmax = self.n_year
         self.threshold = config.get("threshold", np.float32(1e-4))
         self.training = config.get("training", True)
-        # self.parameters = config.get("parameters", parameters)
         self.timestep = 0
         self.bound = 50  # a rescaling parameter
         self.parameters["ages"] = range(
