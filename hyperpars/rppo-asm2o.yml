@@ -61,7 +61,7 @@ algo_config:
   policy_kwargs: "dict(
                     log_std_init=-2,
                     ortho_init=False,
-                    activation_fn=nn.ReLU,
+                    activation_fn=torch.nn.ReLU,
                     net_arch=dict(pi=[256, 256], vf=[256, 256])
                   )"
 
