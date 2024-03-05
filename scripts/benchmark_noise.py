@@ -10,4 +10,8 @@ import rl4fisheries
 
 
 from rl4fisheries.utils import sb3_train    
-sb3_train(args.file, progress_bar = args.progress_bar, config={"sigma": args.noise})
+sb3_train(
+    args.file, 
+    progress_bar = args.progress_bar, 
+    config={"sigma": args.noise},
+)

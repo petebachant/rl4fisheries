@@ -13,3 +13,4 @@ python benchmark_noise.py -f ../hyperpars/ppo-asm2o-v0-1.yml -noise 0.75 &
 python benchmark_noise.py -f ../hyperpars/ppo-asm2o-v0-1.yml -noise 0.50 & 
 python benchmark_noise.py -f ../hyperpars/ppo-asm2o-v0-1.yml -noise 0.25 & 
 python benchmark_noise.py -f ../hyperpars/ppo-asm2o-v0-1.yml -noise 0.10 & 
+python benchmark_noise.py -f ../hyperpars/ppo-asm2o-v0-1.yml -noise 0.05 & 
