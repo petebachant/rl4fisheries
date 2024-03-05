@@ -5,7 +5,7 @@ scriptdir="$(dirname "$0")"
 cd "$scriptdir"
 
 # original noise setting
-python train.py -f ../hyperpars/ppo-asm2o-v0-1.yml -noise 1.5 & 
+python benchmark_noise.py -f ../hyperpars/ppo-asm2o-v0-1.yml -noise 1.5 & 
 
 # lower noise setting
 python benchmark_noise.py -f ../hyperpars/ppo-asm2o-v0-1.yml -noise 1.00 & 
