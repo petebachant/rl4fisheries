@@ -149,7 +149,7 @@ class AsmEsc(gym.Env):
 
     def harvest(self, n, mortality):
         p = self.parameters
-        self.vulb = sum(p["vul"] * n * p["wt"]))
+        self.vulb = sum(p["vul"] * n * p["wt"])
         self.vbobs = self.vulb  # could multiply this by random deviate
         self.ssb = sum(p["mwt"] * n)
         if sum(n) > 0:
