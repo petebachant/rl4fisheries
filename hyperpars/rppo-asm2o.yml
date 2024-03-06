@@ -15,17 +15,33 @@ n_envs: 32
 repo: "cboettig/rl-ecology"
 save_path: "/home/rstudio/rl4fisheries/saved_agents"
 
-# MINIMAL CONFIG
-id: "minimal"
+# # MINIMAL CONFIG
+# id: "minimal"
+# algo_config:
+#     policy: 'MlpLstmPolicy'
+#     tensorboard_log: "/home/rstudio/logs"
+
+# # SLOW LEARN
+# id: "slow"
+# algo_config:
+#     policy: 'MlpLstmPolicy'
+#     tensorboard_log: "/home/rstudio/logs"
+#     learning_rate: 0.0001
+#     # default learning rate = 0.0003
+
+# # EXTRA SLOW LEARN
+id: "extra-slow"
 algo_config:
     policy: 'MlpLstmPolicy'
     tensorboard_log: "/home/rstudio/logs"
+    learning_rate: 0.00003
+
 
 # algo hyperpars taken from:
 # https://github.com/DLR-RM/rl-baselines3-zoo/blob/master/hyperparams/ppo_lstm.yml
 
-# # BIPEDAL WALKER
 
+# # BIPEDAL WALKER
 # id: "bipedal"
 # algo_config:
 #     # normalize: True # not clear what this one actually does -- from the source code it seems to 'activate' VecNormalize, but more care & examination needed
@@ -73,19 +89,18 @@ algo_config:
 
 
 # # INVERTED PENDULUM
-
 # id: "inv_pend"
 # algo_config:
-    # tensorboard_log: "/home/rstudio/logs"
-    # policy: 'MlpLstmPolicy'
-    # n_steps: 2048
-    # batch_size: 64
-    # gae_lambda: 0.95
-    # gamma: 0.99
-    # n_epochs: 10
-    # ent_coef: 0.0
-    # learning_rate: 2.5e-4
-    # clip_range: 0.2
+#     tensorboard_log: "/home/rstudio/logs"
+#     policy: 'MlpLstmPolicy'
+#     n_steps: 2048
+#     batch_size: 64
+#     gae_lambda: 0.95
+#     gamma: 0.99
+#     n_epochs: 10
+#     ent_coef: 0.0
+#     learning_rate: 2.5e-4
+#     clip_range: 0.2
 
 
 # # MOUNTAIN CAR NO VEL
