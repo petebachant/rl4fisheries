@@ -257,16 +257,16 @@ class Asm2o(gym.Env):
     
     def observe(self):
         p = self.parameters
-        vul_pop_vec = p["vul"] * self.state 
-        vulnerable_n = sum(vul_pop_vec)
-        vulnerable_biomass = sum(vul_pop_vec * p["wt"])
+        self.vul_pop = p["vul"] * self.state
+        self.vul_pop_total = sum(self.vul_pop)
+        self.vulb = sum(self.vul_pop * p["wt"]) # update vulnerable biomass
         
-        if vulnerable_biomass==0:
-            vulnuerable_mean_wt=0
+        biomass_obs = 2 * self.vulb / self.bound - 1
+        
+        if self.vul_pop_total==0:
+            vulnuerable_mean_wt = 0
         else:
-            vulnuerable_mean_wt = vulnerable_biomass / vulnerable_n
-
-        biomass_obs = 2 * vulnerable_biomass / self.bound - 1
+            vulnuerable_mean_wt = self.vulb / self.vul_pop_total
 
         max_wt, min_wt = self.parameters["max_wt"], self.parameters["min_wt"] # for readability
         mean_wt_obs = (

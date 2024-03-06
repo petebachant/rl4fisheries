@@ -179,9 +179,9 @@ class AsmEsc(gym.Env):
         return n
 
     def observe(self):
-        total = np.array([sum(self.state)])
-        observation = 2 * total / self.bound - 1
-        observation = np.clip(observation, [-1.0], [1.0])
+        self.vulb = sum(p["vul"] * self.state * p["wt"]) # update vulnerable biomass
+        observation = 2 * np.array([self.vulb]) / self.bound - 1
+        observation = np.clip(observation, -1.0, 1.0)
         return np.float32(observation)
 
     def population_units(self):
