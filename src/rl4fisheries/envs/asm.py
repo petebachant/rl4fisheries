@@ -164,7 +164,7 @@ class Asm(gym.Env):
     def initialize_population(self):
         p = self.parameters  # snag those pars
         ninit = np.float32([0] * p["n_age"])  # initial numbers
-        vul = ninit.copy()  # vulnerability
+        survey_vul = ninit.copy()  # vulnerability
         wt = ninit.copy()  # weight
         mat = ninit.copy()  # maturity
         Lo = ninit.copy()  # survivorship unfished
@@ -173,7 +173,7 @@ class Asm(gym.Env):
 
         # leading array calculations to get vul-at-age, wt-at-age, etc.
         for a in range(0, p["n_age"], 1):
-            vul[a] = 1 / (1 + np.exp(-p["asl"] * (p["ages"][a] - p["ahv"])))
+            survey_vul[a] = 1 / (1 + np.exp(-p["asl"] * (p["ages"][a] - p["ahv"])))
             wt[a] = pow(
                 (1 - np.exp(-p["vbk"] * p["ages"][a])), 3
             )  # 3 --> isometric growth
@@ -183,14 +183,14 @@ class Asm(gym.Env):
                 Lf[a] = 1
             elif a > 0 and a < (p["n_age"] - 1):
                 Lo[a] = Lo[a - 1] * p["s"]
-                Lf[a] = Lf[a - 1] * p["s"] * (1 - vul[a - 1] * p["uo"])
+                Lf[a] = Lf[a - 1] * p["s"] * (1 - survey_vul[a - 1] * p["uo"])
             elif a == (p["n_age"] - 1):
                 Lo[a] = Lo[a - 1] * p["s"] / (1 - p["s"])
                 Lf[a] = (
                     Lf[a - 1]
                     * p["s"]
-                    * (1 - vul[a - 1] * p["uo"])
-                    / (1 - p["s"] * (1 - vul[a - 1] * p["uo"]))
+                    * (1 - survey_vul[a - 1] * p["uo"])
+                    / (1 - p["s"] * (1 - survey_vul[a - 1] * p["uo"]))
                 )
         ninit = np.array(p["rinit"]) * Lf
         mwt = mat * np.array(wt)
@@ -201,7 +201,7 @@ class Asm(gym.Env):
         # put it all in self so we can reference later
         self.parameters["Lo"] = Lo
         self.parameters["Lf"] = Lf
-        self.parameters["vul"] = vul
+        self.parameters["survey_vul"] = survey_vul
         self.parameters["wt"] = wt
         self.parameters["mwt"] = mwt
         self.parameters["bha"] = bha
@@ -215,18 +215,18 @@ class Asm(gym.Env):
 
     def harvest(self, n, mortality):
         p = self.parameters
-        self.vulb = sum(p["vul"] * n * p["wt"])
+        self.vulb = sum(p["survey_vul"] * n * p["wt"])
         self.vbobs = self.vulb  # could multiply this by random deviate
         self.ssb = sum(p["mwt"] * n)
         if sum(n) > 0:
-            self.abar = sum(p["vul"] * np.array(p["ages"]) * n) / sum(n)
-            self.wbar = sum(p["vul"] * n * p["wt"]) / sum(n * p["wt"])
+            self.abar = sum(p["survey_vul"] * np.array(p["ages"]) * n) / sum(n)
+            self.wbar = sum(p["survey_vul"] * n * p["wt"]) / sum(n * p["wt"])
         else:
             self.abar = 0
             self.wbar = 0
         self.yieldf = mortality[0] * self.vulb  # fishery yield
         reward = self.yieldf ** p["upow"]  # this is utility
-        n = p["s"] * n * (1 - p["vul"] * mortality)  # eat fish
+        n = p["s"] * n * (1 - p["survey_vul"] * mortality)  # eat fish - TBD, change survey to fishery vulnerability
         return n, reward
 
     def population_growth(self, n):
@@ -249,7 +249,7 @@ class Asm(gym.Env):
         return n
 
     def observe(self):
-        self.vulb = sum(self.parameters["vul"] * self.state * self.parameters["wt"]) # update vulnerable biomass
+        self.vulb = sum(self.parameters["survey_vul"] * self.state * self.parameters["wt"]) # update vulnerable biomass
         observation = 2 * np.array([self.vulb]) / self.bound - 1
         observation = np.clip(observation, -1.0, 1.0)
         return np.float32(observation)
