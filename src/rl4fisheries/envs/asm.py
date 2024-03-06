@@ -249,7 +249,7 @@ class Asm(gym.Env):
         return n
 
     def observe(self):
-        total = np.array([sum(self.state)])
+        total = np.array([self.vulb])
         observation = 2 * total / self.bound - 1
         observation = np.clip(observation, [-1.0], [1.0])
         return np.float32(observation)

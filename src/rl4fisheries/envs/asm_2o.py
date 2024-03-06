@@ -256,16 +256,24 @@ class Asm2o(gym.Env):
         self.state 
     
     def observe(self):
-        total_pop = np.sum(self.state)
-        pop_obs = 2 * total_pop / self.bound - 1
+        p = self.parameters
+        vul_pop_vec = p["vul"] * self.state 
+        vulnerable_n = sum(vul_pop_vec)
+        vulnerable_biomass = sum(vul_pop_vec * p["wt"])
+        
+        if vulnerable_biomass==0:
+            vulnuerable_mean_wt=0
+        else:
+            vulnuerable_mean_wt = vulnerable_biomass / vulnerable_n
 
-        mean_wt = np.sum(self.parameters["wt"] * self.state) / total_pop
+        biomass_obs = 2 * vulnerable_biomass / self.bound - 1
+
         max_wt, min_wt = self.parameters["max_wt"], self.parameters["min_wt"] # for readability
         mean_wt_obs = (
-            2 * (mean_wt - min_wt) / (max_wt - min_wt) - 1 
+            2 * (vulnuerable_mean_wt - min_wt) / (max_wt - min_wt) - 1 
         )
         
-        observation = np.clip(np.array([pop_obs, mean_wt_obs]), -1, 1)
+        observation = np.clip(np.array([biomass_obs, mean_wt_obs]), -1, 1)
         return np.float32(observation)
 
     def population_units(self):
