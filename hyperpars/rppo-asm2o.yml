@@ -12,15 +12,21 @@ config: {}
 n_envs: 32
 
 # io
-id: "1"
 repo: "cboettig/rl-ecology"
 save_path: "/home/rstudio/rl4fisheries/saved_agents"
+
+# MINIMAL CONFIG
+id: "minimal"
+algo_config:
+    policy: 'MlpLstmPolicy'
+    tensorboard_log: "/home/rstudio/logs"
 
 # algo hyperpars taken from:
 # https://github.com/DLR-RM/rl-baselines3-zoo/blob/master/hyperparams/ppo_lstm.yml
 
 # # BIPEDAL WALKER
 
+# id: "bipedal"
 # algo_config:
 #     # normalize: True # not clear what this one actually does -- from the source code it seems to 'activate' VecNormalize, but more care & examination needed
 #     policy: 'MlpLstmPolicy'
@@ -43,61 +49,64 @@ save_path: "/home/rstudio/rl4fisheries/saved_agents"
 
 # # HALF CHEETAH V4
 
-algo_config:
-  policy: 'MlpLstmPolicy'
-  tensorboard_log: "/home/rstudio/logs"
-  batch_size: 64
-  n_steps: 512
-  gamma: 0.98
-  learning_rate: 2.0633e-05
-  ent_coef: 0.000401762
-  clip_range: 0.1
-  n_epochs: 20
-  gae_lambda: 0.92
-  max_grad_norm: 0.8
-  vf_coef: 0.58096
-  policy_kwargs: "dict(
-                    log_std_init=-2,
-                    ortho_init=False,
-                    activation_fn=torch.nn.ReLU,
-                    net_arch=dict(pi=[256, 256], vf=[256, 256])
-                  )"
+# id: "cheetah"
+# algo_config:
+#     policy: 'MlpLstmPolicy'
+#     tensorboard_log: "/home/rstudio/logs"
+#     batch_size: 64
+#     n_steps: 512
+#     gamma: 0.98
+#     learning_rate: 2.0633e-05
+#     ent_coef: 0.000401762
+#     clip_range: 0.1
+#     n_epochs: 20
+#     gae_lambda: 0.92
+#     max_grad_norm: 0.8
+#     vf_coef: 0.58096
+#     policy_kwargs: "dict(
+#                     log_std_init=-2,
+#                     ortho_init=False,
+#                     activation_fn=torch.nn.ReLU,
+#                     net_arch=dict(pi=[256, 256], vf=[256, 256])
+#                   )"
 
 
 
 # # INVERTED PENDULUM
 
+# id: "inv_pend"
 # algo_config:
-#   tensorboard_log: "/home/rstudio/logs"
-#   policy: 'MlpLstmPolicy'
-#   n_steps: 2048
-#   batch_size: 64
-#   gae_lambda: 0.95
-#   gamma: 0.99
-#   n_epochs: 10
-#   ent_coef: 0.0
-#   learning_rate: 2.5e-4
-#   clip_range: 0.2
+    # tensorboard_log: "/home/rstudio/logs"
+    # policy: 'MlpLstmPolicy'
+    # n_steps: 2048
+    # batch_size: 64
+    # gae_lambda: 0.95
+    # gamma: 0.99
+    # n_epochs: 10
+    # ent_coef: 0.0
+    # learning_rate: 2.5e-4
+    # clip_range: 0.2
 
 
 # # MOUNTAIN CAR NO VEL
 
+# id: "mount_car"
 # algo_config:
-#   tensorboard_log: "/home/rstudio/logs"
-#   policy: 'MlpLstmPolicy'
-#   batch_size: 256
-#   n_steps: 1024
-#   gamma: 0.9999
-#   learning_rate: !!float 7.77e-05
-#   ent_coef: 0.00429
-#   clip_range: 0.1
-#   n_epochs: 10
-#   gae_lambda: 0.9
-#   max_grad_norm: 5
-#   vf_coef: 0.19
-#   use_sde: True
-#   sde_sample_freq: 8
-#   policy_kwargs: "dict(log_std_init=0.0, ortho_init=False,
-#                        lstm_hidden_size=32,
-#                        enable_critic_lstm=True,
-#                        net_arch=dict(pi=[64], vf=[64]))"
+    # tensorboard_log: "/home/rstudio/logs"
+    # policy: 'MlpLstmPolicy'
+    # batch_size: 256
+    # n_steps: 1024
+    # gamma: 0.9999
+    # learning_rate: !!float 7.77e-05
+    # ent_coef: 0.00429
+    # clip_range: 0.1
+    # n_epochs: 10
+    # gae_lambda: 0.9
+    # max_grad_norm: 5
+    # vf_coef: 0.19
+    # use_sde: True
+    # sde_sample_freq: 8
+    # policy_kwargs: "dict(log_std_init=0.0, ortho_init=False,
+    #                    lstm_hidden_size=32,
+    #                    enable_critic_lstm=True,
+    #                    net_arch=dict(pi=[64], vf=[64]))"
