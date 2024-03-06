@@ -259,7 +259,7 @@ class Asm2o(gym.Env):
         p = self.parameters
         self.vul_pop = p["vul"] * self.state
         self.vul_pop_total = sum(self.vul_pop)
-        self.vulb = sum(self.vul_pop * p["wt"]) # update vulnerable biomass
+        self.vulb = sum(self.vul_pop * self.parameters["wt"]) # update vulnerable biomass
         
         biomass_obs = 2 * self.vulb / self.bound - 1
         

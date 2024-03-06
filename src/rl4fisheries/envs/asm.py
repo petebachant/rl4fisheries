@@ -249,7 +249,7 @@ class Asm(gym.Env):
         return n
 
     def observe(self):
-        self.vulb = sum(p["vul"] * self.state * p["wt"]) # update vulnerable biomass
+        self.vulb = sum(p["vul"] * self.state * self.parameters["wt"]) # update vulnerable biomass
         observation = 2 * np.array([self.vulb]) / self.bound - 1
         observation = np.clip(observation, -1.0, 1.0)
         return np.float32(observation)
