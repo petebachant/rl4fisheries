@@ -3,7 +3,7 @@
 algo: "TQC"
 env_id: "Asm2o-v0"
 n_envs: 6
-tensorboard: "/home/rstudio/logs"
+tensorboard: "/~/logs"
 total_timesteps: 12000000
 config: {"learning_rate": 0.0001,
          "learning_starts": 1000,
@@ -11,4 +11,4 @@ config: {"learning_rate": 0.0001,
 use_sde: True
 id: "1"
 repo: "cboettig/rl-ecology"
-save_path: "/home/rstudio/rl4greencrab/saved_agents"
+save_path: "../saved_agents"
