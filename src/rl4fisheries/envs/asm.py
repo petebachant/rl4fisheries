@@ -202,6 +202,7 @@ class Asm(gym.Env):
         self.parameters["Lo"] = Lo
         self.parameters["Lf"] = Lf
         self.parameters["survey_vul"] = survey_vul
+        self.parameters["harvest_vul"] = survey_vul # TBD: compute it separately
         self.parameters["wt"] = wt
         self.parameters["mwt"] = mwt
         self.parameters["bha"] = bha
@@ -215,18 +216,18 @@ class Asm(gym.Env):
 
     def harvest(self, n, mortality):
         p = self.parameters
-        self.vulb = sum(p["survey_vul"] * n * p["wt"])
+        self.vulb = sum(p["harvest_vul"] * n * p["wt"])
         self.vbobs = self.vulb  # could multiply this by random deviate
         self.ssb = sum(p["mwt"] * n)
         if sum(n) > 0:
-            self.abar = sum(p["survey_vul"] * np.array(p["ages"]) * n) / sum(n)
-            self.wbar = sum(p["survey_vul"] * n * p["wt"]) / sum(n * p["wt"])
+            self.abar = sum(p["harvest_vul"] * np.array(p["ages"]) * n) / sum(n)
+            self.wbar = sum(p["harvest_vul"] * n * p["wt"]) / sum(n * p["wt"])
         else:
             self.abar = 0
             self.wbar = 0
         self.yieldf = mortality[0] * self.vulb  # fishery yield
         reward = self.yieldf ** p["upow"]  # this is utility
-        n = p["s"] * n * (1 - p["survey_vul"] * mortality)  # eat fish - TBD, change survey to fishery vulnerability
+        n = p["s"] * n * (1 - p["harvest_vul"] * mortality)  # eat fish
         return n, reward
 
     def population_growth(self, n):

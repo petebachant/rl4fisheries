@@ -13,7 +13,7 @@ n_envs: 32
 
 # io
 repo: "cboettig/rl-ecology"
-save_path: "/home/rstudio/rl4fisheries/saved_agents"
+save_path: "../saved_agents"
 
 # # MINIMAL CONFIG
 id: "minimal"
