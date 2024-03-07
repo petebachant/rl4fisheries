@@ -39,30 +39,29 @@ class Asm2o(gym.Env):
     
     def __init__(self, render_mode: Optional[str] = 'rgb_array', config={}):
         config = config or {}
-        parameters = {
+        self.parameters = {
             "n_age": 20,  # number of age classes
-            "vbk": np.float32(0.23),  # von Bertalanffy kappa
-            "s": np.float32(0.86),  # average survival
-            "cr": np.float32(6.0),  # Goodyear compensation ratio
-            "rinit": np.float32(0.01),  # initial number age-1 recruits
-            "ro": np.float32(1.0),  # average unfished recruitment
-            "uo": np.float32(0.12),  # average historical exploitation rate
-            "asl": np.float32(0.5),  # vul par 1
-            "ahv": np.float32(5.0),  # vul par 2
-            "ahm": np.float32(6.0),  # age 50% maturity
-            "upow": np.float32(1.0),  # 1 = max yield objective, < 1 = HARA
-            "p_big": np.float32(0.05),  # probability of big year class
-            "sdr": np.float32(0.3),  # recruit sd given stock-recruit relationship
-            "rho": np.float32(0.0),  # autocorrelation in recruitment sequence
-            "sdv": np.float32(1e-9),  # sd in vulnerable biomass (survey)
-            "sigma": np.float32(1.5),
+            "vbk": config.get("vbk" , np.float32(0.23)),  # von Bertalanffy kappa
+            "s": config.get("s" , np.float32(0.86)),  # average survival
+            "cr": config.get("cr" , np.float32(6.0)),  # Goodyear compensation ratio
+            "rinit": config.get("rinit" , np.float32(0.01)),  # initial number age-1 recruits
+            "ro": config.get("ro" , np.float32(1.0)),  # average unfished recruitment
+            "uo": config.get("uo" , np.float32(0.12)),  # average historical exploitation rate
+            "asl": config.get("asl" , np.float32(0.5)),  # vul par 1
+            "ahv": config.get("ahv" , np.float32(5.0)),  # vul par 2
+            "ahm": config.get("ahm" , np.float32(6.0)),  # age 50% maturity
+            "upow": config.get("upow" , np.float32(1.0)),  # 1 = max yield objective, < 1 = HARA
+            "p_big": config.get("p_big" , np.float32(0.05)),  # probability of big year class
+            "sdr": config.get("sdr" , np.float32(0.3)),  # recruit sd given stock-recruit relationship
+            "rho": config.get("rho" , np.float32(0.0)),  # autocorrelation in recruitment sequence
+            "sdv": config.get("sdv" , np.float32(1e-9)),  # sd in vulnerable biomass (survey)
+            "sigma": config.get("sigma" , np.float32(1.5)),
         }
         # these parameters can be specified in config
         self.n_year = config.get("n_year", 1000)
         self.Tmax = self.n_year
         self.threshold = config.get("threshold", np.float32(1e-4))
         self.training = config.get("training", True)
-        self.parameters = config.get("parameters", parameters)
         self.timestep = 0
         self.bound = 50  # a rescaling parameter
         self.parameters["ages"] = range(
@@ -166,7 +165,7 @@ class Asm2o(gym.Env):
     def initialize_population(self):
         p = self.parameters  # snag those pars
         ninit = np.float32([0] * p["n_age"])  # initial numbers
-        vul = ninit.copy()  # vulnerability
+        survey_vul = ninit.copy()  # vulnerability
         wt = ninit.copy()  # weight
         mat = ninit.copy()  # maturity
         Lo = ninit.copy()  # survivorship unfished
@@ -175,7 +174,7 @@ class Asm2o(gym.Env):
 
         # leading array calculations to get vul-at-age, wt-at-age, etc.
         for a in range(0, p["n_age"], 1):
-            vul[a] = 1 / (1 + np.exp(-p["asl"] * (p["ages"][a] - p["ahv"])))
+            survey_vul[a] = 1 / (1 + np.exp(-p["asl"] * (p["ages"][a] - p["ahv"])))
             wt[a] = pow(
                 (1 - np.exp(-p["vbk"] * p["ages"][a])), 3
             )  # 3 --> isometric growth
@@ -185,14 +184,14 @@ class Asm2o(gym.Env):
                 Lf[a] = 1
             elif a > 0 and a < (p["n_age"] - 1):
                 Lo[a] = Lo[a - 1] * p["s"]
-                Lf[a] = Lf[a - 1] * p["s"] * (1 - vul[a - 1] * p["uo"])
+                Lf[a] = Lf[a - 1] * p["s"] * (1 - survey_vul[a - 1] * p["uo"])
             elif a == (p["n_age"] - 1):
                 Lo[a] = Lo[a - 1] * p["s"] / (1 - p["s"])
                 Lf[a] = (
                     Lf[a - 1]
                     * p["s"]
-                    * (1 - vul[a - 1] * p["uo"])
-                    / (1 - p["s"] * (1 - vul[a - 1] * p["uo"]))
+                    * (1 - survey_vul[a - 1] * p["uo"])
+                    / (1 - p["s"] * (1 - survey_vul[a - 1] * p["uo"]))
                 )
         
         ninit = np.array(p["rinit"]) * Lf
@@ -204,7 +203,8 @@ class Asm2o(gym.Env):
         # put it all in self so we can reference later
         self.parameters["Lo"] = Lo
         self.parameters["Lf"] = Lf
-        self.parameters["vul"] = vul
+        self.parameters["survey_vul"] = survey_vul
+        self.parameters["harvest_vul"] = survey_vul
         self.parameters["wt"] = wt
         self.parameters["min_wt"] = np.min(wt)
         self.parameters["max_wt"] = np.max(wt)
@@ -220,18 +220,18 @@ class Asm2o(gym.Env):
 
     def harvest(self, n, mortality):
         p = self.parameters
-        self.vulb = sum(p["vul"] * n * p["mwt"])
+        self.vulb = sum(p["harvest_vul"] * n * p["wt"])
         self.vbobs = self.vulb  # could multiply this by random deviate
         self.ssb = sum(p["mwt"] * n)
         if sum(n) > 0:
-            self.abar = sum(p["vul"] * np.array(p["ages"]) * n) / sum(n)
-            self.wbar = sum(p["vul"] * n * p["wt"]) / sum(n * p["wt"])
+            self.abar = sum(p["harvest_vul"] * np.array(p["ages"]) * n) / sum(n)
+            self.wbar = sum(p["harvest_vul"] * n * p["wt"]) / sum(n * p["wt"])
         else:
             self.abar = 0
             self.wbar = 0
         self.yieldf = mortality[0] * self.vulb  # fishery yield
         reward = self.yieldf ** p["upow"]  # this is utility
-        n = p["s"] * n * (1 - p["vul"] * mortality)  # eat fish
+        n = p["s"] * n * (1 - p["harvest_vul"] * mortality)  # eat fish
         return n, reward
 
     def population_growth(self, n):
@@ -257,16 +257,24 @@ class Asm2o(gym.Env):
         self.state 
     
     def observe(self):
-        total_pop = np.sum(self.state)
-        pop_obs = 2 * total_pop / self.bound - 1
+        p = self.parameters
+        self.vul_pop = p["survey_vul"] * self.state
+        self.vul_pop_total = sum(self.vul_pop)
+        self.vulb = sum(self.vul_pop * self.parameters["wt"]) # update vulnerable biomass
+        
+        biomass_obs = 2 * self.vulb / self.bound - 1
+        
+        if self.vul_pop_total==0:
+            vulnuerable_mean_wt = 0
+        else:
+            vulnuerable_mean_wt = self.vulb / self.vul_pop_total
 
-        mean_wt = np.sum(self.parameters["wt"] * self.state) / total_pop
         max_wt, min_wt = self.parameters["max_wt"], self.parameters["min_wt"] # for readability
         mean_wt_obs = (
-            2 * (mean_wt - min_wt) / (max_wt - min_wt) - 1 
+            2 * (vulnuerable_mean_wt - min_wt) / (max_wt - min_wt) - 1 
         )
         
-        observation = np.clip(np.array([pop_obs, mean_wt_obs]), -1, 1)
+        observation = np.clip(np.array([biomass_obs, mean_wt_obs]), -1, 1)
         return np.float32(observation)
 
     def population_units(self):
