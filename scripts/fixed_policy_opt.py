@@ -41,12 +41,12 @@ elif args.policy == "cr":
 
 
 # optimizing space
-msy_space = [Real(0.002, 0.25, name='mortality')]
-esc_space = [Real(0.02, 0.15, name='escapement')]
+msy_space = [Real(0.0002, 0.5, name='mortality')]
+esc_space = [Real(0.0002, 0.25, name='escapement')]
 cr_space  = [
     Real(0.00001, 1, name='radius'),
     Real(0.00001, np.pi/4.00001, name='theta'),
-    Real(0, 0.2, name='y2')
+    Real(0, 0.4, name='y2')
 ]
 space = {'msy':msy_space, 'esc':esc_space, 'cr':cr_space}[args.policy]
 
