@@ -72,6 +72,7 @@ class AsmEnv(gym.Env):
         self.threshold = config.get("threshold", np.float32(1e-4))
         self.timestep = 0
         self.bound = 50  # a rescaling parameter
+        self.r_devs = config.get("r_devs", np.array([]))
 
         #
         # functions
@@ -118,12 +119,13 @@ class AsmEnv(gym.Env):
         self.state = self.init_state * np.array(
             np.random.uniform(0.1, 1), dtype=np.float32
         )
-        self.r_devs = get_r_devs(
-            n_year=self.n_year,
-            p_big=self.parameters["p_big"],
-            sdr=self.parameters["sdr"],
-            rho=self.parameters["rho"],
-        )
+        if len(self.r_devs) == 0:
+            self.r_devs = get_r_devs(
+                n_year=self.n_year,
+                p_big=self.parameters["p_big"],
+                sdr=self.parameters["sdr"],
+                rho=self.parameters["rho"],
+            )
         self.update_vuls()
         obs = self.observe()
         return obs, {}
