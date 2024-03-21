@@ -1,0 +1,14 @@
+# stable-baselines3 configuration
+
+algo: "TQC"
+env_id: "AsmEnv"
+n_envs: 12
+tensorboard: "../../../logs"
+total_timesteps: 6000000
+config: {"learning_rate": 0.0001,
+         "learning_starts": 1000,
+        }
+use_sde: True
+id: "2obs"
+repo: "cboettig/rl-ecology"
+save_path: "../saved_agents"
