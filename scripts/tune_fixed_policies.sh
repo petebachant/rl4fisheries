@@ -4,6 +4,9 @@
 scriptdir="$(dirname "$0")"
 cd "$scriptdir"
 
+# hf
+python login.py
+
 # gp
 python fixed_policy_opt.py -p msy -v True -o gp -nc 100 &
 python fixed_policy_opt.py -p esc -v True -o gp -nc 100 &

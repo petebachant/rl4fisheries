@@ -20,10 +20,6 @@ from stable_baselines3.common.monitor import Monitor
 
 from rl4fisheries import AsmEnv
 
-# hf login
-# api = HfApi()
-# login()
-
 # optimization algo
 if args.opt_algo == "gp":
     from skopt import gp_minimize
@@ -103,6 +99,8 @@ path = "../saved_agents/"
 fname = f"{args.policy}_{args.opt_algo}.pkl"
 dump(results, path+fname)
 
+# hf
+api = HfApi()
 api.upload_file(
     path_or_fileobj=path+fname,
     path_in_repo="sb3/rl4fisheries/"+fname,
