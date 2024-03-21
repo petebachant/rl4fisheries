@@ -4,12 +4,17 @@ parser = argparse.ArgumentParser()
 parser.add_argument("-p", "--policy", choices = ["msy", "esc", "cr"], help="Policy to be tuned", type=str)
 parser.add_argument("-v", "--verbose", help="Verbosity of tuning method", type=bool)
 parser.add_argument("-o", "--opt-algo", choices=["gp", "gbrt"], help="Optimization algo used")
+parser.add_argument("-ncalls", "--n-calls", help="Number of objective function calls used by optimizing algo", type=int)
 args = parser.parse_args()
 
 from huggingface_hub import hf_hub_download, HfApi, login
+
 import numpy as np
+
+from skopt import dump
 from skopt.space import Real
 from skopt.utils import use_named_args
+
 from stable_baselines3.common.evaluation import evaluate_policy
 from stable_baselines3.common.monitor import Monitor
 
@@ -84,11 +89,13 @@ opt_fn = {'msy':msy_fn, 'esc':esc_fn, 'cr':cr_fn}[args.policy]
 
 
 # optimize
-results = opt_algo(opt_fn, space, n_calls=300, verbose=args.verbose, n_jobs=-1)
+results = opt_algo(opt_fn, space, n_calls=args.n_calls, verbose=args.verbose, n_jobs=-1)
 print(
+    "\n\n"
     f"{args.policy}-{args.opt_algo} results: "
     f"opt args = {[eval(f'{r:.4f}') for r in results.x]}, "
     f"rew={results.fun:.4f}"
+    "\n\n"
 )
 
 # save
