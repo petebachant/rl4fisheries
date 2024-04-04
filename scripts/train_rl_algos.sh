@@ -4,6 +4,9 @@
 scriptdir="$(dirname "$0")"
 cd "$scriptdir"
 
+# just for good measure, install
+pip install -e ..
+
 # hf
 python hf_login.py
 
