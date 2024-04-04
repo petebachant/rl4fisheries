@@ -7,7 +7,7 @@ total_timesteps: 20000000
 additional_imports: ["torch"]
 
 # env overall
-env_id: "Asm2o-v0"
+env_id: "AsmEnv"
 config: {}
 n_envs: 4
 
