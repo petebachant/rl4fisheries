@@ -2,7 +2,7 @@
 algo: "PPO"
 total_timesteps: 20000000
 algo_config:
-    tensorboard_log: "../../logs"
+    tensorboard_log: "../../../logs"
     policy: 'MlpPolicy'
     use_sde: True
 
