@@ -1,1 +1,1 @@
-from rl4fisheries.utils.sb3 import sb3_train, sb3_train_v2
+from rl4fisheries.utils.sb3 import sb3_train

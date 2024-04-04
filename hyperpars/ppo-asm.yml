@@ -1,12 +1,20 @@
-# stable-baselines3 configuration
-
+# algo 
 algo: "PPO"
-env_id: "AsmEnv"
-n_envs: 12
-tensorboard: "../../../logs"
 total_timesteps: 20000000
-config: {}
-use_sde: True
-id: "2obs"
+algo_config:
+    tensorboard_log: "../../logs"
+    policy: 'MlpPolicy'
+    use_sde: True
+
+# env
+env_id: "AsmEnv"
+config: {'s': 0.97}
+n_envs: 12
+
+# io
 repo: "cboettig/rl-ecology"
 save_path: "../saved_agents"
+
+# misc
+id: "2obs"
+additional_imports: []

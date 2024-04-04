@@ -37,7 +37,8 @@ def algorithm(algo):
     }
     return algos[algo]
 
-def sb3_train(config_file, **kwargs):
+def sb3_train_old(config_file, **kwargs):
+    # deprecated
     with open(config_file, "r") as stream:
         options = yaml.safe_load(stream)
         options = {**options, **kwargs}
@@ -73,7 +74,7 @@ def sb3_train(config_file, **kwargs):
     return save_id, options
 
 
-def sb3_train_v2(config_file, **kwargs):
+def sb3_train(config_file, **kwargs):
     with open(config_file, "r") as stream:
         options = yaml.safe_load(stream)
         options = {**options, **kwargs}
