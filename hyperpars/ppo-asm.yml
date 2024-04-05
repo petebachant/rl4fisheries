@@ -1,6 +1,6 @@
 # algo 
 algo: "PPO"
-total_timesteps: 20000000
+total_timesteps: 1000000
 algo_config:
     tensorboard_log: "../../../logs"
     policy: 'MlpPolicy'
