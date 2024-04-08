@@ -32,6 +32,7 @@ def asm_pop_growth(env):
     new_state[0] = (
         env.parameters["bha"]
         * env.ssb / (1 + env.parameters["bhb"] * env.ssb)
+        * (env.ssb if env.ssb < 1 else 1) # let's suppress spawners if ssb is smaller than 1
         * env.r_devs[env.timestep]
     )
     #
@@ -90,7 +91,11 @@ def get_r_devs(n_year, p_big=0.05, sdr=0.3, rho=0):
     n_rand = np.random.normal(0, 1, n_year)
     r_big = np.random.uniform(10, 30, n_year)
 
-    r_low = (1 - p_big * r_big) / (1 - p_big)  # small rec event
+    # r_low = (1 - p_big * r_big) / (1 - p_big)  # small rec event
+    r_low = [
+        np.random.choice([1,0], p = [0.6, 0.4])
+        for _ in range(n_year)
+    ]
     r_low = np.clip(r_low, 0, None)
     dev_last = 0
     for t in range(0, n_year, 1):

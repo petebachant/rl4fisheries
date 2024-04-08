@@ -62,6 +62,14 @@ class AsmEnv(gym.Env):
         self.parameters["ages"] = range(
             1, self.parameters["n_age"] + 1
         )  # vector of ages for calculations
+        self.reproducibility_mode = config.get('reproducibility_mode', False)
+        if self.reproducibility_mode:
+            self.fixed_r_devs = get_r_devs(
+                n_year=self.n_year,
+                p_big=self.parameters["p_big"],
+                sdr=self.parameters["sdr"],
+                rho=self.parameters["rho"],
+            )
         default_init = self.initialize_population()
         self.init_state = config.get("init_state", equib_init)
         
@@ -119,7 +127,9 @@ class AsmEnv(gym.Env):
         self.state = self.init_state * np.array(
             np.random.uniform(0.1, 1), dtype=np.float32
         )
-        if len(self.r_devs) == 0:
+        if self.reproducibilty_mode:
+            self.r_devs = self.fixed_r_devs
+        else:
             self.r_devs = get_r_devs(
                 n_year=self.n_year,
                 p_big=self.parameters["p_big"],

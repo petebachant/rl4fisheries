@@ -2,13 +2,13 @@
 
 # algo overall
 algo: "RPPO"
-total_timesteps: 20000000
+total_timesteps: 5000000
 
 additional_imports: ["torch"]
 
 # env overall
 env_id: "AsmEnv"
-config: {}
+config: {'s': 0.94, 'p_big':0.05}
 n_envs: 4
 
 # io
@@ -91,7 +91,7 @@ save_path: "../saved_agents"
 # INVERTED PENDULUM
 id: "inv_pend"
 algo_config:
-    tensorboard_log: "../../logs"
+    tensorboard_log: "../../../logs"
     policy: 'MlpLstmPolicy'
     n_steps: 2048
     batch_size: 64

@@ -8,7 +8,7 @@ algo_config:
 
 # env
 env_id: "AsmEnv"
-config: {'s': 0.97}
+config: {'s': 0.94, 'p_big':0.05}
 n_envs: 12
 
 # io
