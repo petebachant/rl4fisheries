@@ -32,7 +32,7 @@ def asm_pop_growth(env):
     new_state[0] = (
         env.parameters["bha"]
         * env.ssb / (1 + env.parameters["bhb"] * env.ssb)
-        * (env.ssb if env.ssb < 1 else 1) # let's suppress spawners if ssb is smaller than 1
+        # * (env.ssb**1.2 if env.ssb < 1 else 1) # let's suppress spawners if ssb is smaller than 1
         * env.r_devs[env.timestep]
     )
     #
@@ -66,9 +66,11 @@ def harvest(env, mortality):
         env.wbar = 0
     #
     #
-    yieldf = mortality[0] * env.harv_vul_b  # fishery yield
+    # true_mortality = np.clip(mortality[0] * (1 + 0.05 * np.random.normal()), 0, 1)
+    true_mortality = mortality[0]
+    yieldf = true_mortality * env.harv_vul_b  # fishery yield
     reward = yieldf ** p["upow"]  # this is utility
-    new_state = p["s"] * env.state * (1 - p["harvest_vul"] * mortality)  # remove fish
+    new_state = p["s"] * env.state * (1 - p["harvest_vul"] * true_mortality)  # remove fish
     return new_state, reward
 
 def get_r_devs(n_year, p_big=0.05, sdr=0.3, rho=0):
@@ -91,11 +93,11 @@ def get_r_devs(n_year, p_big=0.05, sdr=0.3, rho=0):
     n_rand = np.random.normal(0, 1, n_year)
     r_big = np.random.uniform(10, 30, n_year)
 
-    # r_low = (1 - p_big * r_big) / (1 - p_big)  # small rec event
-    r_low = [
-        np.random.choice([1,0], p = [0.6, 0.4])
-        for _ in range(n_year)
-    ]
+    r_low = (1 - p_big * r_big) / (1 - p_big)  # small rec event
+    # r_low = [
+    #     np.random.choice([1,0], p = [0.6, 0.4])
+    #     for _ in range(n_year)
+    # ]
     r_low = np.clip(r_low, 0, None)
     dev_last = 0
     for t in range(0, n_year, 1):

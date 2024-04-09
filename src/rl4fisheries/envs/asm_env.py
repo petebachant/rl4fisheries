@@ -70,6 +70,8 @@ class AsmEnv(gym.Env):
                 sdr=self.parameters["sdr"],
                 rho=self.parameters["rho"],
             )
+        self.noiseless = config.get('noiseless', False)
+        self.flat_harv_vul = config.get('flat_harv_vul', False)
         default_init = self.initialize_population()
         self.init_state = config.get("init_state", equib_init)
         
@@ -124,11 +126,15 @@ class AsmEnv(gym.Env):
     def reset(self, *, seed=None, options=None):
         self.timestep = 0
         self.state = self.initialize_population()
+        if self.flat_harv_vul:
+            self.parameters["harvest_vul"] = np.ones(shape=len(self.parameters["ages"]))
         self.state = self.init_state * np.array(
             np.random.uniform(0.1, 1), dtype=np.float32
         )
-        if self.reproducibilty_mode:
-            self.r_devs = self.fixed_r_devs
+        if self.noiseless:
+            self.r_devs = np.ones(shape = self.n_year)
+        elif self.reproducibility_mode:
+            self.r_devs = self.fixed_r_devs  
         else:
             self.r_devs = get_r_devs(
                 n_year=self.n_year,
