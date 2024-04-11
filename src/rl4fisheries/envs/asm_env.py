@@ -81,7 +81,7 @@ class AsmEnv(gym.Env):
         self.Tmax = self.n_year
         self.threshold = config.get("threshold", np.float32(1e-4))
         self.timestep = 0
-        self.bound = 50  # a rescaling parameter
+        self.bound = config.get("bound", 50)  # a rescaling parameter
         self.r_devs = config.get("r_devs", np.array([]))
 
         #
@@ -221,35 +221,53 @@ class AsmEnv(gym.Env):
         ninit = np.float32([0] * p["n_age"])  # initial numbers
         survey_vul = ninit.copy()  # survey vulnerability
         harvest_vul = ninit.copy()  # harvest vulnerability
-        wt = ninit.copy()  # weight
-        mat = ninit.copy()  # maturity
-        Lo = ninit.copy()  # survivorship unfished
-        Lf = ninit.copy()  # survivorship fished
+        # wt = ninit.copy()  # weight
+        # mat = ninit.copy()  # maturity
+        # Lo = ninit.copy()  # survivorship unfished
+        # Lf = ninit.copy()  # survivorship fished
         mwt = ninit.copy()  # mature weight
 
         # leading array calculations to get vul-at-age, wt-at-age, etc.
-        for a in range(0, p["n_age"], 1):
-            survey_vul[a] = (p["linf"] / p["lbar"]) * (1 - np.exp(-p["vbk"] * p["ages"][a])) ** (p["survey_phi"])
-            # 1 / (1 + np.exp(-p["asl"] * (p["ages"][a] - p["ahv"]))) # <- this harvest_vul was previously
-            harvest_vul[a] = 1 / (1 + np.exp(-(p["ages"][a] - p["ahv"]) / p["asl"]))
-            wt[a] = pow(
-                (1 - np.exp(-p["vbk"] * p["ages"][a])), 3
-            )  # 3 --> isometric growth
-            mat[a] = 1 / (1 + np.exp(-p["asl"] * (p["ages"][a] - p["ahm"])))
-            if a == 0:
-                Lo[a] = 1
+        survey_vul = [
+            (p["linf"] / p["lbar"]) 
+            * (1 - np.exp(-p["vbk"] * p["ages"][a])) ** (p["survey_phi"])
+            for a in range(p["n_age"])
+        ]
+        harvest_vul = [
+            1 / (1 + np.exp(-(p["ages"][a] - p["ahv"]) / p["asl"]))
+            for a in range(p["n_age"])
+        ]
+        #
+        wt = [
+            (1 - np.exp(-p["vbk"] * p["ages"][a])) ** 3
+            for a in range(p["n_age"])
+        ]
+        mat = [
+            1 / (1 + np.exp(-p["asl"] * (p["ages"][a] - p["ahm"])))
+            for a in range(p["n_age"])
+        ]
+        mwt = mat * np.array(wt)
+        #
+        Lo = [
+            p["s"] ** a 
+            if a<(p["n_age"]-1)
+            else (p["s"] ** a) / (1 - p["s"])
+            for a in range(p["n_age"])
+        ]
+        Lf = []
+        for a in range(p["n_age"])
+            if a==0:
                 Lf[a] = 1
-            elif a > 0 and a < (p["n_age"] - 1):
-                Lo[a] = Lo[a - 1] * p["s"]
+            elif 0<a<(p["n_age"] - 1):
                 Lf[a] = Lf[a - 1] * p["s"] * (1 - harvest_vul[a - 1] * p["uo"])
             elif a == (p["n_age"] - 1):
-                Lo[a] = Lo[a - 1] * p["s"] / (1 - p["s"])
                 Lf[a] = (
                     Lf[a - 1]
                     * p["s"]
                     * (1 - harvest_vul[a - 1] * p["uo"])
                     / (1 - p["s"] * (1 - harvest_vul[a - 1] * p["uo"]))
                 )
+
         
         ninit = np.array(p["rinit"]) * Lf
         mwt = mat * np.array(wt)
