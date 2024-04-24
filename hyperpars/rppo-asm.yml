@@ -8,8 +8,10 @@ additional_imports: ["torch"]
 
 # env overall
 env_id: "AsmEnv"
-config: {'s': 0.94, 'p_big':0.05}
-n_envs: 4
+config: 
+    observation_fn_id: 'observe_2o'
+    n_observs: 2
+n_envs: 12
 
 # io
 repo: "cboettig/rl-ecology"
@@ -19,7 +21,18 @@ save_path: "../saved_agents"
 # id: "minimal"
 # algo_config:
 #     policy: 'MlpLstmPolicy'
-#     tensorboard_log: "../../logs"
+#     tensorboard_log: "../../../logs"
+
+# MY GUESS CONFIG
+id: "minimal"
+algo_config:
+    policy: 'MlpLstmPolicy'
+    tensorboard_log: "../../../logs"
+    batch_size: 64
+    n_steps: 1024
+    gae_lambda: 0.98
+    gamma: 0.995
+    use_sde: True
 
 # # SLOW LEARN
 # id: "slow"
@@ -46,7 +59,7 @@ save_path: "../saved_agents"
 # algo_config:
 #     # normalize: True # not clear what this one actually does -- from the source code it seems to 'activate' VecNormalize, but more care & examination needed
 #     policy: 'MlpLstmPolicy'
-#     tensorboard_log: "../../logs"
+#     tensorboard_log: "../../../logs"
 #     n_steps: 256
 #     batch_size: 256
 #     gae_lambda: 0.95
@@ -68,7 +81,7 @@ save_path: "../saved_agents"
 # id: "cheetah"
 # algo_config:
 #     policy: 'MlpLstmPolicy'
-#     tensorboard_log: "../../logs"
+#     tensorboard_log: "../../../logs"
 #     batch_size: 64
 #     n_steps: 512
 #     gamma: 0.98
@@ -89,25 +102,25 @@ save_path: "../saved_agents"
 
 
 # INVERTED PENDULUM
-id: "inv_pend"
-algo_config:
-    tensorboard_log: "../../../logs"
-    policy: 'MlpLstmPolicy'
-    n_steps: 2048
-    batch_size: 64
-    gae_lambda: 0.95
-    gamma: 0.99
-    n_epochs: 10
-    ent_coef: 0.0
-    learning_rate: 2.5e-4
-    clip_range: 0.2
+# id: "inv_pend"
+# algo_config:
+#     tensorboard_log: "../../../logs"
+#     policy: 'MlpLstmPolicy'
+#     n_steps: 2048
+#     batch_size: 64
+#     gae_lambda: 0.95
+#     gamma: 0.99
+#     n_epochs: 10
+#     ent_coef: 0.0
+#     learning_rate: 2.5e-4
+#     clip_range: 0.2
 
 
 # # MOUNTAIN CAR NO VEL
 
 # id: "mount_car"
 # algo_config:
-    # tensorboard_log: "../../logs"
+    # tensorboard_log: "../../../logs"
     # policy: 'MlpLstmPolicy'
     # batch_size: 256
     # n_steps: 1024
@@ -129,7 +142,7 @@ algo_config:
 # SPACE INVADERS V4
 # id: "space_invaders"
 # algo_config:
-#     tensorboard_log: "../../logs"
+#     tensorboard_log: "../../../logs"
 #     policy: 'MlpLstmPolicy'
 #     batch_size: 512
 #     # clip_range: 0.1
