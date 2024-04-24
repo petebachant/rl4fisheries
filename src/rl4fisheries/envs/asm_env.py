@@ -3,7 +3,13 @@ import gymnasium as gym
 import matplotlib.pyplot as plt
 from typing import Optional
 
-from rl4fisheries.envs.asm_fns import observe_1o, observe_2o, asm_pop_growth, harvest, render_asm, get_r_devs
+from rl4fisheries.envs.asm_fns import (
+    observe_1o, observe_2o, 
+    observe_total, observe_total_2o, 
+    observe_total_2o_v2,
+    asm_pop_growth, harvest, 
+    render_asm, get_r_devs,
+)
 
 # equilibrium dist will in general depend on parameters, need a more robust way
 # to reset to random but not unrealistic starting distribution
@@ -65,13 +71,14 @@ class AsmEnv(gym.Env):
         self.reproducibility_mode = config.get('reproducibility_mode', False)
         if self.reproducibility_mode:
             self.fixed_r_devs = get_r_devs(
-                n_year=self.n_year,
+                n_year=config.get("n_year", 1000),
                 p_big=self.parameters["p_big"],
                 sdr=self.parameters["sdr"],
                 rho=self.parameters["rho"],
             )
         self.noiseless = config.get('noiseless', False)
-        self.flat_harv_vul = config.get('flat_harv_vul', False)
+        self.use_custom_vul = config.get('use_custom_vul', False)
+        self.custom_vul = config.get('custom_vul', np.ones(self.parameters["n_age"]))
         default_init = self.initialize_population()
         self.init_state = config.get("init_state", equib_init)
         
@@ -91,7 +98,13 @@ class AsmEnv(gym.Env):
         self._render_fn = config.get("render_fn", render_asm)
         
         # _observation_fn defaults to observe_2o unless "observation_fn_id" or "observation_fn" specified
-        obs_fn_choices = {"observe_1o": observe_1o, "observe_2o": observe_2o}        
+        obs_fn_choices = {
+            "observe_1o": observe_1o, 
+            "observe_2o": observe_2o, 
+            "observe_total": observe_total,
+            "observe_total_2o": observe_total_2o,
+            "observe_total_2o_v2": observe_total_2o_v2,
+        }        
         self._observation_fn = obs_fn_choices[
             config.get("observation_fn_id", "observe_2o")
         ]
@@ -126,11 +139,14 @@ class AsmEnv(gym.Env):
     def reset(self, *, seed=None, options=None):
         self.timestep = 0
         self.state = self.initialize_population()
-        if self.flat_harv_vul:
-            self.parameters["harvest_vul"] = np.ones(shape=len(self.parameters["ages"]))
+        #
+        if self.use_custom_vul:
+            self.parameters["harvest_vul"] = self.custom_vul
+        #
         self.state = self.init_state * np.array(
             np.random.uniform(0.1, 1), dtype=np.float32
         )
+        #
         if self.noiseless:
             self.r_devs = np.ones(shape = self.n_year)
         elif self.reproducibility_mode:
@@ -142,6 +158,7 @@ class AsmEnv(gym.Env):
                 sdr=self.parameters["sdr"],
                 rho=self.parameters["rho"],
             )
+        #
         self.update_vuls()
         obs = self.observe()
         return obs, {}
@@ -228,34 +245,34 @@ class AsmEnv(gym.Env):
         mwt = ninit.copy()  # mature weight
 
         # leading array calculations to get vul-at-age, wt-at-age, etc.
-        survey_vul = [
+        survey_vul = np.float32([
             (p["linf"] / p["lbar"]) 
             * (1 - np.exp(-p["vbk"] * p["ages"][a])) ** (p["survey_phi"])
             for a in range(p["n_age"])
-        ]
-        harvest_vul = [
+        ])
+        harvest_vul = np.float32([
             1 / (1 + np.exp(-(p["ages"][a] - p["ahv"]) / p["asl"]))
             for a in range(p["n_age"])
-        ]
+        ])
         #
-        wt = [
+        wt = np.float32([
             (1 - np.exp(-p["vbk"] * p["ages"][a])) ** 3
             for a in range(p["n_age"])
-        ]
-        mat = [
+        ])
+        mat = np.float32([
             1 / (1 + np.exp(-p["asl"] * (p["ages"][a] - p["ahm"])))
             for a in range(p["n_age"])
-        ]
+        ])
         mwt = mat * np.array(wt)
         #
-        Lo = [
+        Lo = np.float32([
             p["s"] ** a 
             if a<(p["n_age"]-1)
             else (p["s"] ** a) / (1 - p["s"])
             for a in range(p["n_age"])
-        ]
-        Lf = []
-        for a in range(p["n_age"])
+        ])
+        Lf = np.zeros(shape=p["n_age"], dtype=np.float32)
+        for a in range(p["n_age"]):
             if a==0:
                 Lf[a] = 1
             elif 0<a<(p["n_age"] - 1):

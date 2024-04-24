@@ -10,7 +10,9 @@ algo_config:
 
 # env
 env_id: "AsmEnv"
-config: {'s': 0.94, 'p_big':0.05}
+config: 
+    observation_fn_id: 'observe_2o'
+    n_observs: 2
 n_envs: 12
 
 # io
@@ -18,5 +20,5 @@ repo: "cboettig/rl-ecology"
 save_path: "../saved_agents"
 
 # misc
-id: "2obs"
+id: "2o"
 additional_imports: []

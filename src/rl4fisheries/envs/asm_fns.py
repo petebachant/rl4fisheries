@@ -1,5 +1,50 @@
 import numpy as np
 
+def observe_total(env):
+    total_pop = np.float32([np.sum(env.state)])
+    return 2 * total_pop / env.bound - 1
+
+def observe_total_2o(env):
+    # biomass obs:
+    total_biomass = np.sum(env.state)
+    biomass_obs = 2 * total_biomass / env.bound - 1
+
+    # mean weight:
+    n_vec = env.state / env.parameters["wt"] # estimate # fish in each weight class
+    n = np.sum(n_vec)
+    if n==0:
+        vulnuerable_mean_wt = 0
+    else:
+        vulnuerable_mean_wt = total_biomass / n
+
+    # mean weight obs:
+    max_wt, min_wt = env.parameters["max_wt"], env.parameters["min_wt"] # for readability
+    mean_wt_obs = (
+        2 * (vulnuerable_mean_wt - min_wt) / (max_wt - min_wt) - 1 
+    )
+
+    # gathering results:
+    observation = np.clip(np.array([biomass_obs, mean_wt_obs]), -1, 1)
+    return np.float32(observation)
+
+def observe_total_2o_v2(env):
+    # biomass obs:
+    total_biomass = np.sum(env.state)
+    biomass_obs = 2 * total_biomass / env.bound - 1
+
+    # mean weight:
+    vulnuerable_mean_wt = np.sum(env.state * env.parameters["wt"])
+
+    # mean weight obs:
+    max_wt, min_wt = env.parameters["max_wt"], env.parameters["min_wt"] # for readability
+    mean_wt_obs = (
+        2 * (vulnuerable_mean_wt - min_wt) / (max_wt - min_wt) - 1 
+    )
+
+    # gathering results:
+    observation = np.clip(np.array([biomass_obs, mean_wt_obs]), -1, 1)
+    return np.float32(observation)
+
 def observe_1o(env):
     observation = 2 * np.array([env.surv_vul_b]) / env.bound - 1
     observation = np.clip(observation, -1.0, 1.0)

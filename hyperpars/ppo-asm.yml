@@ -1,14 +1,20 @@
 # algo 
 algo: "PPO"
-total_timesteps: 1000000
+total_timesteps: 15000000
 algo_config:
     tensorboard_log: "../../../logs"
     policy: 'MlpPolicy'
     use_sde: True
+    # batch_size: 128
+    gamma: 0.995
+    gae_lambda: 0.999
 
 # env
 env_id: "AsmEnv"
-config: {'s': 0.94, 'p_big':0.05}
+config: 
+    observation_fn_id: 'observe_2o'
+    n_observs: 2
+    use_custom_vul: True
 n_envs: 12
 
 # io
@@ -16,5 +22,5 @@ repo: "cboettig/rl-ecology"
 save_path: "../saved_agents"
 
 # misc
-id: "2obs"
+id: "2o_flat_harv-long"
 additional_imports: []
