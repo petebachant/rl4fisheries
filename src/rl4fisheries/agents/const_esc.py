@@ -7,9 +7,8 @@ from tqdm import tqdm
 from rl4fisheries.agents.common import isVecObs
 
 class ConstEsc:
-    def __init__(self, env, escapement, observed_var='biomass' **kwargs):
+    def __init__(self, env, escapement, observed_var='biomass', **kwargs):
         self.escapement = escapement
-        self.bounds = bounds
         self.policy_type = "constant_escapement"
         self.env = env
         self.observed_var = observed_var
@@ -32,11 +31,11 @@ class ConstEsc:
         
         return np.float32([2 * predicted_effort - 1]), {}
 
-    def predict_effort(self, obs):
-        if obs <= self.escapement or obs == 0:
+    def predict_effort(self, obs_value):
+        if obs_value <= self.escapement or obs_value == 0:
             return 0
         else:
-            return (obs - self.escapement) / obs
+            return (obs_value - self.escapement) / obs_value
 
     def state_to_pop(self, state):
         return (state + 1 ) / 2

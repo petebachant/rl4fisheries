@@ -22,10 +22,6 @@ class CautionaryRule:
         self.x2_pm1 = self.convert_to_pm1(x2, var_type = self.observed_var)
         self.y2_pm1 = self.convert_to_pm1(y2, var_type = 'action')
 
-        print(
-            f"{self.x1_pm1:.3f}, {self.x2_pm1:.3f}, {self.y2_pm1:.3f}"
-        )
-
         assert x1 <= x2, "CautionaryRule error: x1 <= x2" 
 
     def convert_to_pm1(self, X, var_type):
