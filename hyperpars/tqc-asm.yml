@@ -13,6 +13,7 @@ env_id: "AsmEnv"
 config: 
     observation_fn_id: 'observe_2o'
     n_observs: 2
+    upow: 0.6
 n_envs: 12
 
 # io
@@ -20,5 +21,5 @@ repo: "cboettig/rl-ecology"
 save_path: "../saved_agents"
 
 # misc
-id: "2o"
+id: "2o-upow0.6"
 additional_imports: []
