@@ -5,7 +5,8 @@ parser.add_argument("-p", "--policy", choices = ["msy", "esc", "cr"], help="Poli
 parser.add_argument("-v", "--verbose", help="Verbosity of tuning method", type=bool)
 parser.add_argument("-o", "--opt-algo", choices=["gp", "gbrt"], help="Optimization algo used")
 parser.add_argument("-ncalls", "--n-calls", help="Number of objective function calls used by optimizing algo", type=int)
-parser.add_argument("-f", "--config-file", help="yaml file with env config.")
+parser.add_argument("-f", "--config-file", help="yaml file with env config")
+parser.add_argument("-id", "--id", help="Identifier string", default="")
 args = parser.parse_args()
 
 from huggingface_hub import hf_hub_download, HfApi, login
@@ -46,12 +47,12 @@ with open(args.config_file, "r") as stream:
 
 
 # optimizing space
-msy_space = [Real(0.0002, 0.5, name='mortality')]
-esc_space = [Real(0.0002, 0.25, name='escapement')]
+msy_space = [Real(0.0001, 0.5, name='mortality')]
+esc_space = [Real(0.0001, 10, name='escapement')]
 cr_space  = [
-    Real(0.00001, 1, name='radius'),
+    Real(0.00001, 10, name='radius'),
     Real(0.00001, np.pi/4.00001, name='theta'),
-    Real(0, 0.4, name='y2')
+    Real(0, 0.8, name='y2')
 ]
 space = {'msy':msy_space, 'esc':esc_space, 'cr':cr_space}[args.policy]
 
@@ -94,7 +95,8 @@ print(
 
 # save
 path = "../saved_agents/"
-fname = f"{args.policy}_{args.opt_algo}.pkl"
+save_id = "" if args.id == "" else f"_{args.id}"
+fname = f"{args.policy}_{args.opt_algo}{save_id}.pkl"
 dump(results, path+fname)
 
 # hf
