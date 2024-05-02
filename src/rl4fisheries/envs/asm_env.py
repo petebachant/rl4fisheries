@@ -8,7 +8,9 @@ from rl4fisheries.envs.asm_fns import (
     observe_total, observe_total_2o, 
     observe_total_2o_v2,
     asm_pop_growth, harvest, 
-    render_asm, get_r_devs,
+    render_asm, 
+    get_r_devs,
+    get_r_devs_v2,
 )
 
 # equilibrium dist will in general depend on parameters, need a more robust way
@@ -69,13 +71,18 @@ class AsmEnv(gym.Env):
             1, self.parameters["n_age"] + 1
         )  # vector of ages for calculations
         self.reproducibility_mode = config.get('reproducibility_mode', False)
+        self.get_r_devs_version = config.get('get_r_devs_version', 'v1')
+        self.get_r_devs = {'v1': get_r_devs, 'v2': get_r_devs_v2}[self.get_r_devs_version]
         if self.reproducibility_mode:
-            self.fixed_r_devs = get_r_devs(
-                n_year=config.get("n_year", 1000),
-                p_big=self.parameters["p_big"],
-                sdr=self.parameters["sdr"],
-                rho=self.parameters["rho"],
-            )
+            if "r_devs" in config:
+                self.fixed_r_devs = config["r_devs"]
+            else:
+                self.fixed_r_devs = self.get_r_devs(
+                    n_year=config.get("n_year", 1000),
+                    p_big=self.parameters["p_big"],
+                    sdr=self.parameters["sdr"],
+                    rho=self.parameters["rho"],
+                )
         self.noiseless = config.get('noiseless', False)
         self.use_custom_vul = config.get('use_custom_vul', False)
         self.custom_vul = config.get('custom_vul', np.ones(self.parameters["n_age"]))
@@ -152,7 +159,7 @@ class AsmEnv(gym.Env):
         elif self.reproducibility_mode:
             self.r_devs = self.fixed_r_devs  
         else:
-            self.r_devs = get_r_devs(
+            self.r_devs = self.get_r_devs(
                 n_year=self.n_year,
                 p_big=self.parameters["p_big"],
                 sdr=self.parameters["sdr"],

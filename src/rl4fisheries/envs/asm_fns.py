@@ -153,6 +153,39 @@ def get_r_devs(n_year, p_big=0.05, sdr=0.3, rho=0):
         dev_last = sdr * n_rand[t] + rho * dev_last
     return r_mult
 
+def get_r_devs_v2(n_year, p_big=0.05, sdr=0.3, rho=0):
+    """
+    f(x) to create recruitment deviates, which are multiplied
+    by the stock-recruitment prediction in the age-structured model
+
+    args:
+    n_year: number of deviates required for simulation
+    p_big: Pr(big year class)
+    r_big: magnitude of big year class
+    sdr: sd of recruitment
+    rho: autocorrelation in recruitment sequence
+    returns:
+    vector of recruitment deviates of length n_year
+
+    differs from get_r_devs by having the small-school randomness be a gaussian centered at 1.
+    """
+    def one_rdev(p_big=p_big, r_big_lims=[10,30], r_small_sigma = 1):
+        x = np.random.binomial(n=2,p=p_big)
+        return (
+            x * np.random.uniform(*r_big_lims) # big school
+            + (1-x) * max( # small school
+                1 + r_small_sigma * np.random.normal(),
+                0
+            )
+        )
+
+    r_devs  = np.float32([1] * n_year)
+    r_devs[0] = one_rdev()
+    for t in range(1, n_year):
+        r_devs[t] = one_rdev() + rho * r_devs[t-1]
+    return r_devs
+
+
 def render_asm(env):
     if env.render_mode is None:
         assert env.spec is not None
