@@ -5,9 +5,8 @@ algo_config:
     tensorboard_log: "../../../logs"
     policy: 'MlpPolicy'
     use_sde: True
-    # batch_size: 64
-    # gamma: 0.995
-    # gae_lambda: 0.999
+    # policy_kwargs: "dict(log_std_init=-3, net_arch=[400, 300])"
+    clip_range: 0.1
 
 # env
 env_id: "AsmEnv"
@@ -23,4 +22,4 @@ save_path: "../saved_agents"
 
 # misc
 id: "2o-upow0.6"
-additional_imports: []
+additional_imports: ["torch"]
