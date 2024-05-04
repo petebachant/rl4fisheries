@@ -3,7 +3,7 @@ algo: "PPO"
 total_timesteps: 5000000
 algo_config:
     tensorboard_log: "../../../logs"
-    normalize: true
+    #
     policy: 'MlpPolicy'
     batch_size: 256
     gamma: 0.9999
@@ -33,5 +33,5 @@ repo: "cboettig/rl-ecology"
 save_path: "../saved_agents"
 
 # misc
-id: "1o-upow0.6"
+id: "1o-mtCarContv0-upow0.6"
 additional_imports: ["torch"]
