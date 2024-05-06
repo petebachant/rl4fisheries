@@ -84,8 +84,16 @@ class AsmEnv(gym.Env):
                     rho=self.parameters["rho"],
                 )
         self.noiseless = config.get('noiseless', False)
-        self.use_custom_vul = config.get('use_custom_vul', False)
-        self.custom_vul = config.get('custom_vul', np.ones(self.parameters["n_age"]))
+        self.use_custom_harv_vul = config.get('use_custom_harv_vul', False)
+        self.custom_harv_vul = config.get(
+            'custom_harv_vul', 
+            np.ones(self.parameters["n_age"]),
+        )
+        self.use_custom_surv_vul = config.get('use_custom_surv_vul', False)
+        self.custom_surv_vul = config.get(
+            'custom_surv_vul', 
+            np.ones(self.parameters["n_age"]),
+        )
         default_init = self.initialize_population()
         self.init_state = config.get("init_state", equib_init)
         
@@ -147,8 +155,10 @@ class AsmEnv(gym.Env):
         self.timestep = 0
         self.state = self.initialize_population()
         #
-        if self.use_custom_vul:
-            self.parameters["harvest_vul"] = self.custom_vul
+        # if self.use_custom_harv_vul:
+        #     self.parameters["harvest_vul"] = self.custom_harv_vul
+        # if self.use_custom_surv_vul:
+        #     self.parameters["survey_vul"] = self.custom_surv_vul
         #
         self.state = self.init_state * np.array(
             np.random.uniform(0.1, 1), dtype=np.float32
@@ -302,17 +312,27 @@ class AsmEnv(gym.Env):
         # put it all in self so we can reference later
         self.parameters["Lo"] = Lo
         self.parameters["Lf"] = Lf
-        self.parameters["survey_vul"] = survey_vul
-        self.parameters["harvest_vul"] = harvest_vul # TBD: change!
+        #
+        #
+        if self.use_custom_harv_vul:
+            self.parameters["harvest_vul"] = self.custom_harv_vul
+        else: 
+            self.parameters["harvest_vul"] = harvest_vul
+        #    
+        if self.use_custom_surv_vul:
+            self.parameters["survey_vul"] = self.custom_surv_vul
+        else:
+            self.parameters["survey_vul"] = survey_vul
+        #    
+        #
         self.parameters["wt"] = wt
         self.parameters["min_wt"] = np.min(wt)
         self.parameters["max_wt"] = np.max(wt)
         self.parameters["mwt"] = mwt
+        #
         self.parameters["bha"] = bha
         self.parameters["bhb"] = bhb
-        # self.parameters["p_big"] = 0.05 no need to reinitialize
-        # self.parameters["sdr"] = 0.3
-        # self.parameters["rho"] = 0
+        #
         n = np.array(ninit, dtype=np.float32)
         self.state = np.clip(n, 0, np.Inf)
         return self.state
