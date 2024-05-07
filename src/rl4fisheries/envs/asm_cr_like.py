@@ -2,14 +2,15 @@ import gymnasium as gym
 import numpy as np
 
 from rl4fisheries import AsmEnv
+from rl4fisheries.envs.asm_fns import observe_mwt
 
 class AsmCRLike(AsmEnv):
     """ observe mean weight, decide on a CR-like policy for biomass. """
     def __init__(self, render_mode = 'rgb_array', config={}):
         super().__init__(render_mode=render_mode, config=config)
-        assert config.get("observation_fn_id", "observe_2o") == "observe_2o", (
-            "AsmCRLike only compatible with observe_2o observation function atm, sorry!"
-        )
+
+        self._observation_fn = observe_mwt
+
         self.action_space = gym.spaces.Box(
             np.array(3 * [-1], dtype=np.float32),
             np.array(3 * [1], dtype=np.float32),
@@ -20,10 +21,34 @@ class AsmCRLike(AsmEnv):
             np.array([1], dtype=np.float32),
             dtype=np.float32,
         )
-        
     def reset(self, *, seed=None, options=None):
-        obs, info = super().reset(seed=seed, options=options)
-        return np.array([obs[1]]), info
+        self.timestep = 0
+        self.state = self.initialize_population()
+        #
+        # if self.use_custom_harv_vul:
+        #     self.parameters["harvest_vul"] = self.custom_harv_vul
+        # if self.use_custom_surv_vul:
+        #     self.parameters["survey_vul"] = self.custom_surv_vul
+        #
+        self.state = self.init_state * np.array(
+            np.random.uniform(0.1, 1), dtype=np.float32
+        )
+        #
+        if self.noiseless:
+            self.r_devs = np.ones(shape = self.n_year)
+        elif self.reproducibility_mode:
+            self.r_devs = self.fixed_r_devs  
+        else:
+            self.r_devs = self.get_r_devs(
+                n_year=self.n_year,
+                p_big=self.parameters["p_big"],
+                sdr=self.parameters["sdr"],
+                rho=self.parameters["rho"],
+            )
+        #
+        self.update_vuls()
+        obs = self.observe()
+        return obs, {}
 
     def step(self, action):
         self.update_vuls()
@@ -44,8 +69,9 @@ class AsmCRLike(AsmEnv):
         return observation, reward, terminated, False, {}
 
     def unnormalize_action(self, action):
-        x1 = self.bound * (action[0] + 1) / 2
-        x2 = self.bound * (action[1] + 1) / 2
+        x1 = 10 * (action[0] + 1) / 2
+        x2 = 10 * (action[1] + 1) / 2
+        x2 = max(x2,x1)
         y2 = (action[2] + 1) / 2
         return np.float32([x1,x2,y2])
 
@@ -59,8 +85,12 @@ class AsmCRLike(AsmEnv):
 
         f_yield = self.harv_vul_b * intensity
         new_state = self.parameters["s"] * self.state * (1 - self.parameters["harvest_vul"] * intensity)
+        reward = f_yield  **  self.parameters["upow"]
 
         return new_state, reward
+
+    def observe(self):
+        return observe_mwt(self)
 
         
 

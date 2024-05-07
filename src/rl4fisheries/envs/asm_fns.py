@@ -70,6 +70,23 @@ def observe_2o(env):
     observation = np.clip(np.array([biomass_obs, mean_wt_obs]), -1, 1)
     return np.float32(observation)
 
+def observe_mwt(env):
+    # mean weight:
+    if env.surv_vul_n==0:
+        vulnuerable_mean_wt = 0
+    else:
+        vulnuerable_mean_wt = env.surv_vul_b / env.surv_vul_n
+
+    # mean weight obs:
+    max_wt, min_wt = env.parameters["max_wt"], env.parameters["min_wt"] # for readability
+    mean_wt_obs = (
+        2 * (vulnuerable_mean_wt - min_wt) / (max_wt - min_wt) - 1 
+    )
+
+    # gathering results:
+    observation = np.clip(np.array([mean_wt_obs]), -1, 1)
+    return np.float32(observation)
+
 def asm_pop_growth(env):
     n_age = env.parameters["n_age"]
     new_state = np.zeros(shape = n_age)

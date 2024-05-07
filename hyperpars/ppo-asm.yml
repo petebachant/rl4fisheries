@@ -1,11 +1,11 @@
 # algo 
 algo: "PPO"
-total_timesteps: 5000000
+total_timesteps: 15000000
 algo_config:
     tensorboard_log: "../../../logs"
     #
     policy: 'MlpPolicy'
-    batch_size: 256
+    batch_size: 512
     gamma: 0.9999
     learning_rate: !!float 7.77e-05
     ent_coef: 0.00429
@@ -14,18 +14,21 @@ algo_config:
     max_grad_norm: 5
     vf_coef: 0.19
     use_sde: True
-    policy_kwargs: "dict(log_std_init=-3.29, ortho_init=False)"
+    policy_kwargs: "dict(log_std_init=-3.29, ortho_init=False, net_arch=[256, 128])"
+    # in policy_kwargs: net_arch=[256, 128]
     # policy: 'MlpPolicy'
     # use_sde: True
     # policy_kwargs: "dict(log_std_init=-3, net_arch=[400, 300])"
     # clip_range: 0.1
 
 # env
-env_id: "AsmEnv"
+env_id: "AsmCRLike"
 config: 
-    observation_fn_id: 'observe_1o'
-    n_observs: 1
+    observation_fn_id: 'observe_2o'
+    n_observs: 2
     upow: 0.6
+    use_custom_harv_vul: True
+    use_custom_surv_vul: True
 n_envs: 12
 
 # io
@@ -33,5 +36,5 @@ repo: "cboettig/rl-ecology"
 save_path: "../saved_agents"
 
 # misc
-id: "1o-mtCarContv0-upow0.6"
+id: "2o-lgBatch-256,128-upow0.6-flatHarvSurv"
 additional_imports: ["torch"]

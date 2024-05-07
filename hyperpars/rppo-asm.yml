@@ -118,7 +118,7 @@ save_path: "../saved_agents"
 
 # # MOUNTAIN CAR NO VEL
 
-id: "mount_car"
+id: "MtCar-[256,128]"
 algo_config:
     tensorboard_log: "../../../logs"
     policy: 'MlpLstmPolicy'
@@ -134,10 +134,10 @@ algo_config:
     vf_coef: 0.19
     use_sde: True
     sde_sample_freq: 8
-    policy_kwargs: "dict(log_std_init=0.0, ortho_init=False,
-                       lstm_hidden_size=32,
+    policy_kwargs: "dict(log_std_init=-3.29, ortho_init=False,
+                       lstm_hidden_size=64,
                        enable_critic_lstm=True,
-                       net_arch=dict(pi=[64], vf=[64]))"
+                       net_arch=dict(pi=[256,128], vf=[256,128]))"
 
 # SPACE INVADERS V4
 # id: "space_invaders"
