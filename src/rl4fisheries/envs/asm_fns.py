@@ -135,6 +135,38 @@ def harvest(env, mortality):
     new_state = p["s"] * env.state * (1 - p["harvest_vul"] * true_mortality)  # remove fish
     return new_state, reward
 
+def trophy_harvest(env, mortality):
+    # self.vulb = sum(p["harvest_vul"] * n * p["wt"])
+    # self.vbobs = self.vulb  # could multiply this by random deviate # now done in env.update_vuls()
+    p = env.parameters
+    # env.ssb = sum(p["mwt"] * env.state) # now done in env.update_ssb()
+    
+    # Side effect portion of fn (tbd: discuss - abar and wbar not otherwise used in env)
+    #
+    if (sum(env.state) > 0) and (sum(env.state * p["wt"]) > 0):
+        env.abar = (
+            sum(p["survey_vul"] * np.array(p["ages"]) * env.state) 
+            / sum(env.state)
+        )
+        env.wbar = (
+            sum(p["survey_vul"] * p["wt"] * env.state) 
+            / sum(env.state * p["wt"])
+        )
+    else:
+        env.abar = 0
+        env.wbar = 0
+    #
+    age_resolved_harvests = mortality[0] * env.harv_vul_pop
+    new_state = p['s'] * (env.state - age_resolved_harvests)
+    #
+    n_trophy_ages = 5
+    trophy_reward_dist = np.array(
+        (env.parameters['n_age'] - n_trophy_ages) * [0] 
+        + n_trophy_ages * [1]
+    )
+    reward = sum(trophy_reward_dist * age_resolved_harvests)
+    return new_state, reward
+
 def get_r_devs(n_year, p_big=0.05, sdr=0.3, rho=0):
     """
     f(x) to create recruitment deviates, which are multiplied

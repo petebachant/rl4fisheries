@@ -7,7 +7,8 @@ from rl4fisheries.envs.asm_fns import (
     observe_1o, observe_2o, 
     observe_total, observe_total_2o, 
     observe_total_2o_v2,
-    asm_pop_growth, harvest, 
+    asm_pop_growth, 
+    harvest, trophy_harvest,
     render_asm, 
     get_r_devs,
     get_r_devs_v2,
@@ -108,7 +109,10 @@ class AsmEnv(gym.Env):
 
         #
         # functions
-        self._harvest_fn = config.get("harvest_fn", harvest)
+        HARV_FNS = {'default': harvest, 'trophy': trophy_harvest}
+        self.harv_fn_name = config.get("harvest_fn_name", "default")
+        self._harvest_fn = HARV_FNS[self.harv_fn_name]
+        
         self._pop_growth_fn = config.get("pop_growth_fn", asm_pop_growth)
         self._render_fn = config.get("render_fn", render_asm)
         

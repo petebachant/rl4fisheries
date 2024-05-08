@@ -12,8 +12,8 @@ class AsmCRLike(AsmEnv):
         self._observation_fn = observe_mwt
 
         self.action_space = gym.spaces.Box(
-            np.array(3 * [-1], dtype=np.float32),
-            np.array(3 * [1], dtype=np.float32),
+            np.array(2 * [-1], dtype=np.float32),
+            np.array(2 * [1], dtype=np.float32),
             dtype=np.float32,
         )
         self.observation_space = gym.spaces.Box(
@@ -69,11 +69,12 @@ class AsmCRLike(AsmEnv):
         return observation, reward, terminated, False, {}
 
     def unnormalize_action(self, action):
-        x1 = 10 * (action[0] + 1) / 2
-        x2 = 10 * (action[1] + 1) / 2
+        # x1 = 10 * (action[0] + 1) / 2
+        x1 = 0
+        x2 = 10 * (action[0] + 1) / 2
         x2 = max(x2,x1)
-        y2 = (action[2] + 1) / 2
-        return np.float32([x1,x2,y2])
+        y2 = (action[1] + 1) / 2
+        return np.float32([x1, x2,y2])
 
     def harvest(self, x1, x2, y2):
         if  self.surv_vul_b < x1:
