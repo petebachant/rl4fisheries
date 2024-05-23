@@ -19,9 +19,10 @@ class AsmEnvEsc(AsmEnv):
         escapement = self.escapement_units(action)
         current_pop = self.population_units()
         if current_pop <= 0:
-            mortality = 0
+            mortality = np.float32([0])
         else:
             mortality = (current_pop - escapement) / current_pop
+        mortality = np.clip(mortality, 0, np.inf)
         self.state, reward = self.harvest(mortality)
         #
         self.update_vuls()

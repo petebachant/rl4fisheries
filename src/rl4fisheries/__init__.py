@@ -15,7 +15,7 @@ from gymnasium.envs.registration import register
 # action is 'harvest'
 register(id="Asm-v0", entry_point="rl4fisheries.envs.asm:Asm")
 # action is 'escapement'
-register(id="AsmEsc-v0", entry_point="rl4fisheries.envs.asm_esc:AsmEnvEsc")
+register(id="AsmEnvEsc", entry_point="rl4fisheries.envs.asm_esc:AsmEnvEsc")
 # action is harvest, but observes both total count and mean biomass
 register(id="Asm2o-v0", entry_point="rl4fisheries.envs.asm_2o:Asm2o")
 # action is harvest, but observes both total count and mean biomass
