@@ -34,6 +34,6 @@ repo: "cboettig/rl-ecology"
 save_path: "../saved_agents/results/"
 
 # misc
-id: "results-trophy-nage-10"
+id: "results-trophy-nage-10-run2"
 # id: "short-test"
 additional_imports: ["torch"]
