@@ -18,7 +18,7 @@ class evaluate_agent:
                 ray.shutdown()
         else:
             rewards = [
-                self.simulator.remote(env=self.env, agent=self.agent) 
+                self.simulator(env=self.env, agent=self.agent) 
                 for _ in range(n_eval_episodes)
             ]
         #
@@ -37,7 +37,7 @@ def get_simulator(ray_remote = False):
             episode_reward = 0.0
             observation, _ = env.reset()
             for t in range(env.Tmax):
-                action, _ = agent.predict(observation, deterministic=True)
+                action = agent.predict(observation, deterministic=True)[0]
                 observation, reward, terminated, done, info = env.step(action)
                 episode_reward += reward
                 if terminated or done:
