@@ -159,10 +159,9 @@ def trophy_harvest(env, mortality):
     age_resolved_harvests = mortality[0] * env.harv_vul_pop
     new_state = p['s'] * (env.state - age_resolved_harvests)
     #
-    n_trophy_ages = 5
     trophy_reward_dist = np.array(
-        (env.parameters['n_age'] - n_trophy_ages) * [0] 
-        + n_trophy_ages * [1]
+        (env.parameters['n_age'] - env.n_trophy_ages) * [0] 
+        + env.n_trophy_ages * [1]
     )
     reward = sum(trophy_reward_dist * age_resolved_harvests)
     return new_state, reward

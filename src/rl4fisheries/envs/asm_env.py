@@ -112,6 +112,8 @@ class AsmEnv(gym.Env):
         HARV_FNS = {'default': harvest, 'trophy': trophy_harvest}
         self.harv_fn_name = config.get("harvest_fn_name", "default")
         self._harvest_fn = HARV_FNS[self.harv_fn_name]
+        if self.harv_fn_name == 'trophy':
+            self.n_trophy_ages = config.get("n_trophy_ages", 10)
         
         self._pop_growth_fn = config.get("pop_growth_fn", asm_pop_growth)
         self._render_fn = config.get("render_fn", render_asm)
