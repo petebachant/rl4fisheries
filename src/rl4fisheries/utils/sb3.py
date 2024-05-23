@@ -104,7 +104,7 @@ def sb3_train(config_file, **kwargs):
     if "id" in options:
         options["id"] = "-" + options["id"]
     model_id = options["algo"] + "-" + options["env_id"]  + options.get("id", "")
-    save_id = os.path.join(options["save_path"], model_id)
+    save_id = os.path.join(options["save_path"], model_id) + ".zip"
 
     model = ALGO(
         env=env,
