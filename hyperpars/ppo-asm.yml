@@ -1,6 +1,6 @@
 # algo 
 algo: "PPO"
-total_timesteps: 5000000
+total_timesteps: 10000000
 algo_config:
     tensorboard_log: "../../../logs"
     #
@@ -13,12 +13,8 @@ algo_config:
     # gae_lambda: 0.9
     # max_grad_norm: 5
     # vf_coef: 0.19
-    # use_sde: True
     # policy_kwargs: "dict(log_std_init=-3.29, ortho_init=False, net_arch=[256, 128])"
-    # in policy_kwargs: net_arch=[400, 300]
-    # policy: 'MlpPolicy'
-    # use_sde: True
-    # policy_kwargs: "dict(log_std_init=-3, net_arch=[400, 300])"
+    use_sde: True
     # clip_range: 0.1
 
 # env
@@ -27,6 +23,7 @@ config:
     observation_fn_id: 'observe_2o'
     n_observs: 2
     harvest_fn_name: "trophy"
+    n_trophy_ages: 10
     # upow: 0.6
     # use_custom_harv_vul: True
     # use_custom_surv_vul: True
@@ -34,8 +31,9 @@ n_envs: 12
 
 # io
 repo: "cboettig/rl-ecology"
-save_path: "../saved_agents"
+save_path: "../saved_agents/results/"
 
 # misc
-id: "trophy-basehyperpars"
+id: "results-trophy-nage-10"
+# id: "short-test"
 additional_imports: ["torch"]
