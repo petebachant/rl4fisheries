@@ -16,13 +16,14 @@ class AsmEnvEsc(AsmEnv):
         self.update_vuls()
         self.update_ssb()
         #
-        escapement = self.escapement_units(action)
-        current_pop = self.population_units()
-        if current_pop <= 0:
-            mortality = np.float32([0])
-        else:
-            mortality = (current_pop - escapement) / current_pop
-        mortality = np.clip(mortality, 0, np.inf)
+        # escapement = self.escapement_units(action)
+        # current_pop = self.population_units()
+        # if current_pop <= 0:
+        #     mortality = np.float32([0])
+        # else:
+        #     mortality = (current_pop - escapement) / current_pop
+        # mortality = np.clip(mortality, 0, np.inf)
+        mortality = self.get_mortality(action)
         self.state, reward = self.harvest(mortality)
         #
         self.update_vuls()
@@ -38,3 +39,13 @@ class AsmEnvEsc(AsmEnv):
 
     def escapement_units(self, action):
         return self.bound * (action + 1) / 2
+
+    def get_mortality(self, action):
+        escapement = self.escapement_units(action)
+        current_pop = self.population_units()
+        if current_pop <= 0:
+            mortality = np.float32([0])
+        else:
+            mortality = (current_pop - escapement) / current_pop
+        mortality = np.clip(mortality, 0, np.inf)
+        return mortality
