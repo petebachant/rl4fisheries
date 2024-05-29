@@ -21,6 +21,8 @@ from skopt.utils import use_named_args
 from rl4fisheries import AsmEnv
 from rl4fisheries.utils import evaluate_agent
 
+login()
+
 # optimization algo
 if args.opt_algo == "gp":
     from skopt import gp_minimize
