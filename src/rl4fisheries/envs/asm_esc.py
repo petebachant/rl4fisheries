@@ -42,10 +42,13 @@ class AsmEnvEsc(AsmEnv):
 
     def get_mortality(self, action):
         escapement = self.escapement_units(action)
-        current_pop = self.population_units()
-        if current_pop <= 0:
+        current_observed_pop = self.surv_vul_b
+        if (
+            (current_observed_pop <= escapement) 
+            or (current_observed_pop<=1e-10)
+        ):
             mortality = np.float32([0])
         else:
-            mortality = (current_pop - escapement) / current_pop
+            mortality = (current_observed_pop - escapement) / current_observed_pop
         mortality = np.clip(mortality, 0, np.inf)
         return mortality
