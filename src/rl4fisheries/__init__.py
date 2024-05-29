@@ -9,6 +9,7 @@ from rl4fisheries.envs.asm_cr_like import AsmCRLike
 from rl4fisheries.agents.cautionary_rule import CautionaryRule
 from rl4fisheries.agents.const_esc import ConstEsc
 from rl4fisheries.agents.msy import Msy
+from rl4fisheries.agents.const_act import ConstAct
 
 
 from gymnasium.envs.registration import register
