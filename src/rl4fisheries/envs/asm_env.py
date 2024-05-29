@@ -12,6 +12,7 @@ from rl4fisheries.envs.asm_fns import (
     render_asm, 
     get_r_devs,
     get_r_devs_v2,
+    observe_mwt,
 )
 
 # equilibrium dist will in general depend on parameters, need a more robust way
@@ -125,6 +126,7 @@ class AsmEnv(gym.Env):
             "observe_total": observe_total,
             "observe_total_2o": observe_total_2o,
             "observe_total_2o_v2": observe_total_2o_v2,
+            "observe_mwt": observe_mwt,
         }        
         self._observation_fn = obs_fn_choices[
             config.get("observation_fn_id", "observe_2o")
