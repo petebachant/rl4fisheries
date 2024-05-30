@@ -16,6 +16,12 @@ from skopt.utils import use_named_args
 from rl4fisheries import AsmEnv, Msy, ConstEsc, CautionaryRule
 from rl4fisheries.utils import evaluate_agent
 
+print(f"""
+
+Working with the input {args.input_file} now...
+
+""")
+
 with open(args.input_file, "r") as stream:
     OPTIONS = yaml.safe_load(stream)
 
@@ -132,9 +138,9 @@ msy_fname = f"msy-{OPTIONS['id']}.pkl"
 esc_fname = f"esc-{OPTIONS['id']}.pkl"
 cr_fname = f"cr-{OPTIONS['id']}.pkl"
 
-dump(msy_results, path+msy_fname)
-dump(esc_results, path+esc_fname)
-dump(cr_results, path+cr_fname)
+dump(res=msy_results, filename=path+msy_fname, store_objective=False)
+dump(res=esc_results, filename=path+esc_fname, store_objective=False)
+dump(res=cr_results, filename=path+cr_fname, store_objective=False)
 
 # HF
 
