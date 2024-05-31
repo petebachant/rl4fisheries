@@ -13,7 +13,7 @@ from rl4fisheries.utils import sb3_train
 
 # hf login
 from huggingface_hub import hf_hub_download, HfApi, login
-login()
+# login()
 
 import os
 
@@ -41,3 +41,8 @@ try:
 except Exception as ex:
     print("Couldn't upload to hf :(.")
     print(ex)
+
+print(f"""
+Finished training on input file {args.file}.
+
+""")
