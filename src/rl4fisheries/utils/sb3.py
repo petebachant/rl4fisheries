@@ -121,7 +121,7 @@ def sb3_train(config_file, **kwargs):
     return save_id, options
 
 
-def sb3_train_save_checkpoints(config_file, checkpoint_freq=500_000, checkpoint_start=4_000_000):
+def sb3_train_save_checkpoints(config_file, checkpoint_freq=500_000, checkpoint_start=4_000_000, **kwargs):
     with open(config_file, "r") as stream:
         options = yaml.safe_load(stream)
         options = {**options, **kwargs}
@@ -166,7 +166,7 @@ def sb3_train_save_checkpoints(config_file, checkpoint_freq=500_000, checkpoint_
         tb_log_name=model_id, 
         progress_bar=progress_bar,
     )
-    model.save(save_id+"chkpnt1.zip")
+    model.save(save_id+"-chkpnt1.zip")
     print(f"Saved {options['algo']} checkpoint at {save_id+'-chkpnt1.zip'}")
     if options["total_timesteps"]<=checkpoint_start:
         return save_id+'-chkpnt1.zip', options

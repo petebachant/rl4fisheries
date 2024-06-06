@@ -9,7 +9,7 @@ args = parser.parse_args()
 
 # imports
 import rl4fisheries
-from rl4fisheries.utils import sb3_train
+from rl4fisheries.utils import sb3_train, sb3_train_save_checkpoints
 
 # hf login
 from huggingface_hub import hf_hub_download, HfApi, login
@@ -26,7 +26,7 @@ dname = os.path.dirname(abspath)
 os.chdir(dname)
 
 # train
-save_id, options = sb3_train(abs_filepath, progress_bar = args.progress_bar)
+save_id, options = sb3_train_save_checkpoints(abs_filepath)
 fname = os.path.basename(save_id)
 
 # hf upload
