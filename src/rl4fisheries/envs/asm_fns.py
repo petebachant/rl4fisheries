@@ -1,5 +1,11 @@
 import numpy as np
 
+def observe_full(env):
+    # return 2 * env.state / env.bound - 1
+    obs = np.clip(2 * env.state / 5 - 1, -1, 1)
+    obs = np.float32([age_obs for age_obs in obs])
+    return obs
+
 def observe_total(env):
     total_pop = np.float32([np.sum(env.state)])
     return 2 * total_pop / env.bound - 1
@@ -166,40 +172,83 @@ def trophy_harvest(env, mortality):
     reward = sum(trophy_reward_dist * age_resolved_harvests)
     return new_state, reward
 
-def get_r_devs(n_year, p_big=0.05, sdr=0.3, rho=0):
+def enforce_min_harvest(env, mortality):
+    # self.vulb = sum(p["harvest_vul"] * n * p["wt"])
+    # self.vbobs = self.vulb  # could multiply this by random deviate # now done in env.update_vuls()
+    p = env.parameters
+    # env.ssb = sum(p["mwt"] * env.state) # now done in env.update_ssb()
+    
+    # Side effect portion of fn (tbd: discuss - abar and wbar not otherwise used in env)
+    #
+    if (sum(env.state) > 0) and (sum(env.state * p["wt"]) > 0):
+        env.abar = (
+            sum(p["survey_vul"] * np.array(p["ages"]) * env.state) 
+            / sum(env.state)
+        )
+        env.wbar = (
+            sum(p["survey_vul"] * p["wt"] * env.state) 
+            / sum(env.state * p["wt"])
+        )
+    else:
+        env.abar = 0
+        env.wbar = 0
+    #
+    #
+    # true_mortality = np.clip(mortality[0] * (1 + 0.05 * np.random.normal()), 0, 1)
+    true_mortality = mortality[0]
+    yieldf = true_mortality * env.harv_vul_b  # fishery yield
+
+    if yieldf < 0.001:
+        reward = -1
+    else:
+        reward = yieldf ** p["upow"]  # this is utility
+    new_state = p["s"] * env.state * (1 - p["harvest_vul"] * true_mortality)  # remove fish
+    return new_state, reward
+
+def get_r_devs_logn_unif(n_year, sdr=0.4, rho=0, p_big=0.025):
     """
     f(x) to create recruitment deviates, which are multiplied
     by the stock-recruitment prediction in the age-structured model
 
+    params are set such that < x > = 1 for x sampled from f.
+
     args:
-    n_year: number of deviates required for simulation
-    p_big: Pr(big year class)
-    r_big: magnitude of big year class
-    sdr: sd of recruitment
-    rho: autocorrelation in recruitment sequence
+        - n_year: number of deviates required for simulation
+        - sdr: sd of recruitment exponential noise
+        - rho: autocorrelation in recruitment sequence
+        - x1: width of the distribution of 'small school deviations' = [0, x1]
     returns:
-    vector of recruitment deviates of length n_year
+        vector of recruitment deviates of length n_year, composed of two terms:
 
     """
+    def one_rdev(dev_last, sdr=sdr, rho=rho, p_big=p_big):
+        generator = np.random.Generator(np.random.PCG64())
+        #
+        log_n_mu = 0
+        log_n_sd = sdr
+        log_n_mean = np.exp(log_n_mu + 0.5 * log_n_sd**2)
+        scaling = 1 / (4 * log_n_mean)
+        #
+        #
+        # sample from piecewise constant term (pdf(x) = y1 on [0, x1] and pdf(x)=y2 on [10, 30])
+        big_event = generator.binomial(n=2, p=p_big)
+        if big_event == 1:
+            multiplier = 10 + 20 * generator.random()
+        else:
+            multiplier = scaling * generator.lognormal(mean=log_n_mu, sigma=log_n_sd)
+        #
+        return multiplier, dev_last
+        
     r_mult = np.float32([1] * n_year)
-    u_rand = np.random.uniform(0, 1, n_year)
-    n_rand = np.random.normal(0, 1, n_year)
-    r_big = np.random.uniform(10, 30, n_year)
+    r_mult[0], dev_last = one_rdev(dev_last = 0)
+    for t in range(n_year):
+        r_mult[t], dev_last = one_rdev(dev_last)
+        
+    return np.clip(r_mult, 0, None)
 
-    r_low = (1 - p_big * r_big) / (1 - p_big)  # small rec event
-    # r_low = [
-    #     np.random.choice([1,0], p = [0.6, 0.4])
-    #     for _ in range(n_year)
-    # ]
-    r_low = np.clip(r_low, 0, None)
-    dev_last = 0
-    for t in range(0, n_year, 1):
-        r_mult[t] = r_low[t]
-        if u_rand[t] < p_big:
-            r_mult[t] = r_big[t]
-        r_mult[t] = r_mult[t] * np.exp(sdr * n_rand[t] + rho * dev_last)
-        dev_last = sdr * n_rand[t] + rho * dev_last
-    return r_mult
+def get_r_devs(n_year, *args, **kwargs):
+    # for back compatibility on places I haven't found yet that still use the old r_devs
+    return get_r_devs_logn_unif(n_year, *args, **kwargs)
 
 def get_r_devs_v2(n_year, p_big=0.05, sdr=0.3, rho=0):
     """

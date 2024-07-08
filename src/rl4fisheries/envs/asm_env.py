@@ -8,11 +8,12 @@ from rl4fisheries.envs.asm_fns import (
     observe_total, observe_total_2o, 
     observe_total_2o_v2,
     asm_pop_growth, 
-    harvest, trophy_harvest,
+    harvest, trophy_harvest, enforce_min_harvest,
     render_asm, 
-    get_r_devs,
+    get_r_devs_logn_unif,
     get_r_devs_v2,
     observe_mwt,
+    observe_full,
 )
 
 # equilibrium dist will in general depend on parameters, need a more robust way
@@ -59,7 +60,7 @@ class AsmEnv(gym.Env):
             "ahv": config.get("ahv" , np.float32(5.0)),  # vul par 2
             "ahm": config.get("ahm" , np.float32(6.0)),  # age 50% maturity
             "upow": config.get("upow" , np.float32(1.0)),  # 1 = max yield objective, < 1 = HARA
-            "p_big": config.get("p_big" , np.float32(0.05)),  # probability of big year class
+            "p_big": config.get("p_big" , np.float32(0.025)),  # probability of big year class
             "sdr": config.get("sdr" , np.float32(0.3)),  # recruit sd given stock-recruit relationship
             "rho": config.get("rho" , np.float32(0.0)),  # autocorrelation in recruitment sequence
             "sdv": config.get("sdv" , np.float32(1e-9)),  # sd in vulnerable biomass (survey)
@@ -73,8 +74,11 @@ class AsmEnv(gym.Env):
             1, self.parameters["n_age"] + 1
         )  # vector of ages for calculations
         self.reproducibility_mode = config.get('reproducibility_mode', False)
-        self.get_r_devs_version = config.get('get_r_devs_version', 'v1')
-        self.get_r_devs = {'v1': get_r_devs, 'v2': get_r_devs_v2}[self.get_r_devs_version]
+        self.get_r_devs_version = config.get('get_r_devs_version', 'logn_unif')
+        self.get_r_devs = {
+            'logn_unif': get_r_devs_logn_unif,
+            'v2': get_r_devs_v2, 
+        }[self.get_r_devs_version]
         if self.reproducibility_mode:
             if "r_devs" in config:
                 self.fixed_r_devs = config["r_devs"]
@@ -110,7 +114,7 @@ class AsmEnv(gym.Env):
 
         #
         # functions
-        HARV_FNS = {'default': harvest, 'trophy': trophy_harvest}
+        HARV_FNS = {'default': harvest, 'trophy': trophy_harvest, 'enforce_min': enforce_min_harvest}
         self.harv_fn_name = config.get("harvest_fn_name", "default")
         self._harvest_fn = HARV_FNS[self.harv_fn_name]
         if self.harv_fn_name == 'trophy':
@@ -127,6 +131,7 @@ class AsmEnv(gym.Env):
             "observe_total_2o": observe_total_2o,
             "observe_total_2o_v2": observe_total_2o_v2,
             "observe_mwt": observe_mwt,
+            "observe_full": observe_full,
         }        
         self._observation_fn = obs_fn_choices[
             config.get("observation_fn_id", "observe_2o")
@@ -342,5 +347,5 @@ class AsmEnv(gym.Env):
         self.parameters["bhb"] = bhb
         #
         n = np.array(ninit, dtype=np.float32)
-        self.state = np.clip(n, 0, np.Inf)
+        self.state = np.clip(n, 0, None)
         return self.state
