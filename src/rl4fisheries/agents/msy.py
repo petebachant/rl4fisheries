@@ -6,7 +6,7 @@ from tqdm import tqdm
 
 from rl4fisheries.agents.common import isVecObs
 
-class Msy:
+class FMsy:
     def __init__(self, env, mortality: float =0, threshold: float =0, **kwargs):
         self.mortality = mortality
         self.threshold = threshold
@@ -33,5 +33,10 @@ class Msy:
     def state_to_pop(self, state):
         return (state + 1 ) / 2
 
+def Msy(*args, **kwargs):
+    from warnings import warn
+    warn("Name change: Msy -> FMsy. This old name still works but will be eventually discontinued.")
+    return Msy(*args, **kwargs)
+        
 
         

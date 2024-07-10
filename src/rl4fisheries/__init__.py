@@ -3,10 +3,10 @@ from rl4fisheries.envs.asm_env import AsmEnv
 from rl4fisheries.envs.asm_esc import AsmEnvEsc
 from rl4fisheries.envs.asm_cr_like import AsmCRLike
 
-from rl4fisheries.agents.cautionary_rule import CautionaryRule
-from rl4fisheries.agents.const_esc import ConstEsc
-from rl4fisheries.agents.msy import Msy
-from rl4fisheries.agents.const_act import ConstAct
+from rl4fisheries.agents.cautionary_rule import PrecautionaryPrinciple
+from rl4fisheries.agents.const_esc import ConstantEscapement
+from rl4fisheries.agents.msy import FMsy
+from rl4fisheries.agents.const_act import ConstantAction
 
 
 from gymnasium.envs.registration import register
