@@ -6,7 +6,7 @@ from tqdm import tqdm
 
 from rl4fisheries.agents.common import isVecObs
 
-class ConstEsc:
+class ConstantEscapement:
     def __init__(self, env, escapement, observed_var='biomass', **kwargs):
         self.escapement = escapement
         self.policy_type = "constant_escapement"
@@ -41,4 +41,8 @@ class ConstEsc:
         return (state + 1 ) / 2
 
 
+def ConstEsc(*args, **kwargs):
+    from warnings import warn
+    warn("Name change: ConstEsc -> ConstantEscapement. This old name still works but will be eventually discontinued.")
+    return ConstantEscapement(*args, **kwargs)
         

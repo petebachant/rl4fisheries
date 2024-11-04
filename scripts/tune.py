@@ -13,7 +13,7 @@ from skopt import gp_minimize, dump
 from skopt.space import Real
 from skopt.utils import use_named_args
 
-from rl4fisheries import AsmEnv, Msy, ConstEsc, CautionaryRule
+from rl4fisheries import AsmEnv, FMsy, ConstantEscapement, PrecautionaryPrinciple
 from rl4fisheries.utils import evaluate_agent
 
 print(f"""
@@ -57,7 +57,7 @@ cr_space  = [
 
 @use_named_args(msy_space)
 def msy_fn(**params):
-    agent = Msy(
+    agent = FMsy(
         AsmEnv(config=OPTIONS['config']), 
         mortality=params['mortality'],
     )
@@ -68,7 +68,7 @@ def msy_fn(**params):
 
 @use_named_args(esc_space)
 def esc_fn(**params):
-    agent = ConstEsc(
+    agent = ConstantEscapement(
         AsmEnv(config=OPTIONS['config']), 
         escapement=params['escapement'],
     )
@@ -84,7 +84,7 @@ def cr_fn(**params):
     x1 = np.sin(theta) * radius
     x2 = np.cos(theta) * radius
     #
-    agent = CautionaryRule(
+    agent = PrecautionaryPrinciple(
         AsmEnv(config=OPTIONS['config']), 
         x1 = x1, 
         x2 =  x2, 

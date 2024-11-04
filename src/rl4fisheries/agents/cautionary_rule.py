@@ -8,7 +8,7 @@ from .unit_interface import unitInterface
 
 from rl4fisheries.agents.common import isVecObs
 
-class CautionaryRule:
+class PrecautionaryPrinciple:
     def __init__(self, env, x1=0, x2=1, y2=1, observed_var='biomass', **kwargs):
         self.policy_type = f"CautionaryRule_{observed_var}"
         self.env = env
@@ -65,3 +65,11 @@ class CautionaryRule:
     def state_to_pop(self, state):
         return (state + 1 ) / 2
     
+def CautionaryRule(*args, **kwargs):
+    from warnings import warn
+    warn("Name change: "
+         "CautionaryRule -> PrecautionaryPrinciple. "
+         "This old name still works but will be eventually discontinued."
+        )
+    return PrecautionaryPrinciple(*args, **kwargs)
+        
