@@ -71,3 +71,45 @@ For example
 config file was used to train 1-Obs. RL in Scenario 1 (utility = total harvest).
 The trained model is automatically pushed to hugging-face if a hugging-face token is provided. 
 
+## Source code structure
+
+```
+rl4fisheries
+|
+|-- hyperpars
+|   |
+|   |-- configuration yaml files
+|
+|-- notebooks
+|   |
+|   |-- Jupyter notebooks
+|
+|-- src/rl4fisheries
+|   |
+|   |-- agents
+|   |   |
+|   |   |-- interfaces for policies such as Precautionary Policy, FMSY, Constant Escapement
+|   |
+|   |-- envs
+|   |   |
+|   |   |-- Gymnasium environments used in our study.
+|   |       (specifically, asm_env.py is used for our paper).
+|   |
+|   |-- utils
+|       |
+|       |-- ray.py: RL training within Ray framework (not used in paper)
+|       |
+|       |-- sb3.py: RL training within Stable Baselines framework (used in paper)
+|       |
+|       |-- simulation.py: helper functions to simulate the system dynamics using a policy
+|    
+|-- tests
+|   |
+|   |-- continuous integration tests to ensure code quality in pull requests
+|
+|-- noxfile.py: file used to run continuous integration tests
+|
+|-- pyproject.toml: file used in the installation of this source code
+|
+|-- README.md 
+```
