@@ -14,11 +14,26 @@ Strategies evaluated with Bayesian Optimization:
 
 ## Installation
 
-Clone this repo, then:
-
+To install this source code, you need to have git, Python and pip installed.
+To quickly check whether these are installed you can open the terminal and run the following commands:
 ```bash
+git version
+pip --version
+python -V
+```
+If the commands are not recognized by the terminal, refer to
+[here](https://github.com/git-guides/install-git)
+for git installation instructions,
+[here](https://realpython.com/installing-python/) 
+for Python installation instructions and/or
+[here](https://pip.pypa.io/en/stable/installation/)
+for pip installation instructions.
+
+To install this source code, run
+```bash
+git clone https://github.com/boettiger-lab/rl4fisheries.git
 cd rl4fisheries
-pip install .
+pip install -e .
 ```
 
 ## RL training:
