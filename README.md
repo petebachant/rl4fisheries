@@ -60,11 +60,14 @@ To optimize an RL policy from scratch, use the command
 ```bash
 python scripts/train.py -f path/to/config/file.yml
 ```
+You can use the following template config file:
+```bash
+python scripts/train.py -f hyperpars/RL-template.yml
+```
+
 The config files we used for the policies in our paper are found at `hyperpars/for_results/`.
 For example 
 [this](https://github.com/boettiger-lab/rl4fisheries/blob/main/hyperpars/for_results/ppo_biomass_UM1.yml) 
 config file was used to train 1-Obs. RL in Scenario 1 (utility = total harvest).
-
-The trained model is automatically pushed to Huggingface (requires a HF token). 
-The config files used for our results are found in `hyperpars/for_results/`
+The trained model is automatically pushed to hugging-face if a hugging-face token is provided. 
 
