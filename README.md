@@ -36,12 +36,35 @@ cd rl4fisheries
 pip install -e .
 ```
 
-## RL training:
+## Optimized policies
 
-Simply run 
+The optimized policies presented in the paper---both RL policies and non-RL policies such as the precautionary policy---are saved in a public hugging-face 
+[repository](https://huggingface.co/boettiger-lab/rl4eco/tree/main/sb3/rl4fisheries/results).
+RL policies are saved as zip files named ```PPO-AsmEnv-(...)-UMx-(...).zip``` since the RL algorithm PPO was used to optimize them.
+Here *UM* stands for *utility model* and `x=1, 2, or 3` designates which utility model the policy was optimized for.
+Precautionary policies are named `cr-UMx.pkl` (CR stands for "cautionary rule", an acronym we used during the research phase of this collaboration).
+Similarly, constant escapement policies are saved as `esc-UMx.pkl` and FMSY policies are saved as `msy-UMx.pkl`.
+
+## Reproducing paper figures
+
+The Jupyter notebooks found at `rl4fisheries/notebooks/for_results` may be used to recreate the figures found in the paper. 
+Notice that the data for the plots is re-generated each time the notebook is run so, e.g., the time-series plots will look different.
+
+To reproduce these figures in your own machine you need to have Jupyter Notebooks installed, however you can navigate to 
+```https://github.com/boettiger-lab/rl4fisheries```
+and click on `code > codespaces > Create codespace on main` to open the notebooks in a Github codespace.
+
+## Optimizing RL policies
+
+To optimize an RL policy from scratch, use the command
 ```bash
 python scripts/train.py -f path/to/config/file.yml
 ```
+The config files we used for the policies in our paper are found at `hyperpars/for_results/`.
+For example 
+[this](https://github.com/boettiger-lab/rl4fisheries/blob/main/hyperpars/for_results/ppo_biomass_UM1.yml) 
+config file was used to train 1-Obs. RL in Scenario 1 (utility = total harvest).
+
 The trained model is automatically pushed to Huggingface (requires a HF token). 
 The config files used for our results are found in `hyperpars/for_results/`
 
