@@ -1,0 +1,36 @@
+algo: "PPO"
+total_timesteps: 6000000
+algo_config:
+    tensorboard_log: "../../../logs"
+    #
+    # use a feedforward neural net with three layers of 64, 32, and 16 neurons
+    policy: 'MlpPolicy' 
+    use_sde: True
+    policy_kwargs: "dict(net_arch=[64, 32, 16])"
+    #
+    # you can add hyperparameter values here, e.g. by uncommenting the following row:
+    # learning_rate: 0.00015
+
+# The environment simulating the population dynamics of Walleye
+env_id: "AsmEnv"
+config: 
+  # configurations that specify the specifics of the environment:
+  #
+  # use one observation (vulnerable biomass)
+  observation_fn_id: 'observe_1o'
+  n_observs: 1
+  #
+  # use the "default" utility function:
+  harvest_fn_name: "default"
+  upow: 1
+
+# helps paralellize training:
+n_envs: 12
+
+# save and upload models to hugging-face (needs hugging-face token)
+repo: "boettiger-lab/rl4eco"
+save_path: "../from-template/"
+id: "from-template"
+
+# misc, needed to use custom network structures (as in algo_config: policy_kwargs).
+additional_imports: ["torch"]
