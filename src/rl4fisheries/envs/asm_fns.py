@@ -53,7 +53,11 @@ def observe_total_2o_v2(env):
 
 def observe_1o(env):
     observation = 2 * np.array([env.surv_vul_b]) / env.bound - 1
+
+    # observation noise (happenning in [-1,1] normalized observation space)
+    observation += np.random.normal() * env.parameters["obs_noise"]
     observation = np.clip(observation, -1.0, 1.0)
+    
     return np.float32(observation)
 
 def observe_2o(env):
@@ -71,6 +75,10 @@ def observe_2o(env):
     mean_wt_obs = (
         2 * (vulnuerable_mean_wt - min_wt) / (max_wt - min_wt) - 1 
     )
+
+    # observation noise (happenning in [-1,1] normalized observation space)
+    biomass_obs += np.random.normal() * env.parameters["obs_noise"]
+    mean_wt_obs += np.random.normal() * env.parameters["obs_noise"]
 
     # gathering results:
     observation = np.clip(np.array([biomass_obs, mean_wt_obs]), -1, 1)

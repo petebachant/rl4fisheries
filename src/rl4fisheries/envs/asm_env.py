@@ -69,6 +69,7 @@ class AsmEnv(gym.Env):
             "lbar": config.get("lbar", np.float32(57.57)),
             "linf": config.get("linf", np.float32(41.08)),
             "survey_phi": config.get("survey_phi", np.float32(2.02)),
+            "obs_noise": config.get("obs_noise", np.float32(0.0)),
         }
         self.parameters["ages"] = range(
             1, self.parameters["n_age"] + 1
