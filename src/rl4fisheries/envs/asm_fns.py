@@ -52,17 +52,26 @@ def observe_total_2o_v2(env):
     return np.float32(observation)
 
 def observe_1o(env):
-    observation = 2 * np.array([env.surv_vul_b]) / env.bound - 1
-
-    # observation noise (happenning in [-1,1] normalized observation space)
-    observation += np.random.normal() * env.parameters["obs_noise"]
-    observation = np.clip(observation, -1.0, 1.0)
+    observed_biomass = np.clip(
+        env.surv_vul_b * (1 + np.random.normal() * env.parameters["obs_noise"]),
+        0, # min
+        env.bound, #max
+    )
+        
+    observation = 2 * np.array([observed_biomass]) / env.bound - 1
+    observation = np.clip(observation, -1.0, 1.0) # just in case :)
     
     return np.float32(observation)
 
 def observe_2o(env):
     # biomass obs:
-    biomass_obs = 2 * env.surv_vul_b / env.bound - 1
+    observed_biomass = np.clip(
+        env.surv_vul_b * (1 + np.random.normal() * env.parameters["obs_noise"]),
+        0, # min
+        env.bound, #max
+    )
+    normalized_b_obs = 2 * env.surv_vul_b / env.bound - 1
+    normalized_b_obs = np.clip(normalized_b_obs, -1.0, 1.0) # just in case :)
 
     # mean weight:
     if env.surv_vul_n==0:
@@ -72,17 +81,20 @@ def observe_2o(env):
 
     # mean weight obs:
     max_wt, min_wt = env.parameters["max_wt"], env.parameters["min_wt"] # for readability
-    mean_wt_obs = (
-        2 * (vulnuerable_mean_wt - min_wt) / (max_wt - min_wt) - 1 
+    mean_wt_observed = np.clip(
+        vulnuerable_mean_wt,
+        min_wt,
+        max_wt,
     )
+    normalized_mwt_obs = (
+        2 * (mean_wt_observed - min_wt) / (max_wt - min_wt) - 1 
+    )
+    normalized_mwt_obs = np.clip(normalized_mwt_obs, -1.0, 1.0) # just in case :)
 
-    # observation noise (happenning in [-1,1] normalized observation space)
-    biomass_obs += np.random.normal() * env.parameters["obs_noise"]
-    mean_wt_obs += np.random.normal() * env.parameters["obs_noise"]
 
     # gathering results:
-    observation = np.clip(np.array([biomass_obs, mean_wt_obs]), -1, 1)
-    return np.float32(observation)
+    observation = np.float32([normalized_b_obs, normalized_mwt_obs])
+    return observation
 
 def observe_mwt(env):
     # mean weight:
