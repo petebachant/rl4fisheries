@@ -6,7 +6,7 @@ algo_config:
     #
     policy: 'MlpPolicy'
     # learning_rate: 0.00015
-    policy_kwargs: "dict(net_arch=[256, 64, 32, 16])"
+    policy_kwargs: "dict(net_arch=[1024, 128, 32])"
     #
     # batch_size: 512
     # gamma: 0.9999
@@ -39,6 +39,6 @@ repo: "cboettig/rl-ecology"
 save_path: "../saved_agents/results/"
 
 # misc
-id: "2obs-UM1-64-32-16-noise0.1-stack4"
+id: "2obs-UM1-1024-128-32-noise0.1-stack4"
 # id: "short-test"
 additional_imports: ["torch"]
