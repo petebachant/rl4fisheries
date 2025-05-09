@@ -31,6 +31,7 @@ class evaluate_agent:
 
 def get_simulator(ray_remote = False):
     if ray_remote:
+        ray.init(logging_level='error')
         @ray.remote
         def simulator(env, agent):
             results = []
