@@ -2,6 +2,7 @@
 from rl4fisheries.envs.asm_env import AsmEnv
 from rl4fisheries.envs.asm_esc import AsmEnvEsc
 from rl4fisheries.envs.asm_cr_like import AsmCRLike
+from rl4fisheries.envs.fs_asm_env import FrameStackedAsmEnv
 
 from rl4fisheries.agents.cautionary_rule import PrecautionaryPrinciple
 from rl4fisheries.agents.const_esc import ConstantEscapement
@@ -16,4 +17,9 @@ register(id="AsmEnv", entry_point="rl4fisheries.envs.asm_env:AsmEnv")
 register(id="AsmEnvEsc", entry_point="rl4fisheries.envs.asm_esc:AsmEnvEsc")
 # CR-like actions
 register(id="AsmCRLike", entry_point="rl4fisheries.envs.asm_cr_like:AsmCRLike")
+# frame-stacked env
+register(
+    id="FrameStackedAsmEnv", 
+    entry_point="rl4fisheries.envs.fs_asm_env:FrameStackedAsmEnv",
+)
 
