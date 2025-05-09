@@ -3,6 +3,7 @@ from rl4fisheries.envs.asm_env import AsmEnv
 from rl4fisheries.envs.asm_esc import AsmEnvEsc
 from rl4fisheries.envs.asm_cr_like import AsmCRLike
 from rl4fisheries.envs.fs_asm_env import FrameStackedAsmEnv
+from rl4fisheries.envs.asm_anger import AsmAngerEnv
 
 from rl4fisheries.agents.cautionary_rule import PrecautionaryPrinciple
 from rl4fisheries.agents.const_esc import ConstantEscapement
@@ -21,5 +22,10 @@ register(id="AsmCRLike", entry_point="rl4fisheries.envs.asm_cr_like:AsmCRLike")
 register(
     id="FrameStackedAsmEnv", 
     entry_point="rl4fisheries.envs.fs_asm_env:FrameStackedAsmEnv",
+)
+# env in which anger level increases b/c of small actions
+register(
+    id="AsmAngerEnv", 
+    entry_point="rl4fisheries.envs.asm_anger:AsmAngerEnv",
 )
 
