@@ -2,8 +2,10 @@
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("-f", "--input-file", help="input yaml file")
-parser.add_argument("-hf-login", "--do-huggingface-login", default=False, type=bool, help="Whether to log in to hugging face from tune.py script.")
+parser.add_argument("-hf", "--do-huggingface-login", default=False, type=bool, help="Whether to log in to hugging face from tune.py script.")
+parser.add_argument("-vb", "--opt-verbose", default=False, type=bool, help="GP optimizer verbosity.")
 args = parser.parse_args()
+
 
 import numpy as np
 import yaml
@@ -99,7 +101,19 @@ def cr_fn(**params):
 #
 ### OPTIMIZE
 
-msy_results = gp_minimize(msy_fn, msy_space, n_calls=OPTIONS['n_calls'], verbose=True)
+msy_results = gp_minimize(msy_fn, msy_space, n_calls=OPTIONS['n_calls'], verbose=args.opt_verbose)
+
+print(msy_results.x, msy_results.fun)
+
+# esc_results = gp_minimize(esc_fn, esc_space, n_calls=OPTIONS['n_calls'], verbose=args.opt_verbose)
+
+# print(esc_results.x, esc_results.fun)
+
+cr_results = gp_minimize(cr_fn, cr_space, n_calls=OPTIONS['n_calls'], verbose=args.opt_verbose)
+
+print(cr_results.x, cr_results.fun)
+
+print("All results:", end="\n-----------\n\n")
 
 print(
     "\n\n"
@@ -109,18 +123,6 @@ print(
     "\n\n"
 )
 
-esc_results = gp_minimize(esc_fn, esc_space, n_calls=OPTIONS['n_calls'], verbose=True)
-
-print(
-    "\n\n"
-    f"gp-esc results: "
-    f"opt args = {[eval(f'{r:.4f}') for r in esc_results.x]}, "
-    f"rew={esc_results.fun:.4f}"
-    "\n\n"
-)
-
-cr_results = gp_minimize(cr_fn, cr_space, n_calls=OPTIONS['n_calls'], verbose=True)
-
 print(
     "\n\n"
     f"gp-cr results: "
@@ -129,18 +131,31 @@ print(
     "\n\n"
 )
 
+# print(
+#     "\n\n"
+#     f"gp-esc results: "
+#     f"opt args = {[eval(f'{r:.4f}') for r in esc_results.x]}, "
+#     f"rew={esc_results.fun:.4f}"
+#     "\n\n"
+# )
+
 #
 #
 ### SAVE
 
 path = "../saved_agents/results/"
 msy_fname = f"msy-{OPTIONS['id']}.pkl"
-esc_fname = f"esc-{OPTIONS['id']}.pkl"
+# esc_fname = f"esc-{OPTIONS['id']}.pkl"
 cr_fname = f"cr-{OPTIONS['id']}.pkl"
 
-dump(res=msy_results, filename=path+msy_fname, store_objective=False)
-dump(res=esc_results, filename=path+esc_fname, store_objective=False)
-dump(res=cr_results, filename=path+cr_fname, store_objective=False)
+with open(path+msy_fname, "wb"):
+    dump(res=msy_results, filename=path+msy_fname, store_objective=False)
+
+# with open(path+esc_fname, "wb"):
+#     dump(res=esc_results, filename=path+esc_fname, store_objective=False)
+
+with open(path+cr_fname, "wb"):
+    dump(res=cr_results, filename=path+cr_fname, store_objective=False)
 
 # HF
 
@@ -151,12 +166,12 @@ api.upload_file(
     repo_type="model",
 )
 
-api.upload_file(
-    path_or_fileobj=path+esc_fname,
-    path_in_repo="sb3/rl4fisheries/results/"+esc_fname,
-    repo_id=OPTIONS["repo_id"],
-    repo_type="model",
-)
+# api.upload_file(
+#     path_or_fileobj=path+esc_fname,
+#     path_in_repo="sb3/rl4fisheries/results/"+esc_fname,
+#     repo_id=OPTIONS["repo_id"],
+#     repo_type="model",
+# )
 
 api.upload_file(
     path_or_fileobj=path+cr_fname,
