@@ -43,12 +43,12 @@ Similarly, constant escapement policies are saved as `esc-UMx.pkl` and FMSY poli
 
 ## Reproducing paper figures
 
-The Jupyter notebooks found at `rl4fisheries/notebooks/for_results` may be used to recreate the figures found in the paper. 
-Notice that the data for the plots is re-generated each time the notebook is run so, e.g., the time-series plots will look different.
+The Jupyter notebooks found at `rl4fisheries/notebooks/for_results` may be used to re-generate the csv data used in our figures.
+Notice that the data for the plots is re-generated each time the notebook is run so, e.g., the time-series plots will look different due to stochasticity.
 
-To reproduce these figures in your own machine you need to have Jupyter Notebooks installed, however you can navigate to 
-```https://github.com/boettiger-lab/rl4fisheries```
-and click on `code > codespaces > Create codespace on main` to open the notebooks in a Github codespace.
+The specific data used to generate the figures in our paper, along with the Jupyter notebooks to construct the figures and make them look pretty, can be found in this huggingface repo:
+
+```https://huggingface.co/datasets/felimomo/rl4fisheries-public-data```
 
 ## Optimizing RL policies
 
