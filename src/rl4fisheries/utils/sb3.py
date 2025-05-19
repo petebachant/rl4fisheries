@@ -184,7 +184,7 @@ def sb3_train_save_checkpoints(config_file, checkpoint_freq=500_000, checkpoint_
         print(f"now ...-chkpnt{i}.zip")
         timesteps_now += checkpoint_freq
         if timesteps_now >= options["total_timesteps"]:
-            return save_id + f"-chkpnt{i}.zip", options
+            return [save_id + f"-chkpnt{j+1}.zip" for j in range(i)], options
 
 
 

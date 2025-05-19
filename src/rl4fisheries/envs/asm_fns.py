@@ -1,5 +1,50 @@
 import numpy as np
 
+def observe_1o(env):
+    observed_biomass = np.clip(
+        env.surv_vul_b * (1 + np.random.normal() * env.parameters["obs_noise"]),
+        0, # min
+        env.bound, #max
+    )
+        
+    observation = 2 * np.array([observed_biomass]) / env.bound - 1
+    observation = np.clip(observation, -1.0, 1.0) # just in case :)
+    
+    return np.float32(observation)
+
+def observe_2o(env):
+    # biomass obs:
+    observed_biomass = np.clip(
+        env.surv_vul_b * (1 + np.random.normal() * env.parameters["obs_noise"]),
+        0, # min
+        env.bound, #max
+    )
+    normalized_b_obs = 2 * observed_biomass / env.bound - 1
+    normalized_b_obs = np.clip(normalized_b_obs, -1.0, 1.0) # just in case :)
+
+    # mean weight:
+    if env.surv_vul_n==0:
+        vulnuerable_mean_wt = 0
+    else:
+        vulnuerable_mean_wt = env.surv_vul_b / env.surv_vul_n
+
+    # mean weight obs:
+    max_wt, min_wt = env.parameters["max_wt"], env.parameters["min_wt"] # for readability
+    mean_wt_observed = np.clip(
+        vulnuerable_mean_wt * (1 + np.random.normal() * env.parameters["obs_noise"]),
+        min_wt,
+        max_wt,
+    )
+    normalized_mwt_obs = (
+        2 * (mean_wt_observed - min_wt) / (max_wt - min_wt) - 1 
+    )
+    normalized_mwt_obs = np.clip(normalized_mwt_obs, -1.0, 1.0) # just in case :)
+
+
+    # gathering results:
+    observation = np.float32([normalized_b_obs, normalized_mwt_obs])
+    return observation
+
 def observe_full(env):
     # return 2 * env.state / env.bound - 1
     obs = np.clip(2 * env.state / 5 - 1, -1, 1)
@@ -40,31 +85,6 @@ def observe_total_2o_v2(env):
 
     # mean weight:
     vulnuerable_mean_wt = np.sum(env.state * env.parameters["wt"])
-
-    # mean weight obs:
-    max_wt, min_wt = env.parameters["max_wt"], env.parameters["min_wt"] # for readability
-    mean_wt_obs = (
-        2 * (vulnuerable_mean_wt - min_wt) / (max_wt - min_wt) - 1 
-    )
-
-    # gathering results:
-    observation = np.clip(np.array([biomass_obs, mean_wt_obs]), -1, 1)
-    return np.float32(observation)
-
-def observe_1o(env):
-    observation = 2 * np.array([env.surv_vul_b]) / env.bound - 1
-    observation = np.clip(observation, -1.0, 1.0)
-    return np.float32(observation)
-
-def observe_2o(env):
-    # biomass obs:
-    biomass_obs = 2 * env.surv_vul_b / env.bound - 1
-
-    # mean weight:
-    if env.surv_vul_n==0:
-        vulnuerable_mean_wt = 0
-    else:
-        vulnuerable_mean_wt = env.surv_vul_b / env.surv_vul_n
 
     # mean weight obs:
     max_wt, min_wt = env.parameters["max_wt"], env.parameters["min_wt"] # for readability
@@ -250,38 +270,20 @@ def get_r_devs(n_year, *args, **kwargs):
     # for back compatibility on places I haven't found yet that still use the old r_devs
     return get_r_devs_logn_unif(n_year, *args, **kwargs)
 
-def get_r_devs_v2(n_year, p_big=0.05, sdr=0.3, rho=0):
+def get_r_devs_v2(n_year, sdr=0.3, rho=0, **kwargs):
+    """just lognormal
+
+    n_year: number of years for output sequence of deviations
+    sdr: log normal sigma
+    rho: self-correlation over time (not implemented yet)
+    kwargs: not used, for compatibility with other r_devs functions
     """
-    f(x) to create recruitment deviates, which are multiplied
-    by the stock-recruitment prediction in the age-structured model
-
-    args:
-    n_year: number of deviates required for simulation
-    p_big: Pr(big year class)
-    r_big: magnitude of big year class
-    sdr: sd of recruitment
-    rho: autocorrelation in recruitment sequence
-    returns:
-    vector of recruitment deviates of length n_year
-
-    differs from get_r_devs by having the small-school randomness be a gaussian centered at 1.
-    """
-    def one_rdev(p_big=p_big, r_big_lims=[10,30], r_small_sigma = 1):
-        x = np.random.binomial(n=2,p=p_big)
-        return (
-            x * np.random.uniform(*r_big_lims) # big school
-            + (1-x) * max( # small school
-                1 + r_small_sigma * np.random.normal(),
-                0
-            )
-        )
-
-    r_devs  = np.float32([1] * n_year)
-    r_devs[0] = one_rdev()
-    for t in range(1, n_year):
-        r_devs[t] = one_rdev() + rho * r_devs[t-1]
-    return r_devs
-
+    generator = np.random.Generator(np.random.PCG64())
+    r_mult = np.float32([
+        generator.lognormal(mean=0, sigma=sdr)
+        for _ in range(n_year)
+    ])
+    return r_mult
 
 def render_asm(env):
     if env.render_mode is None:

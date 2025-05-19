@@ -28,25 +28,26 @@ dname = os.path.dirname(abspath)
 os.chdir(dname)
 
 # train
-save_id, options = sb3_train_save_checkpoints(
+save_ids, options = sb3_train_save_checkpoints(
     abs_filepath,
     checkpoint_freq=1_000_000, 
     checkpoint_start=3_000_000
 )
-fname = os.path.basename(save_id)
 
 # hf upload
 api = HfApi()
-try:
-    api.upload_file(
-        path_or_fileobj=save_id,
-        path_in_repo="sb3/rl4fisheries/results/"+fname,
-        repo_id="boettiger-lab/rl4eco",
-        repo_type="model",
-    )
-except Exception as ex:
-    print("Couldn't upload to hf :(.")
-    print(ex)
+for save_id in save_ids:
+    fname = os.path.basename(save_id)
+    try:
+        api.upload_file(
+            path_or_fileobj=save_id,
+            path_in_repo="sb3/rl4fisheries/post-review-results/"+fname,
+            repo_id="boettiger-lab/rl4eco",
+            repo_type="model",
+        )
+    except Exception as ex:
+        print("Couldn't upload to hf :(.")
+        print(ex)
 
 print(f"""
 Finished training on input file {args.file}.
