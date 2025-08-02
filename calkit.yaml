@@ -13,6 +13,17 @@ environments:
     prefix: .venv-for-results
 pipeline:
   stages:
+    tests:
+      kind: jupyter-notebook
+      notebook_path: notebooks/for_generating_results/0_tests.ipynb
+      environment: main
+    fp-skopt:
+      kind: jupyter-notebook
+      notebook_path: notebooks/for_generating_results/1_fp_skopt.ipynb
+      environment: main
+      outputs:
+        - path: notebooks/for_generating_results/csv/opt-params.csv
+          storage: git
     download-data:
       kind: jupyter-notebook
       environment: for-results
