@@ -2,3 +2,18 @@ name: rl4fisheries
 title: Using machine learning to inform harvest control rule design in
   complex fishery settings
 description:
+environments:
+  for-results:
+    path: notebooks/for_results/requirements.txt
+    kind: uv-venv
+    python: "3.13.3"
+    prefix: .venv
+pipeline:
+  stages:
+    download-data:
+      kind: jupyter-notebook
+      environment: for-results
+      notebook_path: notebooks/for_results/2-download-data.ipynb
+      outputs:
+        - path: notebooks/for_results/data/rl4fisheries-reproducing
+          storage: null
