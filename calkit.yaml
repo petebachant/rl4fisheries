@@ -3,11 +3,14 @@ title: Using machine learning to inform harvest control rule design in
   complex fishery settings
 description:
 environments:
+  main:
+    kind: uv
+    path: pyproject.toml
   for-results:
     path: notebooks/for_results/requirements.txt
     kind: uv-venv
     python: "3.13.3"
-    prefix: .venv
+    prefix: .venv-for-results
 pipeline:
   stages:
     download-data:
