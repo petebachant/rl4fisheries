@@ -162,3 +162,5 @@ cython_debug/
 .DS_Store
 
 saved_agents/
+
+notebooks/for_results/data/rl4fisheries-reproducing

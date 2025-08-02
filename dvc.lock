@@ -1,0 +1,67 @@
+schema: '2.0'
+stages:
+  _check-env-for-results:
+    cmd: calkit check environment --name for-results
+    deps:
+    - path: notebooks/for_results/requirements.txt
+      hash: md5
+      md5: de0343b5fadbedfe668cd692256e9a7d
+      size: 1053
+    outs:
+    - path: .calkit/env-locks/for-results.txt
+      hash: md5
+      md5: 48d77317a55c16949681de99559a93ee
+      size: 1424
+  _clean-nb-download-data:
+    cmd: calkit nb clean "notebooks/for_results/2-download-data.ipynb"
+    deps:
+    - path: notebooks/for_results/2-download-data.ipynb
+      hash: md5
+      md5: b9c96603a0423552fe365c5cb2211688
+      size: 2141
+    outs:
+    - path: 
+        .calkit/notebooks/cleaned/notebooks/for_results/2-download-data.ipynb
+      hash: md5
+      md5: 0471bfd9b2710879ff19e9f0ec0b2905
+      size: 1613
+  _check-env-download-data:
+    cmd: calkit check environment --name download-data
+    deps:
+    - path: .calkit/envs/download-data.txt
+      hash: md5
+      md5: a886f9a365f14a7e55ef19c790621fae
+      size: 16
+    outs:
+    - path: .calkit/env-locks/download-data.txt
+      hash: md5
+      md5: 54111093495ef9846457747b8b898c6a
+      size: 229
+  download-data:
+    cmd: calkit nb execute --environment for-results --no-check --to html 
+      "notebooks/for_results/2-download-data.ipynb"
+    deps:
+    - path: .calkit/env-locks/for-results.txt
+      hash: md5
+      md5: 48d77317a55c16949681de99559a93ee
+      size: 1424
+    - path: 
+        .calkit/notebooks/cleaned/notebooks/for_results/2-download-data.ipynb
+      hash: md5
+      md5: 0471bfd9b2710879ff19e9f0ec0b2905
+      size: 1613
+    outs:
+    - path: 
+        .calkit/notebooks/executed/notebooks/for_results/2-download-data.ipynb
+      hash: md5
+      md5: f73e50f6a453145362d34d779a5180ab
+      size: 2661
+    - path: .calkit/notebooks/html/notebooks/for_results/2-download-data.html
+      hash: md5
+      md5: a8d002c78c237dea1deb25e59de416e1
+      size: 274031
+    - path: notebooks/for_results/data/rl4fisheries-reproducing
+      hash: md5
+      md5: 2748c3ef0dbf2bb53c6f77ae8d9cb957.dir
+      size: 1598598
+      nfiles: 6
