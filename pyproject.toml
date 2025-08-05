@@ -23,6 +23,8 @@ dev = [
     "sb3-contrib",
     "plotnine",
     "huggingface_hub",
+    "ray",
+    "tensorboard",
 ]
 
 [build-system]
