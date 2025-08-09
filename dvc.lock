@@ -203,3 +203,52 @@ stages:
       hash: md5
       md5: 1548a541fc7ac435a0f6edd2a871787b
       size: 102133
+  _clean-nb-policy-plots:
+    cmd: calkit nb clean "notebooks/for_generating_results/3_policy_plots.ipynb"
+    deps:
+    - path: notebooks/for_generating_results/3_policy_plots.ipynb
+      hash: md5
+      md5: 570d8ec066bce6bb3d38db25ca53dea2
+      size: 47265
+    outs:
+    - path: 
+        .calkit/notebooks/cleaned/notebooks/for_generating_results/3_policy_plots.ipynb
+      hash: md5
+      md5: 0ed4ec6bd6da61a74fff4a8837bb07ae
+      size: 41542
+  policy-plots:
+    cmd: calkit nb execute --environment main --no-check --to html 
+      "notebooks/for_generating_results/3_policy_plots.ipynb"
+    deps:
+    - path: 
+        .calkit/notebooks/cleaned/notebooks/for_generating_results/3_policy_plots.ipynb
+      hash: md5
+      md5: 0ed4ec6bd6da61a74fff4a8837bb07ae
+      size: 41542
+    - path: uv.lock
+      hash: md5
+      md5: 011decbb054e47ff6ee8a81eae4f58f2
+      size: 207684
+    outs:
+    - path: 
+        .calkit/notebooks/executed/notebooks/for_generating_results/3_policy_plots.ipynb
+      hash: md5
+      md5: da14b44252d26f72ff5406f627a550f7
+      size: 64776
+    - path: 
+        .calkit/notebooks/html/notebooks/for_generating_results/3_policy_plots.html
+      hash: md5
+      md5: 7a04a8d90ed703750cdf03bab228ffd3
+      size: 421868
+    - path: notebooks/for_generating_results/csv/UM1_policies.csv
+      hash: md5
+      md5: 7d4d12307edc3b7657668cdff19b0de4
+      size: 387238
+    - path: notebooks/for_generating_results/csv/UM2_policies.csv
+      hash: md5
+      md5: 8a63590cc36facd4fede08d3b4f681d8
+      size: 397590
+    - path: notebooks/for_generating_results/csv/UM3_policies.csv
+      hash: md5
+      md5: 644145ad1ca0b346a213ca95e7b0b508
+      size: 382273

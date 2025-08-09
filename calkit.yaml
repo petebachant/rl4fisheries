@@ -41,6 +41,17 @@ pipeline:
         - notebooks/for_generating_results/csv/UM1_rew.csv
         - notebooks/for_generating_results/csv/UM2_rew.csv
         - notebooks/for_generating_results/csv/UM3_rew.csv
+    policy-plots:
+      kind: jupyter-notebook
+      notebook_path: notebooks/for_generating_results/3_policy_plots.ipynb
+      environment: main
+      cleaned_ipynb_storage: null
+      executed_ipynb_storage: git
+      html_storage: git
+      outputs:
+        - notebooks/for_generating_results/csv/UM1_policies.csv
+        - notebooks/for_generating_results/csv/UM2_policies.csv
+        - notebooks/for_generating_results/csv/UM3_policies.csv
     download-data:
       kind: jupyter-notebook
       environment: for-results

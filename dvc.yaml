@@ -96,6 +96,32 @@ stages:
           cache: false
     desc: Automatically generated from the 'reward-distr' stage in 
       calkit.yaml. Changes made here will be overwritten.
+  _clean-nb-policy-plots:
+    cmd: calkit nb clean 
+      "notebooks/for_generating_results/3_policy_plots.ipynb"
+    deps:
+      - notebooks/for_generating_results/3_policy_plots.ipynb
+    outs:
+      - .calkit/notebooks/cleaned/notebooks/for_generating_results/3_policy_plots.ipynb:
+          cache: false
+    desc: Automatically generated from the 'policy-plots' stage in 
+      calkit.yaml. Changes made here will be overwritten.
+  policy-plots:
+    cmd: calkit nb execute --environment main --no-check --to html 
+      "notebooks/for_generating_results/3_policy_plots.ipynb"
+    deps:
+      - .calkit/notebooks/cleaned/notebooks/for_generating_results/3_policy_plots.ipynb
+      - uv.lock
+    outs:
+      - notebooks/for_generating_results/csv/UM1_policies.csv
+      - notebooks/for_generating_results/csv/UM2_policies.csv
+      - notebooks/for_generating_results/csv/UM3_policies.csv
+      - .calkit/notebooks/executed/notebooks/for_generating_results/3_policy_plots.ipynb:
+          cache: false
+      - .calkit/notebooks/html/notebooks/for_generating_results/3_policy_plots.html:
+          cache: false
+    desc: Automatically generated from the 'policy-plots' stage in 
+      calkit.yaml. Changes made here will be overwritten.
   _clean-nb-download-data:
     cmd: calkit nb clean "notebooks/for_results/2-download-data.ipynb"
     deps:
