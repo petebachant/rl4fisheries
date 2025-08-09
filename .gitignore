@@ -164,3 +164,9 @@ cython_debug/
 saved_agents/
 
 notebooks/for_results/data/rl4fisheries-reproducing
+
+.calkit/notebooks/cleaned/notebooks/for_generating_results/0_tests.ipynb
+
+.calkit/notebooks/cleaned/notebooks/for_generating_results/1_fp_skopt.ipynb
+
+.calkit/notebooks/cleaned/notebooks/for_generating_results/2_reward_distr.ipynb

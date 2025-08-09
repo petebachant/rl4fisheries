@@ -17,13 +17,30 @@ pipeline:
       kind: jupyter-notebook
       notebook_path: notebooks/for_generating_results/0_tests.ipynb
       environment: main
+      cleaned_ipynb_storage: null
+      executed_ipynb_storage: git
+      html_storage: git
     fp-skopt:
       kind: jupyter-notebook
       notebook_path: notebooks/for_generating_results/1_fp_skopt.ipynb
       environment: main
+      cleaned_ipynb_storage: null
+      executed_ipynb_storage: git
+      html_storage: git
       outputs:
         - path: notebooks/for_generating_results/csv/opt-params.csv
           storage: git
+    reward-distr:
+      kind: jupyter-notebook
+      notebook_path: notebooks/for_generating_results/2_reward_distr.ipynb
+      environment: main
+      cleaned_ipynb_storage: null
+      executed_ipynb_storage: git
+      html_storage: git
+      outputs:
+        - notebooks/for_generating_results/csv/UM1_rew.csv
+        - notebooks/for_generating_results/csv/UM2_rew.csv
+        - notebooks/for_generating_results/csv/UM3_rew.csv
     download-data:
       kind: jupyter-notebook
       environment: for-results

@@ -17,14 +17,14 @@ stages:
     deps:
     - path: notebooks/for_results/2-download-data.ipynb
       hash: md5
-      md5: b9c96603a0423552fe365c5cb2211688
-      size: 2141
+      md5: 1fa53035273bc1850c7f08a25d789538
+      size: 2173
     outs:
     - path: 
         .calkit/notebooks/cleaned/notebooks/for_results/2-download-data.ipynb
       hash: md5
-      md5: 0471bfd9b2710879ff19e9f0ec0b2905
-      size: 1613
+      md5: bffd67bc3412f726fceec141d5642f2b
+      size: 1606
   _check-env-download-data:
     cmd: calkit check environment --name download-data
     deps:
@@ -48,20 +48,158 @@ stages:
     - path: 
         .calkit/notebooks/cleaned/notebooks/for_results/2-download-data.ipynb
       hash: md5
-      md5: 0471bfd9b2710879ff19e9f0ec0b2905
-      size: 1613
+      md5: bffd67bc3412f726fceec141d5642f2b
+      size: 1606
     outs:
     - path: 
         .calkit/notebooks/executed/notebooks/for_results/2-download-data.ipynb
       hash: md5
-      md5: f73e50f6a453145362d34d779a5180ab
-      size: 2661
+      md5: 572e0e2294dc837bf5ccc588888d77e3
+      size: 2666
     - path: .calkit/notebooks/html/notebooks/for_results/2-download-data.html
       hash: md5
-      md5: a8d002c78c237dea1deb25e59de416e1
-      size: 274031
+      md5: 37303f27e13d597b696cb4336449e581
+      size: 274043
     - path: notebooks/for_results/data/rl4fisheries-reproducing
       hash: md5
       md5: 2748c3ef0dbf2bb53c6f77ae8d9cb957.dir
       size: 1598598
       nfiles: 6
+  _check-env-main:
+    cmd: calkit check environment --name main
+    deps:
+    - path: pyproject.toml
+      hash: md5
+      md5: 82cf4d3c7d7b430fc2fcf4969961f0b4
+      size: 573
+    outs:
+    - path: uv.lock
+      hash: md5
+      md5: 011decbb054e47ff6ee8a81eae4f58f2
+      size: 207684
+  _clean-nb-tests:
+    cmd: calkit nb clean "notebooks/for_generating_results/0_tests.ipynb"
+    deps:
+    - path: notebooks/for_generating_results/0_tests.ipynb
+      hash: md5
+      md5: 5fb21961c543b440b5a80077590ab1dc
+      size: 3626
+    outs:
+    - path: 
+        .calkit/notebooks/cleaned/notebooks/for_generating_results/0_tests.ipynb
+      hash: md5
+      md5: 977b745f5c4f6b6044af3083e73e576e
+      size: 1892
+  tests:
+    cmd: calkit nb execute --environment main --no-check --to html 
+      "notebooks/for_generating_results/0_tests.ipynb"
+    deps:
+    - path: 
+        .calkit/notebooks/cleaned/notebooks/for_generating_results/0_tests.ipynb
+      hash: md5
+      md5: 977b745f5c4f6b6044af3083e73e576e
+      size: 1892
+    - path: uv.lock
+      hash: md5
+      md5: 011decbb054e47ff6ee8a81eae4f58f2
+      size: 207684
+    outs:
+    - path: 
+        .calkit/notebooks/executed/notebooks/for_generating_results/0_tests.ipynb
+      hash: md5
+      md5: 7f086f5de81f8137722feee67f6ee66e
+      size: 5918
+    - path: .calkit/notebooks/html/notebooks/for_generating_results/0_tests.html
+      hash: md5
+      md5: 9ba5815e1c92c8c8ed94e5d7a973f86e
+      size: 275965
+  _clean-nb-fp-skopt:
+    cmd: calkit nb clean "notebooks/for_generating_results/1_fp_skopt.ipynb"
+    deps:
+    - path: notebooks/for_generating_results/1_fp_skopt.ipynb
+      hash: md5
+      md5: dc25e23e093dd37b6158ee3de4a2d4bc
+      size: 447079
+    outs:
+    - path: 
+        .calkit/notebooks/cleaned/notebooks/for_generating_results/1_fp_skopt.ipynb
+      hash: md5
+      md5: 5f5f7548710ba88a840329ce02a7d992
+      size: 5686
+  fp-skopt:
+    cmd: calkit nb execute --environment main --no-check --to html 
+      "notebooks/for_generating_results/1_fp_skopt.ipynb"
+    deps:
+    - path: 
+        .calkit/notebooks/cleaned/notebooks/for_generating_results/1_fp_skopt.ipynb
+      hash: md5
+      md5: 5f5f7548710ba88a840329ce02a7d992
+      size: 5686
+    - path: uv.lock
+      hash: md5
+      md5: 011decbb054e47ff6ee8a81eae4f58f2
+      size: 207684
+    outs:
+    - path: 
+        .calkit/notebooks/executed/notebooks/for_generating_results/1_fp_skopt.ipynb
+      hash: md5
+      md5: 15bcb9fd803b584290573ddf337c1791
+      size: 423080
+    - path: 
+        .calkit/notebooks/html/notebooks/for_generating_results/1_fp_skopt.html
+      hash: md5
+      md5: 7c34f18a26d26b9351c8186099d57279
+      size: 702435
+    - path: notebooks/for_generating_results/csv/opt-params.csv
+      hash: md5
+      md5: eb1b9523c1510eccf73e7d58ceee775a
+      size: 484
+  _clean-nb-reward-distr:
+    cmd: calkit nb clean "notebooks/for_generating_results/2_reward_distr.ipynb"
+    deps:
+    - path: notebooks/for_generating_results/2_reward_distr.ipynb
+      hash: md5
+      md5: 62181e9c6c142c9c314e9d27e02956ff
+      size: 42919
+    outs:
+    - path: 
+        .calkit/notebooks/cleaned/notebooks/for_generating_results/2_reward_distr.ipynb
+      hash: md5
+      md5: 550bcce7d1d3cacf62aeb52f203d0b78
+      size: 41166
+  reward-distr:
+    cmd: calkit nb execute --environment main --no-check --to html 
+      "notebooks/for_generating_results/2_reward_distr.ipynb"
+    deps:
+    - path: 
+        .calkit/notebooks/cleaned/notebooks/for_generating_results/2_reward_distr.ipynb
+      hash: md5
+      md5: 550bcce7d1d3cacf62aeb52f203d0b78
+      size: 41166
+    - path: uv.lock
+      hash: md5
+      md5: 011decbb054e47ff6ee8a81eae4f58f2
+      size: 207684
+    outs:
+    - path: 
+        .calkit/notebooks/executed/notebooks/for_generating_results/2_reward_distr.ipynb
+      hash: md5
+      md5: bdcb0a41b5f64bb7d8db76d7c45e62c8
+      size: 61310
+    - path: 
+        .calkit/notebooks/html/notebooks/for_generating_results/2_reward_distr.html
+      hash: md5
+      md5: f7862ff5ada6b7011fef5a5226176b4e
+      size: 423724
+    - path: notebooks/for_generating_results/csv/UM1_rew.csv
+      hash: md5
+      md5: c20768634d88d3fb8b13cf518611ff62
+      size: 102287
+    - path: notebooks/for_generating_results/csv/UM2_rew.csv
+      hash: md5
+      md5: ee36bf3a3ba81218033179ece798b825
+      size: 103041
+    - path: notebooks/for_generating_results/csv/UM3_rew.csv
+      hash: md5
+      md5: 1548a541fc7ac435a0f6edd2a871787b
+      size: 102133
