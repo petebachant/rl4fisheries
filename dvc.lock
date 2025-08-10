@@ -252,3 +252,46 @@ stages:
       hash: md5
       md5: 644145ad1ca0b346a213ca95e7b0b508
       size: 382273
+  _clean-nb-episode-plots:
+    cmd: calkit nb clean 
+      "notebooks/for_generating_results/4_episode_plots.ipynb"
+    deps:
+    - path: notebooks/for_generating_results/4_episode_plots.ipynb
+      hash: md5
+      md5: ae8df3d29c41060d8e46472b7361b65d
+      size: 105114
+    outs:
+    - path: 
+        .calkit/notebooks/cleaned/notebooks/for_generating_results/4_episode_plots.ipynb
+      hash: md5
+      md5: 3cf0d5fe95d2b35045dc5716cca7d96c
+      size: 26300
+  episode-plots:
+    cmd: calkit nb execute --environment main --no-check --to html 
+      "notebooks/for_generating_results/4_episode_plots.ipynb"
+    deps:
+    - path: 
+        .calkit/notebooks/cleaned/notebooks/for_generating_results/4_episode_plots.ipynb
+      hash: md5
+      md5: 3cf0d5fe95d2b35045dc5716cca7d96c
+      size: 26300
+    - path: uv.lock
+      hash: md5
+      md5: 011decbb054e47ff6ee8a81eae4f58f2
+      size: 207684
+    outs:
+    - path: 
+        .calkit/notebooks/executed/notebooks/for_generating_results/4_episode_plots.ipynb
+      hash: md5
+      md5: 2783e05f4908eef1ba1f46144fb03771
+      size: 109705
+    - path: 
+        .calkit/notebooks/html/notebooks/for_generating_results/4_episode_plots.html
+      hash: md5
+      md5: c14deb17d539f9e4d86bb5a88890178a
+      size: 426484
+    - path: notebooks/for_generating_results/csv/eps-v2
+      hash: md5
+      md5: c22120b3e9a3429797be034645fa277e.dir
+      size: 773114
+      nfiles: 30

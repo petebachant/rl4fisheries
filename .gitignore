@@ -172,3 +172,5 @@ notebooks/for_results/data/rl4fisheries-reproducing
 .calkit/notebooks/cleaned/notebooks/for_generating_results/2_reward_distr.ipynb
 
 .calkit/notebooks/cleaned/notebooks/for_generating_results/3_policy_plots.ipynb
+
+.calkit/notebooks/cleaned/notebooks/for_generating_results/4_episode_plots.ipynb
