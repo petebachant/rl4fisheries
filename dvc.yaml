@@ -260,9 +260,32 @@ stages:
       - .calkit/notebooks/cleaned/notebooks/for_results/4-policies.ipynb
       - .calkit/env-locks/for-results.txt
     outs:
+      - notebooks/for_results/figures/policies.jpeg
       - .calkit/notebooks/executed/notebooks/for_results/4-policies.ipynb:
           cache: false
       - .calkit/notebooks/html/notebooks/for_results/4-policies.html:
           cache: false
     desc: Automatically generated from the 'policies' stage in 
+      calkit.yaml. Changes made here will be overwritten.
+  _clean-nb-episodes:
+    cmd: calkit nb clean "notebooks/for_results/5-episodes.ipynb"
+    deps:
+      - notebooks/for_results/5-episodes.ipynb
+    outs:
+      - .calkit/notebooks/cleaned/notebooks/for_results/5-episodes.ipynb:
+          cache: false
+    desc: Automatically generated from the 'episodes' stage in 
+      calkit.yaml. Changes made here will be overwritten.
+  episodes:
+    cmd: calkit nb execute --environment for-results --no-check --to 
+      html "notebooks/for_results/5-episodes.ipynb"
+    deps:
+      - .calkit/notebooks/cleaned/notebooks/for_results/5-episodes.ipynb
+      - .calkit/env-locks/for-results.txt
+    outs:
+      - .calkit/notebooks/executed/notebooks/for_results/5-episodes.ipynb:
+          cache: false
+      - .calkit/notebooks/html/notebooks/for_results/5-episodes.html:
+          cache: false
+    desc: Automatically generated from the 'episodes' stage in 
       calkit.yaml. Changes made here will be overwritten.

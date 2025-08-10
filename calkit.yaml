@@ -107,3 +107,15 @@ pipeline:
       html_storage: git
       outputs:
         - notebooks/for_results/figures/policies.jpeg
+    episodes:
+      kind: jupyter-notebook
+      environment: for-results
+      notebook_path: notebooks/for_results/5-episodes.ipynb
+      cleaned_ipynb_storage: null
+      executed_ipynb_storage: git
+      html_storage: git
+      outputs:
+        - notebooks/for_results/figures/eps-um1.jpeg
+        - notebooks/for_results/figures/eps-um2.jpeg
+        - notebooks/for_results/figures/eps-um3.jpeg
+        - notebooks/for_results/figures/eps-um3-zoom.jpeg

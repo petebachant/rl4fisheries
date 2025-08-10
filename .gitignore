@@ -184,3 +184,5 @@ notebooks/for_results/data/rl4fisheries-reproducing
 .calkit/notebooks/cleaned/notebooks/for_results/3-rewards.ipynb
 
 .calkit/notebooks/cleaned/notebooks/for_results/4-policies.ipynb
+
+.calkit/notebooks/cleaned/notebooks/for_results/5-episodes.ipynb

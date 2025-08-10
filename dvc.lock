@@ -448,3 +448,36 @@ stages:
       hash: md5
       md5: d983cb7312bb26dcdf571b80049d1845
       size: 549789
+  _clean-nb-episodes:
+    cmd: calkit nb clean "notebooks/for_results/5-episodes.ipynb"
+    deps:
+    - path: notebooks/for_results/5-episodes.ipynb
+      hash: md5
+      md5: 2dace30dbada4e9fb676fd02b24f8be3
+      size: 3028256
+    outs:
+    - path: .calkit/notebooks/cleaned/notebooks/for_results/5-episodes.ipynb
+      hash: md5
+      md5: 21e09ab9421577988d806ffdc4e24bcd
+      size: 17571
+  episodes:
+    cmd: calkit nb execute --environment for-results --no-check --to html 
+      "notebooks/for_results/5-episodes.ipynb"
+    deps:
+    - path: .calkit/env-locks/for-results.txt
+      hash: md5
+      md5: 48d77317a55c16949681de99559a93ee
+      size: 1424
+    - path: .calkit/notebooks/cleaned/notebooks/for_results/5-episodes.ipynb
+      hash: md5
+      md5: 21e09ab9421577988d806ffdc4e24bcd
+      size: 17571
+    outs:
+    - path: .calkit/notebooks/executed/notebooks/for_results/5-episodes.ipynb
+      hash: md5
+      md5: 8222b69035c772ff0a930414df590e1a
+      size: 3038072
+    - path: .calkit/notebooks/html/notebooks/for_results/5-episodes.html
+      hash: md5
+      md5: 61f53ccd403ab670dec87a194a365791
+      size: 3356290
