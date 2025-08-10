@@ -213,8 +213,34 @@ stages:
           cache: false
           persist: false
       - .calkit/notebooks/executed/notebooks/for_results/2-download-data.ipynb:
-          cache: true
+          cache: false
       - .calkit/notebooks/html/notebooks/for_results/2-download-data.html:
-          cache: true
+          cache: false
     desc: Automatically generated from the 'download-data' stage in 
+      calkit.yaml. Changes made here will be overwritten.
+  _clean-nb-rewards:
+    cmd: calkit nb clean "notebooks/for_results/3-rewards.ipynb"
+    deps:
+      - notebooks/for_results/3-rewards.ipynb
+    outs:
+      - .calkit/notebooks/cleaned/notebooks/for_results/3-rewards.ipynb:
+          cache: false
+    desc: Automatically generated from the 'rewards' stage in 
+      calkit.yaml. Changes made here will be overwritten.
+  rewards:
+    cmd: calkit nb execute --environment for-results --no-check --to 
+      html "notebooks/for_results/3-rewards.ipynb"
+    deps:
+      - .calkit/notebooks/cleaned/notebooks/for_results/3-rewards.ipynb
+      - .calkit/env-locks/for-results.txt
+    outs:
+      - notebooks/for_results/figures/rewards.jpeg
+      - notebooks/for_results/csv/rew-table.csv:
+          cache: false
+          persist: false
+      - .calkit/notebooks/executed/notebooks/for_results/3-rewards.ipynb:
+          cache: false
+      - .calkit/notebooks/html/notebooks/for_results/3-rewards.html:
+          cache: false
+    desc: Automatically generated from the 'rewards' stage in 
       calkit.yaml. Changes made here will be overwritten.

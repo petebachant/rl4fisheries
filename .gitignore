@@ -178,3 +178,7 @@ notebooks/for_results/data/rl4fisheries-reproducing
 .calkit/notebooks/cleaned/notebooks/for_generating_results/5_stochasticity.ipynb
 
 .calkit/notebooks/cleaned/notebooks/for_generating_results/6_aftermath.ipynb
+
+.calkit/notebooks/cleaned/notebooks/for_results/2-download-data.ipynb
+
+.calkit/notebooks/cleaned/notebooks/for_results/3-rewards.ipynb

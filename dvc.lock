@@ -374,3 +374,44 @@ stages:
       hash: md5
       md5: c49982d5e3a4d6e14e104e98bf14eaa5
       size: 537780
+  _clean-nb-rewards:
+    cmd: calkit nb clean "notebooks/for_results/3-rewards.ipynb"
+    deps:
+    - path: notebooks/for_results/3-rewards.ipynb
+      hash: md5
+      md5: 53622d8e096ec983225da354731082b1
+      size: 222157
+    outs:
+    - path: .calkit/notebooks/cleaned/notebooks/for_results/3-rewards.ipynb
+      hash: md5
+      md5: 4aa3eb1adc70cba4c3b2a9ad651d1cf6
+      size: 7958
+  rewards:
+    cmd: calkit nb execute --environment for-results --no-check --to html 
+      "notebooks/for_results/3-rewards.ipynb"
+    deps:
+    - path: .calkit/env-locks/for-results.txt
+      hash: md5
+      md5: 48d77317a55c16949681de99559a93ee
+      size: 1424
+    - path: .calkit/notebooks/cleaned/notebooks/for_results/3-rewards.ipynb
+      hash: md5
+      md5: 4aa3eb1adc70cba4c3b2a9ad651d1cf6
+      size: 7958
+    outs:
+    - path: .calkit/notebooks/executed/notebooks/for_results/3-rewards.ipynb
+      hash: md5
+      md5: 41da7d65321f11ca7505284b4775ae38
+      size: 229912
+    - path: .calkit/notebooks/html/notebooks/for_results/3-rewards.html
+      hash: md5
+      md5: e7b0737ed9ecb2dfaa9564f3dd9f4a69
+      size: 511160
+    - path: notebooks/for_results/csv/rew-table.csv
+      hash: md5
+      md5: a41da8ce3e9a7865a40821a1cd2235ca
+      size: 331
+    - path: notebooks/for_results/figures/rewards.jpeg
+      hash: md5
+      md5: a6b31063f0838e910ef3951394611795
+      size: 115327

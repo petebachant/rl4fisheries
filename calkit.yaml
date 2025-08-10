@@ -81,6 +81,20 @@ pipeline:
       kind: jupyter-notebook
       environment: for-results
       notebook_path: notebooks/for_results/2-download-data.ipynb
+      cleaned_ipynb_storage: null
+      executed_ipynb_storage: git
+      html_storage: git
       outputs:
         - path: notebooks/for_results/data/rl4fisheries-reproducing
           storage: null
+    rewards:
+      kind: jupyter-notebook
+      environment: for-results
+      notebook_path: notebooks/for_results/3-rewards.ipynb
+      cleaned_ipynb_storage: null
+      executed_ipynb_storage: git
+      html_storage: git
+      outputs:
+        - notebooks/for_results/figures/rewards.jpeg
+        - path: notebooks/for_results/csv/rew-table.csv
+          storage: git
