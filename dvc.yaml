@@ -244,3 +244,25 @@ stages:
           cache: false
     desc: Automatically generated from the 'rewards' stage in 
       calkit.yaml. Changes made here will be overwritten.
+  _clean-nb-policies:
+    cmd: calkit nb clean "notebooks/for_results/4-policies.ipynb"
+    deps:
+      - notebooks/for_results/4-policies.ipynb
+    outs:
+      - .calkit/notebooks/cleaned/notebooks/for_results/4-policies.ipynb:
+          cache: false
+    desc: Automatically generated from the 'policies' stage in 
+      calkit.yaml. Changes made here will be overwritten.
+  policies:
+    cmd: calkit nb execute --environment for-results --no-check --to 
+      html "notebooks/for_results/4-policies.ipynb"
+    deps:
+      - .calkit/notebooks/cleaned/notebooks/for_results/4-policies.ipynb
+      - .calkit/env-locks/for-results.txt
+    outs:
+      - .calkit/notebooks/executed/notebooks/for_results/4-policies.ipynb:
+          cache: false
+      - .calkit/notebooks/html/notebooks/for_results/4-policies.html:
+          cache: false
+    desc: Automatically generated from the 'policies' stage in 
+      calkit.yaml. Changes made here will be overwritten.

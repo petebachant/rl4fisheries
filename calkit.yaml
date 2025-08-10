@@ -98,3 +98,12 @@ pipeline:
         - notebooks/for_results/figures/rewards.jpeg
         - path: notebooks/for_results/csv/rew-table.csv
           storage: git
+    policies:
+      kind: jupyter-notebook
+      environment: for-results
+      notebook_path: notebooks/for_results/4-policies.ipynb
+      cleaned_ipynb_storage: null
+      executed_ipynb_storage: git
+      html_storage: git
+      outputs:
+        - notebooks/for_results/figures/policies.jpeg

@@ -415,3 +415,36 @@ stages:
       hash: md5
       md5: a6b31063f0838e910ef3951394611795
       size: 115327
+  _clean-nb-policies:
+    cmd: calkit nb clean "notebooks/for_results/4-policies.ipynb"
+    deps:
+    - path: notebooks/for_results/4-policies.ipynb
+      hash: md5
+      md5: a33316139edb566123cd50b5b5492bec
+      size: 270573
+    outs:
+    - path: .calkit/notebooks/cleaned/notebooks/for_results/4-policies.ipynb
+      hash: md5
+      md5: c63b440d75ab13aae80f373b54ad690a
+      size: 4277
+  policies:
+    cmd: calkit nb execute --environment for-results --no-check --to html 
+      "notebooks/for_results/4-policies.ipynb"
+    deps:
+    - path: .calkit/env-locks/for-results.txt
+      hash: md5
+      md5: 48d77317a55c16949681de99559a93ee
+      size: 1424
+    - path: .calkit/notebooks/cleaned/notebooks/for_results/4-policies.ipynb
+      hash: md5
+      md5: c63b440d75ab13aae80f373b54ad690a
+      size: 4277
+    outs:
+    - path: .calkit/notebooks/executed/notebooks/for_results/4-policies.ipynb
+      hash: md5
+      md5: 35fcd5dcce8e6878e31fb4886e41fa22
+      size: 274231
+    - path: .calkit/notebooks/html/notebooks/for_results/4-policies.html
+      hash: md5
+      md5: d983cb7312bb26dcdf571b80049d1845
+      size: 549789
