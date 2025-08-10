@@ -146,6 +146,29 @@ stages:
           cache: false
     desc: Automatically generated from the 'episode-plots' stage in 
       calkit.yaml. Changes made here will be overwritten.
+  _clean-nb-stochasticity:
+    cmd: calkit nb clean 
+      "notebooks/for_generating_results/5_stochasticity.ipynb"
+    deps:
+      - notebooks/for_generating_results/5_stochasticity.ipynb
+    outs:
+      - .calkit/notebooks/cleaned/notebooks/for_generating_results/5_stochasticity.ipynb:
+          cache: false
+    desc: Automatically generated from the 'stochasticity' stage in 
+      calkit.yaml. Changes made here will be overwritten.
+  stochasticity:
+    cmd: calkit nb execute --environment main --no-check --to html 
+      "notebooks/for_generating_results/5_stochasticity.ipynb"
+    deps:
+      - .calkit/notebooks/cleaned/notebooks/for_generating_results/5_stochasticity.ipynb
+      - uv.lock
+    outs:
+      - .calkit/notebooks/executed/notebooks/for_generating_results/5_stochasticity.ipynb:
+          cache: false
+      - .calkit/notebooks/html/notebooks/for_generating_results/5_stochasticity.html:
+          cache: false
+    desc: Automatically generated from the 'stochasticity' stage in 
+      calkit.yaml. Changes made here will be overwritten.
   _clean-nb-download-data:
     cmd: calkit nb clean "notebooks/for_results/2-download-data.ipynb"
     deps:

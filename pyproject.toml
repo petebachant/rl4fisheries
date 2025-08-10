@@ -10,6 +10,7 @@ dependencies = [
     "matplotlib",
     "typing",
     "polars",
+    "seaborn",
     "tqdm",
     "scikit-optimize",
     "scikit-learn==1.4.2",

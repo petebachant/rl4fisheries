@@ -61,6 +61,13 @@ pipeline:
       html_storage: git
       outputs:
         - notebooks/for_generating_results/csv/eps-v2
+    stochasticity:
+      kind: jupyter-notebook
+      notebook_path: notebooks/for_generating_results/5_stochasticity.ipynb
+      environment: main
+      cleaned_ipynb_storage: null
+      executed_ipynb_storage: git
+      html_storage: git
     download-data:
       kind: jupyter-notebook
       environment: for-results

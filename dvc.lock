@@ -70,13 +70,13 @@ stages:
     deps:
     - path: pyproject.toml
       hash: md5
-      md5: 82cf4d3c7d7b430fc2fcf4969961f0b4
-      size: 573
+      md5: 5dd453ff0ca348e9886637f09683ce6a
+      size: 588
     outs:
     - path: uv.lock
       hash: md5
-      md5: 011decbb054e47ff6ee8a81eae4f58f2
-      size: 207684
+      md5: 22290e615ba613a687a87def94b859b3
+      size: 208529
   _clean-nb-tests:
     cmd: calkit nb clean "notebooks/for_generating_results/0_tests.ipynb"
     deps:
@@ -295,3 +295,41 @@ stages:
       md5: c22120b3e9a3429797be034645fa277e.dir
       size: 773114
       nfiles: 30
+  _clean-nb-stochasticity:
+    cmd: calkit nb clean 
+      "notebooks/for_generating_results/5_stochasticity.ipynb"
+    deps:
+    - path: notebooks/for_generating_results/5_stochasticity.ipynb
+      hash: md5
+      md5: a03fb50f678ca02096943279f1251f68
+      size: 271014
+    outs:
+    - path: 
+        .calkit/notebooks/cleaned/notebooks/for_generating_results/5_stochasticity.ipynb
+      hash: md5
+      md5: a7eef2311d32d91234d7b12574c85b1a
+      size: 4236
+  stochasticity:
+    cmd: calkit nb execute --environment main --no-check --to html 
+      "notebooks/for_generating_results/5_stochasticity.ipynb"
+    deps:
+    - path: 
+        .calkit/notebooks/cleaned/notebooks/for_generating_results/5_stochasticity.ipynb
+      hash: md5
+      md5: a7eef2311d32d91234d7b12574c85b1a
+      size: 4236
+    - path: uv.lock
+      hash: md5
+      md5: 22290e615ba613a687a87def94b859b3
+      size: 208529
+    outs:
+    - path: 
+        .calkit/notebooks/executed/notebooks/for_generating_results/5_stochasticity.ipynb
+      hash: md5
+      md5: 824c01c6033b7c1795541dc2c09ceac4
+      size: 292921
+    - path: 
+        .calkit/notebooks/html/notebooks/for_generating_results/5_stochasticity.html
+      hash: md5
+      md5: 89095ae1564c94c24ea757182ee9d664
+      size: 569716
