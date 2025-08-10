@@ -333,3 +333,44 @@ stages:
       hash: md5
       md5: 89095ae1564c94c24ea757182ee9d664
       size: 569716
+  _clean-nb-aftermath:
+    cmd: calkit nb clean "notebooks/for_generating_results/6_aftermath.ipynb"
+    deps:
+    - path: notebooks/for_generating_results/6_aftermath.ipynb
+      hash: md5
+      md5: 9d655db0d8eac43a522e51aca1180c00
+      size: 2202176
+    outs:
+    - path: 
+        .calkit/notebooks/cleaned/notebooks/for_generating_results/6_aftermath.ipynb
+      hash: md5
+      md5: bff6edc4f2d0a373df6bb12b0f5585c8
+      size: 28924
+  aftermath:
+    cmd: calkit nb execute --environment main --no-check --to html 
+      "notebooks/for_generating_results/6_aftermath.ipynb"
+    deps:
+    - path: 
+        .calkit/notebooks/cleaned/notebooks/for_generating_results/6_aftermath.ipynb
+      hash: md5
+      md5: bff6edc4f2d0a373df6bb12b0f5585c8
+      size: 28924
+    - path: uv.lock
+      hash: md5
+      md5: 22290e615ba613a687a87def94b859b3
+      size: 208529
+    outs:
+    - path: 
+        .calkit/notebooks/executed/notebooks/for_generating_results/6_aftermath.ipynb
+      hash: md5
+      md5: fcfd099eb9d58c2ae1294786dabc8a31
+      size: 2304813
+    - path: 
+        .calkit/notebooks/html/notebooks/for_generating_results/6_aftermath.html
+      hash: md5
+      md5: 5b614b2d00db9ec184805b3a983bd15f
+      size: 2637152
+    - path: peer-review/myst/figures/aftermath-full.jpeg
+      hash: md5
+      md5: c49982d5e3a4d6e14e104e98bf14eaa5
+      size: 537780

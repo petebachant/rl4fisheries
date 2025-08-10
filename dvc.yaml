@@ -169,6 +169,30 @@ stages:
           cache: false
     desc: Automatically generated from the 'stochasticity' stage in 
       calkit.yaml. Changes made here will be overwritten.
+  _clean-nb-aftermath:
+    cmd: calkit nb clean 
+      "notebooks/for_generating_results/6_aftermath.ipynb"
+    deps:
+      - notebooks/for_generating_results/6_aftermath.ipynb
+    outs:
+      - .calkit/notebooks/cleaned/notebooks/for_generating_results/6_aftermath.ipynb:
+          cache: false
+    desc: Automatically generated from the 'aftermath' stage in 
+      calkit.yaml. Changes made here will be overwritten.
+  aftermath:
+    cmd: calkit nb execute --environment main --no-check --to html 
+      "notebooks/for_generating_results/6_aftermath.ipynb"
+    deps:
+      - .calkit/notebooks/cleaned/notebooks/for_generating_results/6_aftermath.ipynb
+      - uv.lock
+    outs:
+      - peer-review/myst/figures/aftermath-full.jpeg
+      - .calkit/notebooks/executed/notebooks/for_generating_results/6_aftermath.ipynb:
+          cache: false
+      - .calkit/notebooks/html/notebooks/for_generating_results/6_aftermath.html:
+          cache: false
+    desc: Automatically generated from the 'aftermath' stage in 
+      calkit.yaml. Changes made here will be overwritten.
   _clean-nb-download-data:
     cmd: calkit nb clean "notebooks/for_results/2-download-data.ipynb"
     deps:

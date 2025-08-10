@@ -68,6 +68,15 @@ pipeline:
       cleaned_ipynb_storage: null
       executed_ipynb_storage: git
       html_storage: git
+    aftermath:
+      kind: jupyter-notebook
+      notebook_path: notebooks/for_generating_results/6_aftermath.ipynb
+      environment: main
+      cleaned_ipynb_storage: null
+      executed_ipynb_storage: git
+      html_storage: git
+      outputs:
+        - peer-review/myst/figures/aftermath-full.jpeg
     download-data:
       kind: jupyter-notebook
       environment: for-results
