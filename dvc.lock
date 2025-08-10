@@ -54,8 +54,8 @@ stages:
     - path: 
         .calkit/notebooks/executed/notebooks/for_results/2-download-data.ipynb
       hash: md5
-      md5: 572e0e2294dc837bf5ccc588888d77e3
-      size: 2666
+      md5: 3ad1d435277fcf3078dc11aa8a606e63
+      size: 3740
     - path: .calkit/notebooks/html/notebooks/for_results/2-download-data.html
       hash: md5
       md5: 37303f27e13d597b696cb4336449e581
@@ -101,14 +101,14 @@ stages:
       size: 1892
     - path: uv.lock
       hash: md5
-      md5: 011decbb054e47ff6ee8a81eae4f58f2
-      size: 207684
+      md5: 22290e615ba613a687a87def94b859b3
+      size: 208529
     outs:
     - path: 
         .calkit/notebooks/executed/notebooks/for_generating_results/0_tests.ipynb
       hash: md5
-      md5: 7f086f5de81f8137722feee67f6ee66e
-      size: 5918
+      md5: a026418b4bf3b3955f45aec9e31443d2
+      size: 5917
     - path: .calkit/notebooks/html/notebooks/for_generating_results/0_tests.html
       hash: md5
       md5: 9ba5815e1c92c8c8ed94e5d7a973f86e
@@ -137,19 +137,19 @@ stages:
       size: 5686
     - path: uv.lock
       hash: md5
-      md5: 011decbb054e47ff6ee8a81eae4f58f2
-      size: 207684
+      md5: 22290e615ba613a687a87def94b859b3
+      size: 208529
     outs:
     - path: 
         .calkit/notebooks/executed/notebooks/for_generating_results/1_fp_skopt.ipynb
       hash: md5
-      md5: 15bcb9fd803b584290573ddf337c1791
-      size: 423080
+      md5: 360c2908eaa28a1d986ee68a46f54afd
+      size: 416060
     - path: 
         .calkit/notebooks/html/notebooks/for_generating_results/1_fp_skopt.html
       hash: md5
-      md5: 7c34f18a26d26b9351c8186099d57279
-      size: 702435
+      md5: 2a817903803f734714c4d435adcb7352
+      size: 695415
     - path: notebooks/for_generating_results/csv/opt-params.csv
       hash: md5
       md5: eb1b9523c1510eccf73e7d58ceee775a
@@ -178,31 +178,31 @@ stages:
       size: 41166
     - path: uv.lock
       hash: md5
-      md5: 011decbb054e47ff6ee8a81eae4f58f2
-      size: 207684
+      md5: 22290e615ba613a687a87def94b859b3
+      size: 208529
     outs:
     - path: 
         .calkit/notebooks/executed/notebooks/for_generating_results/2_reward_distr.ipynb
       hash: md5
-      md5: bdcb0a41b5f64bb7d8db76d7c45e62c8
-      size: 61310
+      md5: d76fcae7307f85c51f5d746887715321
+      size: 61306
     - path: 
         .calkit/notebooks/html/notebooks/for_generating_results/2_reward_distr.html
       hash: md5
-      md5: f7862ff5ada6b7011fef5a5226176b4e
-      size: 423724
+      md5: 5276f91fd2b8a5e5eb21cb50ed0f47f9
+      size: 423725
     - path: notebooks/for_generating_results/csv/UM1_rew.csv
       hash: md5
-      md5: c20768634d88d3fb8b13cf518611ff62
-      size: 102287
+      md5: 95b82a2fcf16e6023f4218d5ccab2d3c
+      size: 102257
     - path: notebooks/for_generating_results/csv/UM2_rew.csv
       hash: md5
-      md5: ee36bf3a3ba81218033179ece798b825
-      size: 103041
+      md5: 749ac04b1cf033a1793a2561bbfbe7f1
+      size: 103065
     - path: notebooks/for_generating_results/csv/UM3_rew.csv
       hash: md5
-      md5: 1548a541fc7ac435a0f6edd2a871787b
-      size: 102133
+      md5: 7185fe7dd5ba20cf575240e7f1366e8a
+      size: 102134
   _clean-nb-policy-plots:
     cmd: calkit nb clean "notebooks/for_generating_results/3_policy_plots.ipynb"
     deps:
@@ -227,31 +227,31 @@ stages:
       size: 41542
     - path: uv.lock
       hash: md5
-      md5: 011decbb054e47ff6ee8a81eae4f58f2
-      size: 207684
+      md5: 22290e615ba613a687a87def94b859b3
+      size: 208529
     outs:
     - path: 
         .calkit/notebooks/executed/notebooks/for_generating_results/3_policy_plots.ipynb
       hash: md5
-      md5: da14b44252d26f72ff5406f627a550f7
-      size: 64776
+      md5: 7c8b8ba9c0e08f6cd0a89945de982287
+      size: 64778
     - path: 
         .calkit/notebooks/html/notebooks/for_generating_results/3_policy_plots.html
       hash: md5
-      md5: 7a04a8d90ed703750cdf03bab228ffd3
+      md5: fe8022342e54174889d8c03a783ed03c
       size: 421868
     - path: notebooks/for_generating_results/csv/UM1_policies.csv
       hash: md5
-      md5: 7d4d12307edc3b7657668cdff19b0de4
-      size: 387238
+      md5: 26ab0b8ca9ca15e9d032d8841c84f4fe
+      size: 382388
     - path: notebooks/for_generating_results/csv/UM2_policies.csv
       hash: md5
-      md5: 8a63590cc36facd4fede08d3b4f681d8
-      size: 397590
+      md5: 1fb6ed8fa838969f63793e78a2410b46
+      size: 396671
     - path: notebooks/for_generating_results/csv/UM3_policies.csv
       hash: md5
-      md5: 644145ad1ca0b346a213ca95e7b0b508
-      size: 382273
+      md5: 7f031c2ba4a690f5a7dde83593ebd11d
+      size: 382193
   _clean-nb-episode-plots:
     cmd: calkit nb clean 
       "notebooks/for_generating_results/4_episode_plots.ipynb"
@@ -277,23 +277,23 @@ stages:
       size: 26300
     - path: uv.lock
       hash: md5
-      md5: 011decbb054e47ff6ee8a81eae4f58f2
-      size: 207684
+      md5: 22290e615ba613a687a87def94b859b3
+      size: 208529
     outs:
     - path: 
         .calkit/notebooks/executed/notebooks/for_generating_results/4_episode_plots.ipynb
       hash: md5
-      md5: 2783e05f4908eef1ba1f46144fb03771
-      size: 109705
+      md5: b0ad20fef4cd2d22a765d12cef7d44dc
+      size: 111634
     - path: 
         .calkit/notebooks/html/notebooks/for_generating_results/4_episode_plots.html
       hash: md5
-      md5: c14deb17d539f9e4d86bb5a88890178a
-      size: 426484
+      md5: 10551617eb9c2b3fcfc78ffd480d8a17
+      size: 428412
     - path: notebooks/for_generating_results/csv/eps-v2
       hash: md5
-      md5: c22120b3e9a3429797be034645fa277e.dir
-      size: 773114
+      md5: 090c66df47c9d8640aa0ad4c725c1c52.dir
+      size: 773970
       nfiles: 30
   _clean-nb-stochasticity:
     cmd: calkit nb clean 
@@ -442,12 +442,16 @@ stages:
     outs:
     - path: .calkit/notebooks/executed/notebooks/for_results/4-policies.ipynb
       hash: md5
-      md5: 35fcd5dcce8e6878e31fb4886e41fa22
-      size: 274231
+      md5: 89d2a875d1d2f376e599cae627417aea
+      size: 274232
     - path: .calkit/notebooks/html/notebooks/for_results/4-policies.html
       hash: md5
-      md5: d983cb7312bb26dcdf571b80049d1845
+      md5: 321e56914fb07fd6420717d84578a1b2
       size: 549789
+    - path: notebooks/for_results/figures/policies.jpeg
+      hash: md5
+      md5: 00ef8401d1ce053d818ba2ac5db97442
+      size: 167138
   _clean-nb-episodes:
     cmd: calkit nb clean "notebooks/for_results/5-episodes.ipynb"
     deps:
@@ -475,9 +479,25 @@ stages:
     outs:
     - path: .calkit/notebooks/executed/notebooks/for_results/5-episodes.ipynb
       hash: md5
-      md5: 8222b69035c772ff0a930414df590e1a
-      size: 3038072
+      md5: f16abe141521c06a220269d18148cddb
+      size: 3038073
     - path: .calkit/notebooks/html/notebooks/for_results/5-episodes.html
       hash: md5
-      md5: 61f53ccd403ab670dec87a194a365791
+      md5: edccde8099466ad1bffed1d7cd3ac7d9
       size: 3356290
+    - path: notebooks/for_results/figures/eps-um1.jpeg
+      hash: md5
+      md5: a912e6dc37c800b9721267b5339215f8
+      size: 449741
+    - path: notebooks/for_results/figures/eps-um2.jpeg
+      hash: md5
+      md5: a1ae6b3bf933564da318b9aa69fcb448
+      size: 471596
+    - path: notebooks/for_results/figures/eps-um3-zoom.jpeg
+      hash: md5
+      md5: c0677d82ae479f64d722105012d5883e
+      size: 433893
+    - path: notebooks/for_results/figures/eps-um3.jpeg
+      hash: md5
+      md5: 1187ff1f0d89e4d06f0a97c860c1f00c
+      size: 470309

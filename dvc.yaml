@@ -283,6 +283,10 @@ stages:
       - .calkit/notebooks/cleaned/notebooks/for_results/5-episodes.ipynb
       - .calkit/env-locks/for-results.txt
     outs:
+      - notebooks/for_results/figures/eps-um1.jpeg
+      - notebooks/for_results/figures/eps-um2.jpeg
+      - notebooks/for_results/figures/eps-um3.jpeg
+      - notebooks/for_results/figures/eps-um3-zoom.jpeg
       - .calkit/notebooks/executed/notebooks/for_results/5-episodes.ipynb:
           cache: false
       - .calkit/notebooks/html/notebooks/for_results/5-episodes.html:
