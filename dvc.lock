@@ -501,3 +501,237 @@ stages:
       hash: md5
       md5: 1187ff1f0d89e4d06f0a97c860c1f00c
       size: 470309
+  trail-rl-algos:
+    cmd: calkit xenv -n main --no-check -- bash --noprofile --norc 
+      scripts/train_rl_algos.sh
+    deps:
+    - path: hyperpars/for_results/ppo_biomass_UM1.yml
+      hash: md5
+      md5: 4301fa8d4aa9edea6ad3bbc6281f7580
+      size: 905
+    - path: hyperpars/for_results/ppo_biomass_UM2.yml
+      hash: md5
+      md5: 7c6b39ba8cd0db64bded12e8e47f3aff
+      size: 907
+    - path: hyperpars/for_results/ppo_biomass_UM3.yml
+      hash: md5
+      md5: 26a4f8c27e6b4a4fbe5027b55b3e292a
+      size: 926
+    - path: hyperpars/for_results/ppo_both_UM1.yml
+      hash: md5
+      md5: 3143f5c3462640003b70cc4d166ccf03
+      size: 902
+    - path: hyperpars/for_results/ppo_both_UM1_deep.yml
+      hash: md5
+      md5: 07759437f84c2af7f2f538354716239b
+      size: 886
+    - path: hyperpars/for_results/ppo_both_UM2.yml
+      hash: md5
+      md5: f242d6079feed2d5bf13d49624f44f0c
+      size: 904
+    - path: hyperpars/for_results/ppo_both_UM2_deep.yml
+      hash: md5
+      md5: a9e1d9577ee9bd132ee546bd7c5c08cf
+      size: 888
+    - path: hyperpars/for_results/ppo_both_UM3.yml
+      hash: md5
+      md5: 4b253538bccbb5dd856a12b5a13e1f4e
+      size: 923
+    - path: hyperpars/for_results/ppo_both_UM3_deep.yml
+      hash: md5
+      md5: 57e38b232765c10acf60ce64a7e0a3f5
+      size: 885
+    - path: scripts/train_rl_algos.sh
+      hash: md5
+      md5: a83c5d509ee367f2bef917a40019c1d2
+      size: 860
+    - path: src
+      hash: md5
+      md5: c9e5d494e3e18efc2cb7964d5e3c8724.dir
+      size: 52560
+      nfiles: 20
+    - path: uv.lock
+      hash: md5
+      md5: 22290e615ba613a687a87def94b859b3
+      size: 208529
+    outs:
+    - path: 
+        saved_agents/results/PPO-AsmEnv-2obs-UM1-256-64-16-noise0.1-chkpnt1.zip
+      hash: md5
+      md5: 02d74895ee9de0829f9783a2287613db
+      size: 475541
+    - path: 
+        saved_agents/results/PPO-AsmEnv-2obs-UM1-256-64-16-noise0.1-chkpnt2.zip
+      hash: md5
+      md5: 5f03cbb4554f71a583753adf10345481
+      size: 475541
+    - path: 
+        saved_agents/results/PPO-AsmEnv-2obs-UM1-256-64-16-noise0.1-chkpnt3.zip
+      hash: md5
+      md5: edffd6eb9ff6ce5541276945a88dfc3e
+      size: 475541
+    - path: 
+        saved_agents/results/PPO-AsmEnv-2obs-UM1-256-64-16-noise0.1-chkpnt4.zip
+      hash: md5
+      md5: 589d42fafaedd0e0f5d763bcc52f004e
+      size: 475541
+    - path: 
+        saved_agents/results/PPO-AsmEnv-2obs-UM1-64-32-16-noise0.1-chkpnt1.zip
+      hash: md5
+      md5: 9c28fb40a96c3fc2b3f4fa935a357d40
+      size: 104468
+    - path: 
+        saved_agents/results/PPO-AsmEnv-2obs-UM1-64-32-16-noise0.1-chkpnt2.zip
+      hash: md5
+      md5: ddc30519fab7c175f3c135400779bd3f
+      size: 104468
+    - path: 
+        saved_agents/results/PPO-AsmEnv-2obs-UM1-64-32-16-noise0.1-chkpnt3.zip
+      hash: md5
+      md5: 8dc193a7a7e40260a120514c386595f9
+      size: 104468
+    - path: 
+        saved_agents/results/PPO-AsmEnv-2obs-UM1-64-32-16-noise0.1-chkpnt4.zip
+      hash: md5
+      md5: b8edd085ce85e97e3b45c057eabecb03
+      size: 104468
+    - path: 
+        saved_agents/results/PPO-AsmEnv-2obs-UM2-256-64-16-noise0.1-chkpnt1.zip
+      hash: md5
+      md5: ca59aa7ea1a63dc16c6f49c89f9bdf19
+      size: 475541
+    - path: 
+        saved_agents/results/PPO-AsmEnv-2obs-UM2-256-64-16-noise0.1-chkpnt2.zip
+      hash: md5
+      md5: 34dc2b4da86d9c272741dd2f575b5123
+      size: 475541
+    - path: 
+        saved_agents/results/PPO-AsmEnv-2obs-UM2-256-64-16-noise0.1-chkpnt3.zip
+      hash: md5
+      md5: 9b4238eaca6d24f4b00716633c8d54fe
+      size: 475541
+    - path: 
+        saved_agents/results/PPO-AsmEnv-2obs-UM2-256-64-16-noise0.1-chkpnt4.zip
+      hash: md5
+      md5: 0ca3ee00670e0409dd48d11f9962cd3c
+      size: 475541
+    - path: 
+        saved_agents/results/PPO-AsmEnv-2obs-UM2-64-32-16-noise0.1-chkpnt1.zip
+      hash: md5
+      md5: 4777f1a0bb327288252f27b36be872b1
+      size: 104468
+    - path: 
+        saved_agents/results/PPO-AsmEnv-2obs-UM2-64-32-16-noise0.1-chkpnt2.zip
+      hash: md5
+      md5: 3b7a8ba7550ce1f80902fb22c72a470d
+      size: 104468
+    - path: 
+        saved_agents/results/PPO-AsmEnv-2obs-UM2-64-32-16-noise0.1-chkpnt3.zip
+      hash: md5
+      md5: 2cd70066796abc3f201e7db37ae0ec9f
+      size: 104468
+    - path: 
+        saved_agents/results/PPO-AsmEnv-2obs-UM2-64-32-16-noise0.1-chkpnt4.zip
+      hash: md5
+      md5: bef968ee09bf80b58c09fdff6a24d957
+      size: 104468
+    - path: 
+        saved_agents/results/PPO-AsmEnv-2obs-UM3-256-64-16-noise0.1-chkpnt1.zip
+      hash: md5
+      md5: cff3a4f7bf8aa43d0e2869a0d9a24cdd
+      size: 475541
+    - path: 
+        saved_agents/results/PPO-AsmEnv-2obs-UM3-256-64-16-noise0.1-chkpnt2.zip
+      hash: md5
+      md5: 83527cb44f2d8178d00fe9eec8a3c89f
+      size: 475541
+    - path: 
+        saved_agents/results/PPO-AsmEnv-2obs-UM3-256-64-16-noise0.1-chkpnt3.zip
+      hash: md5
+      md5: bf4e7c95f5463d469683b5f8a12b17eb
+      size: 475541
+    - path: 
+        saved_agents/results/PPO-AsmEnv-2obs-UM3-256-64-16-noise0.1-chkpnt4.zip
+      hash: md5
+      md5: bd664b83dca930dbfe14ca54b774be0f
+      size: 475541
+    - path: 
+        saved_agents/results/PPO-AsmEnv-2obs-UM3-64-32-16-noise0.1-chkpnt1.zip
+      hash: md5
+      md5: 13fc35f0270a3a032aeab51d098829d6
+      size: 104468
+    - path: 
+        saved_agents/results/PPO-AsmEnv-2obs-UM3-64-32-16-noise0.1-chkpnt2.zip
+      hash: md5
+      md5: 8200d17cfe1cc27cfa60d43bceedf251
+      size: 104468
+    - path: 
+        saved_agents/results/PPO-AsmEnv-2obs-UM3-64-32-16-noise0.1-chkpnt3.zip
+      hash: md5
+      md5: b39c853d9a11b2d1fad76650bbb1407d
+      size: 104468
+    - path: 
+        saved_agents/results/PPO-AsmEnv-2obs-UM3-64-32-16-noise0.1-chkpnt4.zip
+      hash: md5
+      md5: fd2f5da30becaf8cd53f2caf94a75e53
+      size: 104468
+    - path: 
+        saved_agents/results/PPO-AsmEnv-biomass-UM1-64-32-16-noise0.1-chkpnt1.zip
+      hash: md5
+      md5: bee4234af8cd71b2414ee6ac7aab4869
+      size: 102833
+    - path: 
+        saved_agents/results/PPO-AsmEnv-biomass-UM1-64-32-16-noise0.1-chkpnt2.zip
+      hash: md5
+      md5: a3cb35ccefb729a59c347ce41d0c8ab6
+      size: 102833
+    - path: 
+        saved_agents/results/PPO-AsmEnv-biomass-UM1-64-32-16-noise0.1-chkpnt3.zip
+      hash: md5
+      md5: 0bfaaf52f0d673e777761f0414d8016c
+      size: 102833
+    - path: 
+        saved_agents/results/PPO-AsmEnv-biomass-UM1-64-32-16-noise0.1-chkpnt4.zip
+      hash: md5
+      md5: 666f235f2822b748c83ac5bc8188f122
+      size: 102833
+    - path: 
+        saved_agents/results/PPO-AsmEnv-biomass-UM2-64-32-16-noise0.1-chkpnt1.zip
+      hash: md5
+      md5: 066cb6ab390a3de164cbdb612e7683ef
+      size: 102833
+    - path: 
+        saved_agents/results/PPO-AsmEnv-biomass-UM2-64-32-16-noise0.1-chkpnt2.zip
+      hash: md5
+      md5: cadd445ba01a0883288edf3ef762c316
+      size: 102833
+    - path: 
+        saved_agents/results/PPO-AsmEnv-biomass-UM2-64-32-16-noise0.1-chkpnt3.zip
+      hash: md5
+      md5: b7f44414b9d6ae9281b48b18df30758a
+      size: 102833
+    - path: 
+        saved_agents/results/PPO-AsmEnv-biomass-UM2-64-32-16-noise0.1-chkpnt4.zip
+      hash: md5
+      md5: a3b92b1c43d20a08aade07405c9e6fcd
+      size: 102833
+    - path: 
+        saved_agents/results/PPO-AsmEnv-biomass-UM3-64-32-16-noise0.1-chkpnt1.zip
+      hash: md5
+      md5: 28db11c4c78fe0a21e0b405f298f85f6
+      size: 102833
+    - path: 
+        saved_agents/results/PPO-AsmEnv-biomass-UM3-64-32-16-noise0.1-chkpnt2.zip
+      hash: md5
+      md5: dea040767360405963f4965d2187e750
+      size: 102833
+    - path: 
+        saved_agents/results/PPO-AsmEnv-biomass-UM3-64-32-16-noise0.1-chkpnt3.zip
+      hash: md5
+      md5: ffd8d262db8006c9444ea49fb7aa0f68
+      size: 102833
+    - path: 
+        saved_agents/results/PPO-AsmEnv-biomass-UM3-64-32-16-noise0.1-chkpnt4.zip
+      hash: md5
+      md5: fc3f705bd03acd60568fa853cc005a75
+      size: 102833

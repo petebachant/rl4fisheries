@@ -71,9 +71,9 @@ pipeline:
       environment: main
       inputs:
         - src
-        - hyperpars/for_results/fixed_policies_UM1.yml
-        - hyperpars/for_results/fixed_policies_UM2.yml
-        - hyperpars/for_results/fixed_policies_UM3.yml
+        - hyperpars/for_results/fixed_policy_UM1.yml
+        - hyperpars/for_results/fixed_policy_UM2.yml
+        - hyperpars/for_results/fixed_policy_UM3.yml
       outputs:
         - saved_agents/results/cr-UM1-noise01.pkl
         - saved_agents/results/msy-UM1-noise01.pkl
