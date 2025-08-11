@@ -13,6 +13,70 @@ environments:
     prefix: .venv-for-results
 pipeline:
   stages:
+    trail-rl-algos:
+      kind: shell-script
+      script_path: scripts/train_rl_algos.sh
+      environment: main
+      inputs:
+        - src
+        - hyperpars/for_results/ppo_both_UM1.yml
+        - hyperpars/for_results/ppo_both_UM1_deep.yml
+        - hyperpars/for_results/ppo_biomass_UM1.yml
+        - hyperpars/for_results/ppo_both_UM2.yml
+        - hyperpars/for_results/ppo_both_UM2_deep.yml
+        - hyperpars/for_results/ppo_biomass_UM2.yml
+        - hyperpars/for_results/ppo_both_UM3.yml
+        - hyperpars/for_results/ppo_both_UM3_deep.yml
+        - hyperpars/for_results/ppo_biomass_UM3.yml
+      outputs:
+        - saved_agents/results/PPO-AsmEnv-2obs-UM1-256-64-16-noise0.1-chkpnt1.zip
+        - saved_agents/results/PPO-AsmEnv-2obs-UM1-256-64-16-noise0.1-chkpnt2.zip
+        - saved_agents/results/PPO-AsmEnv-2obs-UM1-256-64-16-noise0.1-chkpnt3.zip
+        - saved_agents/results/PPO-AsmEnv-2obs-UM1-256-64-16-noise0.1-chkpnt4.zip
+        - saved_agents/results/PPO-AsmEnv-2obs-UM1-64-32-16-noise0.1-chkpnt1.zip
+        - saved_agents/results/PPO-AsmEnv-2obs-UM1-64-32-16-noise0.1-chkpnt2.zip
+        - saved_agents/results/PPO-AsmEnv-2obs-UM1-64-32-16-noise0.1-chkpnt3.zip
+        - saved_agents/results/PPO-AsmEnv-2obs-UM1-64-32-16-noise0.1-chkpnt4.zip
+        - saved_agents/results/PPO-AsmEnv-2obs-UM2-256-64-16-noise0.1-chkpnt1.zip
+        - saved_agents/results/PPO-AsmEnv-2obs-UM2-256-64-16-noise0.1-chkpnt2.zip
+        - saved_agents/results/PPO-AsmEnv-2obs-UM2-256-64-16-noise0.1-chkpnt3.zip
+        - saved_agents/results/PPO-AsmEnv-2obs-UM2-256-64-16-noise0.1-chkpnt4.zip
+        - saved_agents/results/PPO-AsmEnv-2obs-UM2-64-32-16-noise0.1-chkpnt1.zip
+        - saved_agents/results/PPO-AsmEnv-2obs-UM2-64-32-16-noise0.1-chkpnt2.zip
+        - saved_agents/results/PPO-AsmEnv-2obs-UM2-64-32-16-noise0.1-chkpnt3.zip
+        - saved_agents/results/PPO-AsmEnv-2obs-UM2-64-32-16-noise0.1-chkpnt4.zip
+        - saved_agents/results/PPO-AsmEnv-2obs-UM3-256-64-16-noise0.1-chkpnt1.zip
+        - saved_agents/results/PPO-AsmEnv-2obs-UM3-256-64-16-noise0.1-chkpnt2.zip
+        - saved_agents/results/PPO-AsmEnv-2obs-UM3-256-64-16-noise0.1-chkpnt3.zip
+        - saved_agents/results/PPO-AsmEnv-2obs-UM3-256-64-16-noise0.1-chkpnt4.zip
+        - saved_agents/results/PPO-AsmEnv-2obs-UM3-64-32-16-noise0.1-chkpnt1.zip
+        - saved_agents/results/PPO-AsmEnv-2obs-UM3-64-32-16-noise0.1-chkpnt2.zip
+        - saved_agents/results/PPO-AsmEnv-2obs-UM3-64-32-16-noise0.1-chkpnt3.zip
+        - saved_agents/results/PPO-AsmEnv-2obs-UM3-64-32-16-noise0.1-chkpnt4.zip
+        - saved_agents/results/PPO-AsmEnv-biomass-UM1-64-32-16-noise0.1-chkpnt1.zip
+        - saved_agents/results/PPO-AsmEnv-biomass-UM1-64-32-16-noise0.1-chkpnt2.zip
+        - saved_agents/results/PPO-AsmEnv-biomass-UM1-64-32-16-noise0.1-chkpnt3.zip
+        - saved_agents/results/PPO-AsmEnv-biomass-UM1-64-32-16-noise0.1-chkpnt4.zip
+        - saved_agents/results/PPO-AsmEnv-biomass-UM2-64-32-16-noise0.1-chkpnt1.zip
+        - saved_agents/results/PPO-AsmEnv-biomass-UM2-64-32-16-noise0.1-chkpnt2.zip
+        - saved_agents/results/PPO-AsmEnv-biomass-UM2-64-32-16-noise0.1-chkpnt3.zip
+        - saved_agents/results/PPO-AsmEnv-biomass-UM2-64-32-16-noise0.1-chkpnt4.zip
+        - saved_agents/results/PPO-AsmEnv-biomass-UM3-64-32-16-noise0.1-chkpnt1.zip
+        - saved_agents/results/PPO-AsmEnv-biomass-UM3-64-32-16-noise0.1-chkpnt2.zip
+        - saved_agents/results/PPO-AsmEnv-biomass-UM3-64-32-16-noise0.1-chkpnt3.zip
+        - saved_agents/results/PPO-AsmEnv-biomass-UM3-64-32-16-noise0.1-chkpnt4.zip
+    tune-fixed-policies:
+      kind: shell-script
+      script_path: scripts/tune_fixed_policies.sh
+      environment: main
+      inputs:
+        - src
+        - hyperpars/for_results/fixed_policies_UM1.yml
+        - hyperpars/for_results/fixed_policies_UM2.yml
+        - hyperpars/for_results/fixed_policies_UM3.yml
+      outputs:
+        - saved_agents/results/cr-UM1-noise01.pkl
+        - saved_agents/results/msy-UM1-noise01.pkl
     tests:
       kind: jupyter-notebook
       notebook_path: notebooks/for_generating_results/0_tests.ipynb
@@ -20,6 +84,8 @@ pipeline:
       cleaned_ipynb_storage: null
       executed_ipynb_storage: git
       html_storage: git
+      inputs:
+        - src
     fp-skopt:
       kind: jupyter-notebook
       notebook_path: notebooks/for_generating_results/1_fp_skopt.ipynb
@@ -37,6 +103,8 @@ pipeline:
       cleaned_ipynb_storage: null
       executed_ipynb_storage: git
       html_storage: git
+      inputs:
+        - src
       outputs:
         - notebooks/for_generating_results/csv/UM1_rew.csv
         - notebooks/for_generating_results/csv/UM2_rew.csv
@@ -48,6 +116,8 @@ pipeline:
       cleaned_ipynb_storage: null
       executed_ipynb_storage: git
       html_storage: git
+      inputs:
+        - src
       outputs:
         - notebooks/for_generating_results/csv/UM1_policies.csv
         - notebooks/for_generating_results/csv/UM2_policies.csv
@@ -59,6 +129,8 @@ pipeline:
       cleaned_ipynb_storage: null
       executed_ipynb_storage: git
       html_storage: git
+      inputs:
+        - src
       outputs:
         - notebooks/for_generating_results/csv/eps-v2
     stochasticity:
@@ -68,6 +140,8 @@ pipeline:
       cleaned_ipynb_storage: null
       executed_ipynb_storage: git
       html_storage: git
+      inputs:
+        - src
     aftermath:
       kind: jupyter-notebook
       notebook_path: notebooks/for_generating_results/6_aftermath.ipynb
@@ -75,6 +149,8 @@ pipeline:
       cleaned_ipynb_storage: null
       executed_ipynb_storage: git
       html_storage: git
+      inputs:
+        - src
       outputs:
         - peer-review/myst/figures/aftermath-full.jpeg
     download-data:

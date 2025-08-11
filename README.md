@@ -1,6 +1,6 @@
 # rl4fisheries
 
-Open code to reproduce and extend the paper 
+Open code to reproduce and extend the paper
 
 **Using machine learning to inform harvest control rule design in complex fishery settings**
 Montealegre-Mora, Boettiger, Walters, Cahill.
@@ -12,7 +12,7 @@ We provide reinforcement learning (RL) and Bayesian optimization methodologies t
 We provide notebooks to reproduce the figures in the paper in the folder `notebooks/for_results/`.
 - These figures are generated with csv data that is stored in this [link](https://huggingface.co/boettiger-lab/rl4eco/tree/main/rl4fisheries-reproducing).
 - First step for reproducing results here is a script `setup.sh` which sets the python environment that the notebooks need in order to generate the figures.
-- Notebook `2-download-data.ipynb` downloads the data locally to the user's computer. 
+- Notebook `2-download-data.ipynb` downloads the data locally to the user's computer.
 - Subsequent notebooks use that downloaded data to generate figures.
 
 ### Generating new figures
@@ -54,10 +54,10 @@ Here we explain how to use our code to optimize policies as done in our paper.
 
 To train both RL policies in the 3 utility model scenarios considered in the paper, you can use the following command:
 ``` bash
-bash scripts/train_RL_algos.sh
+bash scripts/train_rl_algos.sh
 ```
 
-Similarly, to train all non-RL policies ('fixed policies' in the paper) in the 3 scenarios, run 
+Similarly, to train all non-RL policies ('fixed policies' in the paper) in the 3 scenarios, run
 ``` bash
 bash scripts/tune_fixed_policies.sh
 ```
@@ -78,7 +78,7 @@ Similarly, you can optimize fixed policies using
 ``` bash
 python scripts/tune.py -f path/to/config/file.yml,
 ```
-e.g. 
+e.g.
 ``` bash
 python scripts/tune.py -f hyperpars/for_results/fixed_policy_UM1.yml,
 ```
@@ -114,7 +114,7 @@ rl4fisheries
 |       |-- sb3.py: RL training within Stable Baselines framework (used in paper)
 |       |
 |       |-- simulation.py: helper functions to simulate the system dynamics using a policy (used to generate policy evaluations)
-|    
+|
 |-- tests
 |   |
 |   |-- continuous integration tests to ensure code quality in pull requests
@@ -123,5 +123,5 @@ rl4fisheries
 |
 |-- pyproject.toml: file used in the installation of this source code
 |
-|-- README.md 
+|-- README.md
 ```
