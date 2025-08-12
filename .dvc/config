@@ -1,5 +1,5 @@
 [core]
     remote = calkit
 ['remote "calkit"']
-    url = https://api.calkit.io/projects/petebachant/rl4fisheries/dvc
+    url = https://api.calkit.io/projects/boettiger-lab/rl4fisheries/dvc
     auth = custom
