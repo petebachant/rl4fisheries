@@ -27,6 +27,7 @@ After cloning the project, run the project pipeline with:
 calkit run
 ```
 
+This will train and tune models, then generate results and figures.
 If you want to force rerunning stages with results cached, add the
 `--force` or `-f` flag.
 
