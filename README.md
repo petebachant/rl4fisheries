@@ -39,15 +39,6 @@ If you want to force rerunning stages with results cached, add the
 Note that because the system is stochastic,
 new data and figures generated may not exactly match those in the paper.
 
-## Installation
-
-To install this source code, you need to have git, Python and pip installed.
-To quickly check whether these are installed you can open the terminal and run the following command:
-
-```bash
-pip install git+https://github.com/boettiger-lab/rl4fisheries.git
-```
-
 ## Optimized policies
 
 The optimized policies presented in the paper are saved at this [link](https://huggingface.co/boettiger-lab/rl4eco/tree/main/sb3/rl4fisheries/post-review-results/) which is a public repository hosted by [Hugging Face](https://huggingface.co).
