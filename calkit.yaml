@@ -83,18 +83,12 @@ pipeline:
       kind: jupyter-notebook
       notebook_path: notebooks/for_generating_results/0_tests.ipynb
       environment: main
-      cleaned_ipynb_storage: null
-      executed_ipynb_storage: git
-      html_storage: git
       inputs:
         - src
     fp-skopt:
       kind: jupyter-notebook
       notebook_path: notebooks/for_generating_results/1_fp_skopt.ipynb
       environment: main
-      cleaned_ipynb_storage: null
-      executed_ipynb_storage: git
-      html_storage: git
       outputs:
         - path: notebooks/for_generating_results/csv/opt-params.csv
           storage: git
@@ -102,9 +96,6 @@ pipeline:
       kind: jupyter-notebook
       notebook_path: notebooks/for_generating_results/2_reward_distr.ipynb
       environment: main
-      cleaned_ipynb_storage: null
-      executed_ipynb_storage: git
-      html_storage: git
       inputs:
         - src
       outputs:
@@ -115,9 +106,6 @@ pipeline:
       kind: jupyter-notebook
       notebook_path: notebooks/for_generating_results/3_policy_plots.ipynb
       environment: main
-      cleaned_ipynb_storage: null
-      executed_ipynb_storage: git
-      html_storage: git
       inputs:
         - src
       outputs:
@@ -128,9 +116,6 @@ pipeline:
       kind: jupyter-notebook
       notebook_path: notebooks/for_generating_results/4_episode_plots.ipynb
       environment: main
-      cleaned_ipynb_storage: null
-      executed_ipynb_storage: git
-      html_storage: git
       inputs:
         - src
       outputs:
@@ -139,18 +124,12 @@ pipeline:
       kind: jupyter-notebook
       notebook_path: notebooks/for_generating_results/5_stochasticity.ipynb
       environment: main
-      cleaned_ipynb_storage: null
-      executed_ipynb_storage: git
-      html_storage: git
       inputs:
         - src
     aftermath:
       kind: jupyter-notebook
       notebook_path: notebooks/for_generating_results/6_aftermath.ipynb
       environment: main
-      cleaned_ipynb_storage: null
-      executed_ipynb_storage: git
-      html_storage: git
       inputs:
         - src
       outputs:
@@ -159,9 +138,6 @@ pipeline:
       kind: jupyter-notebook
       environment: for-results
       notebook_path: notebooks/for_results/2-download-data.ipynb
-      cleaned_ipynb_storage: null
-      executed_ipynb_storage: git
-      html_storage: git
       outputs:
         - path: notebooks/for_results/data/rl4fisheries-reproducing
           storage: null
@@ -169,9 +145,6 @@ pipeline:
       kind: jupyter-notebook
       environment: for-results
       notebook_path: notebooks/for_results/3-rewards.ipynb
-      cleaned_ipynb_storage: null
-      executed_ipynb_storage: git
-      html_storage: git
       outputs:
         - notebooks/for_results/figures/rewards.jpeg
         - path: notebooks/for_results/csv/rew-table.csv
@@ -180,18 +153,12 @@ pipeline:
       kind: jupyter-notebook
       environment: for-results
       notebook_path: notebooks/for_results/4-policies.ipynb
-      cleaned_ipynb_storage: null
-      executed_ipynb_storage: git
-      html_storage: git
       outputs:
         - notebooks/for_results/figures/policies.jpeg
     episodes:
       kind: jupyter-notebook
       environment: for-results
       notebook_path: notebooks/for_results/5-episodes.ipynb
-      cleaned_ipynb_storage: null
-      executed_ipynb_storage: git
-      html_storage: git
       outputs:
         - notebooks/for_results/figures/eps-um1.jpeg
         - notebooks/for_results/figures/eps-um2.jpeg
