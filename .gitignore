@@ -162,27 +162,3 @@ cython_debug/
 .DS_Store
 
 saved_agents/
-
-notebooks/for_results/data/rl4fisheries-reproducing
-
-.calkit/notebooks/cleaned/notebooks/for_generating_results/0_tests.ipynb
-
-.calkit/notebooks/cleaned/notebooks/for_generating_results/1_fp_skopt.ipynb
-
-.calkit/notebooks/cleaned/notebooks/for_generating_results/2_reward_distr.ipynb
-
-.calkit/notebooks/cleaned/notebooks/for_generating_results/3_policy_plots.ipynb
-
-.calkit/notebooks/cleaned/notebooks/for_generating_results/4_episode_plots.ipynb
-
-.calkit/notebooks/cleaned/notebooks/for_generating_results/5_stochasticity.ipynb
-
-.calkit/notebooks/cleaned/notebooks/for_generating_results/6_aftermath.ipynb
-
-.calkit/notebooks/cleaned/notebooks/for_results/2-download-data.ipynb
-
-.calkit/notebooks/cleaned/notebooks/for_results/3-rewards.ipynb
-
-.calkit/notebooks/cleaned/notebooks/for_results/4-policies.ipynb
-
-.calkit/notebooks/cleaned/notebooks/for_results/5-episodes.ipynb
