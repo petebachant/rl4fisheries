@@ -39,15 +39,6 @@ If you want to force rerunning stages with results cached, add the
 Note that because the system is stochastic,
 new data and figures generated may not exactly match those in the paper.
 
-After running, results can be cached in the cloud at calkit.io with:
-
-```sh
-calkit save -am "Run pipeline"
-```
-
-Note this will require the project to exist there and
-[cloud integration to be set up](https://docs.calkit.org/cloud-integration/).
-
 ## Installation
 
 To install this source code, you need to have git, Python and pip installed.
