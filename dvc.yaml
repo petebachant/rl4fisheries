@@ -82,9 +82,9 @@ stages:
     deps:
       - scripts/tune_fixed_policies.sh
       - src
-      - hyperpars/for_results/fixed_policies_UM1.yml
-      - hyperpars/for_results/fixed_policies_UM2.yml
-      - hyperpars/for_results/fixed_policies_UM3.yml
+      - hyperpars/for_results/fixed_policy_UM1.yml
+      - hyperpars/for_results/fixed_policy_UM2.yml
+      - hyperpars/for_results/fixed_policy_UM3.yml
       - uv.lock
     outs:
       - saved_agents/results/cr-UM1-noise01.pkl
