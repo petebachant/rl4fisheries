@@ -19,15 +19,9 @@ curl -LsSf https://github.com/calkit/calkit/raw/refs/heads/main/scripts/install.
 
 All other dependencies and environments will be handled automatically.
 
-## Clone the project
-
-```sh
-git clone https://github.com/boettiger-lab/rl4fisheries.git
-```
-
 ## Run the project to reproduce the results
 
-Run the project pipeline with:
+After cloning the project, run the project pipeline with:
 
 ```sh
 calkit run
