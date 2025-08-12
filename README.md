@@ -63,7 +63,7 @@ It can be rerun with:
 calkit run train-rl-algos
 ```
 
-Similarly, to train all non-RL policies ('fixed policies' in the paper) in the 3 scenarios, run
+Similarly, to train all non-RL policies ('fixed policies' in the paper) in the 3 scenarios, run:
 
 ```sh
 calkit run tune-fixed-policies
@@ -85,13 +85,13 @@ calkit xenv -n main -- python scripts/train.py -f hyperpars/RL-template.yml
 
 For reference, the config files used for our paper's results are located at `hyperpars/for_results`.
 
-Similarly, you can optimize fixed policies using
+Similarly, you can optimize fixed policies using:
 
 ```bash
 calkit xenv -n main -- python scripts/tune.py -f path/to/config/file.yml,
 ```
 
-e.g.
+e.g.:
 
 ```bash
 calkit xenv -n main -- python scripts/tune.py -f hyperpars/for_results/fixed_policy_UM1.yml,
@@ -146,6 +146,8 @@ rl4fisheries
 |-- tests
 |   |
 |   |-- continuous integration tests to ensure code quality in pull requests
+|
+|-- calkit.yaml: Calkit config for defining environments and pipeline
 |
 |-- noxfile.py: file used to run continuous integration tests
 |
